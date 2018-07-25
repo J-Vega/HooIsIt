@@ -41,7 +41,7 @@ const testCommentSchema = mongoose.Schema({
     content: String
 });
 
-const testdata = mongoose.Schema({
+const testdataSchema = mongoose.Schema({
   
     //**** Should I include a requirement for number of digits?
     phoneNumber: Number,
@@ -66,7 +66,9 @@ userProfileSchema.methods.serialize = function() {
 const UserProfile = mongoose.model('UserProfile', userProfileSchema);
 const PhoneNumber = mongoose.model('PhoneNumber', phoneNumberSchema);
 const Comment = mongoose.model('PhoneNumber', phoneNumberSchema);
+const testdata = mongoose.model('testdata', testdataSchema);
+const testcomment = mongoose.model('testcomment', testCommentSchema);
 
-module.exports = {UserProfile,PhoneNumber,Comment};
+module.exports = {UserProfile,PhoneNumber,Comment, testdata, testcomment};
 
 
