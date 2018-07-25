@@ -8,7 +8,7 @@ const userProfileSchema = mongoose.Schema({
   	userName: {type: String, required: true},
   	firstName: {type: String, required: true},
   	lastName: {type: String, required: true},
-    comments: author: { type: mongoose.Schema.Types.ObjectId, ref: 'Author' },
+    //comments: author: { type: mongoose.Schema.Types.ObjectId, ref: 'Author' },
   	created: {type: Date, default: Date.now}
 });
 
