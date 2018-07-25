@@ -54,6 +54,6 @@ const UserProfile = mongoose.model('UserProfile', userProfileSchema);
 const PhoneNumber = mongoose.model('PhoneNumber', phoneNumberSchema);
 const Comment = mongoose.model('PhoneNumber', phoneNumberSchema);
 
-module.exports = {UserProfile,PhoneNumber};
+module.exports = {UserProfile,PhoneNumber,Comment};
 
 
