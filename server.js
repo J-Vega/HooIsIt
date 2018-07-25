@@ -13,6 +13,9 @@ app.use(express.json());
 const { DATABASE_URL, PORT } = require('./config');
 const { UserProfile } = require('./models');
 
+app.get("/signup", (req, res) => {
+  res.sendFile(__dirname + "/public/signup.html");
+});
 
 //Use later for testing
 function runServer(databaseUrl, port = PORT) {
