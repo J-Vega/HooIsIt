@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
 const app = express();
+let server;
 
 app.use(express.static('public'));
 app.use(express.json());
@@ -18,25 +19,24 @@ app.get("/signup", (req, res) => {
   res.sendFile(__dirname + "/public/signup.html");
 });
 
+app.get("/seeddata", (req, res) => {
+  res.sendFile(__dirname + "/seed-data.js");
+});
+
 //Just for testing...
 app.get("/list", (req, res) => {
+  console.log("list");
   testdata
-    .find()
-    // we're limiting because restaurants db has > 25,000
-    // documents, and that's too much to process/return
-    .limit(4)
-    // success callback: for each restaurant we got back, we'll
-    // call the `.serialize` instance method we've created in
-    // models.js in order to only expose the data we want the API return.    
+    .find({})
+    .populate("comment")//***Instead of pushing itself , push id of comment into array
+    .exec() 
     .then(testdata => {
-      res.json({
-        testdata: testdata.map(
-          (testdata) => testdata.serialize())
-      });
+      console.log("a",testdata);
+      return res.json(testdata);
     })
     .catch(err => {
       console.error(err);
-      res.status(500).json({ message: 'Internal server error' });
+      return res.status(500).json({ message: 'Internal server error' });
     });
 });
 
@@ -83,8 +83,9 @@ function closeServer() {
 if (require.main === module) {
   runServer(DATABASE_URL).catch(err => console.error(err));
 }
-
-app.listen(process.env.PORT || 8080);
+else{
+  app.listen(process.env.PORT || 8080);
+}
 
 module.exports = app;//Use later for testing { runServer, app, closeServer };
 
