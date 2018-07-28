@@ -32,11 +32,10 @@ const phoneNumberSchema = mongoose.Schema({
     
     phoneNumber: {type: Number, required: true},
     flags: {type: Number, required: true},
-    delete: {type: Number, required: true, default: 0},
     description: {type:String, required: true},
     comments: [{type:String}],
     created: {type: Date, default: Date.now}
-    
+
 },{collection:"phoneNumberData"});
 
 const testCommentSchema = mongoose.Schema({
