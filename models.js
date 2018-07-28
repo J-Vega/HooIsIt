@@ -6,60 +6,63 @@ var Schema = mongoose.Schema;
 
 const userProfileSchema = mongoose.Schema({
 	
-  	userName: {type: String, required: true},
+  	displayName: {type: String, required: true, unique: true},
   	firstName: {type: String, required: true},
   	lastName: {type: String, required: true},
-    //comments: author: { type: mongoose.Schema.Types.ObjectId, ref: 'Author' },
-  	created: {type: Date, default: Date.now}
+    email: {type: String, required: true, unique: true},
+  	created: {type: Date, default: Date.now},
+    userComments: {type:Schema.Types.ObjectId, ref: 'userComment'}
 });
 
-//Probably not - just use an array of comments inside user profile schema
-const userContributionSchema = mongoose.Schema({
-	
-  	userName: {type: String, required: true},
-  	firstName: {type: String, required: true},
-  	lastName: {type: String, required: true},
-  	created: {type: Date, default: Date.now}
+const userCommentSchema = mongoose.Schema({
+    
+    content: {type: String, required: true},
+    creator: [{type: Schema.Types.ObjectId, ref: 'UserProfile'}],
+    created: {type: Date, default: Date.now}
 });
 
 const commentSchema = mongoose.Schema({
     //Not sure if to include required or not - must include user id of person who created it
-    content: {type: String, required: true}
-    //creator: {type: String, required: true},
-    //created: {type: Date, default: Date.now}
+    content: {type: String, required: true},
+    creator: [{type: Schema.Types.ObjectId, ref: 'UserProfile'}],
+    created: {type: Date, required: true, default: Date.now, }
 });
 
 const phoneNumberSchema = mongoose.Schema({
-  
-    //**** Should I include a requirement for number of digits? user input phone number - require phone number format
+    
     phoneNumber: {type: Number, required: true},
     flags: {type: Number, required: true},
-    //Initial short Description - Other users will add comments related to this description
+    delete: {type: Number, required: true, default: 0},
     description: {type:String, required: true},
-    //comments: [{type:Schema.Types.ObjectId, ref: 'testcomment'}],
+    comments: [{type:String}],
     created: {type: Date, default: Date.now}
-});
+    
+},{collection:"phoneNumberData"});
 
 const testCommentSchema = mongoose.Schema({
     //Not sure if to include required or not - must include user id of person who created it
-    content: {type:String},
+    //content: {type:PhoneNumber },
     created: {type: Date, default: Date.now}
 });
 
 const testdataSchema = mongoose.Schema({
-  
-    //**** Should I include a requirement for number of digits?
-    phoneNumber: Number,
-    flags: Number,
-    comment: [testCommentSchema]
-
+  phoneNumber: {type: Number, required: true, unique: true},
+  flags: {type: Number, required: true},
+  description: {type: String, required: true},
+  comments: [{type:String}],
+  created: {type: Date, default: Date.now}
 },{collection:"testdata"});
 
-// userProfileSchema.virtual('fullName').get(function() {
+// userProfileSchema.virtual('virtualDisplayName').get(function() {
 //   return `${this.fullName.firstName} ${this.fullName.lastName}`.trim();
 // });
 
-userProfileSchema.methods.serialize = function() {
+commentSchema.pre('findOne', function(next){
+  this.populate(displayName);
+  next();
+});
+
+userProfileSchema.methods.serialize = function(){
   return {
     id: this._id,
     userName: this.userName,
@@ -69,9 +72,19 @@ userProfileSchema.methods.serialize = function() {
   };
 };
 
+commentSchema.methods.serialize = function(){
+  return{
+    id: this._id,
+    content: this.content,
+    creator: this.displayName,
+    created: this.created
+  };
+};
+
 const UserProfile = mongoose.model('UserProfile', userProfileSchema);
 const PhoneNumber = mongoose.model('PhoneNumber', phoneNumberSchema);
-const Comment = mongoose.model('Comment', phoneNumberSchema);
+const UserComment = mongoose.model('UserComment', userCommentSchema)
+const Comment = mongoose.model('Comment', commentSchema);
 const testdata = mongoose.model('testdata', testdataSchema);
 const testcomment = mongoose.model('testcomment', testCommentSchema);
 
