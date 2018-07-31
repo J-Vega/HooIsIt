@@ -12,7 +12,7 @@ const {app, closeServer, runServer} = require("../server.js");
 //makes 'expect' syntax available
 const expect = chai.expect;
 
-const {PhoneNumber} = require('../models.js');
+const {PhoneNumber , UserProfile} = require('../models.js');
 
 const {TEST_DATABASE_URL} = require('../config.js');
 
@@ -21,16 +21,27 @@ chai.use(chaiHttp);
 function seedPhoneNumberData() {
 	const testData = [];
 
-	for(let i = 1; i <= 10; i++){
+	for(let i = 1; i <= 5; i++){
 		testData.push(generatePhoneNumberData());
 	}
 	//console.log("Adding test data");
 	return PhoneNumber.insertMany(testData);
 }
 
+function seedUserData() {
+	const testData = [];
+
+	for(let i = 1; i <= 5; i++){
+		testData.push(generateUserData());
+	}
+	//console.log("Adding test data");
+	return UserProfile.insertMany(testData);
+}
+
 function generatePhoneNumberData(){
 	var phoneNumber = faker.phone.phoneNumberFormat();
-	console.log(phoneNumber);
+	var wholeNumber = parseInt(phoneNumber,10);
+	console.log(phoneNumber + wholeNumber);
 	return{
 		phoneNumber: phoneNumber.replace(/[^\d]/g,''),
     	flags: 1,
@@ -40,35 +51,48 @@ function generatePhoneNumberData(){
 	}
 }
 
+function generateUserData(){
+	var userName = "user"+faker.random.word();
+	var firstName = faker.name.firstName();
+	var lastName = faker.name.lastName();
+	var email = faker.random.word()+"@"+faker.random.word()+".com";
+
+	return{
+		userName: userName,
+    	firstName: firstName,
+    	lastName: lastName,
+    	email: email,
+    	comments: [],
+    	created: faker.date.past()
+	}
+}
+
 function tearDownDb() {
-	console.warn('Deleting database');
+	//console.warn('Deleting database');
 	return mongoose.connection.db.dropDatabase();
 }
 
-describe('Phone number API resource', function(){
-	
-	
 	before(function() {
-		console.log(TEST_DATABASE_URL);
     	return runServer(TEST_DATABASE_URL, 8081);
-
   	});
 
-  	beforeEach(function() {
-  		return seedPhoneNumberData();
-  	});
-
+ 
   	afterEach(function() {
   		return tearDownDb();
   	});
 
 	after(function() {
-		console.log("closing server");
     	return closeServer();
   	});
 
-  	
-	describe('Get endpoint', function(){
+describe('Phone number API resource', function(){
+
+	beforeEach(function() {
+  		return seedPhoneNumberData();
+  	});
+
+describe('Get endpoint', function(){
+
 	it('should return all existing phone numbers', function(){
 		
 		let res;
@@ -88,39 +112,76 @@ describe('Phone number API resource', function(){
 	})
 });
 
-// describe('POST endpoint', function() {
+describe('POST endpoint', function() {
 
-//     it('should add a new phone number', function() {
+    it('should add a new phone number', function() {
 
-//       const newListing = generatePhoneNumberData();
+      const newListing = generatePhoneNumberData();
+      //console.log(newListing);
 
-//       return chai.request(app)
-//         .post('/list')
-//         .send(newListing)
+      return chai.request(app)
+        .post('/list')
+        .send(newListing)
+        .then(function(res) {
+          expect(res).to.have.status(201);
+          expect(res).to.be.json;
+          expect(res.body).to.be.a('object');
+          expect(res.body).to.include.keys(
+            '_id', 'phoneNumber', 'comments', 'description');
+          //Serialized model - id -vs actual model - _id -
+          // Mongo should have 
+          expect(res.body.id).to.not.be.null;
+          expect(res.body.description).to.equal(newListing.description);
+          //console.log(PhoneNumber.findById(res.body._id));
+          return PhoneNumber.findById(res.body._id);
+        })
+        .then(function(listing) {
+        	//console.log("Listing below:");
+          	expect(`${listing.phoneNumber}`).to.equal(newListing.phoneNumber);
+          	expect(listing.flags).to.equal(newListing.flags);
+          	expect(listing.description).to.equal(newListing.description);
+        });
+    });
+  });
+
+// describe('PUT endpoint', function() {
+
+//     // strategy:
+//     //  1. Get an existing restaurant from db
+//     //  2. Make a PUT request to update that restaurant
+//     //  3. Prove restaurant returned by request contains data we sent
+//     //  4. Prove restaurant in db is correctly updated
+//     it('should add a new comment to the selected phone number', function() {
+//       const updateData = {
+//         comment: "New comment from test server!"
+//       };
+
+//       return PhoneNumber
+//         .findOne()
+//         .then(function(listing) {
+//           updateData.id = restaurant.id;
+
+//           // make request then inspect it to make sure it reflects
+//           // data we sent
+//           return chai.request(app)
+//             .put(`/list/${restaurant.id}`)
+//             .send(updateData);
+//         })
 //         .then(function(res) {
-//           expect(res).to.have.status(201);
-//           expect(res).to.be.json;
-//           expect(res.body).to.be.a('object');
-//           expect(res.body).to.include.keys(
-//             'id', 'phoneNumber', 'comments', 'flags', 'description');
-//           //expect(res.body.name).to.equal(newListing.name);
-//           // cause Mongo should have created id on insertion
-//           expect(res.body.id).to.not.be.null;
-//           expect(res.body.description).to.equal(newListing.description);
-          
-//           return PhoneNumber.findById(res.body.id);
+//           expect(res).to.have.status(204);
+
+//           return Restaurant.findById(updateData.id);
 //         })
 //         .then(function(listing) {
-//           expect(listing.phoneNumber).to.equal(newListing.phoneNumber);
-//           expect(listing.flags).to.equal(newListing.flags);
-//           expect(listing.description).to.equal(newListing.description);
-
+//           //expect(restaurant.name).to.equal(updateData.name);
+//           //expect(restaurant.cuisine).to.equal(updateData.cuisine);
 //         });
 //     });
 //   });
 	
 
-	describe('DELETE endpoint', function() {
+
+describe('DELETE endpoint', function() {
    
     it('delete a phone number by id', function() {
 
@@ -142,7 +203,122 @@ describe('Phone number API resource', function(){
     });
   });
 
-});//End
+});//End of phone Number API Resource
+
+
+describe('User data API resource', function(){
+
+	beforeEach(function() {
+  		return seedUserData();
+  	});
+
+	describe('GET endpoint', function() {
+		it('should return all existing users', function(){
+		
+			let res;
+			return chai.request(app)
+			.get("/users")
+			.then(function(_res){
+				res = _res;
+				//console.log(res.body);
+		 		expect(res).to.have.status(200);
+		 		expect(res.body).to.have.lengthOf.at.least(1);
+		 		//console.log(phoneNumberData.count);
+		 		return UserProfile.count();
+			})
+			.then(function(count){
+			expect(res.body).to.have.lengthOf(count);
+			});
+		});
+	});
+
+	describe('POST endpoint', function() {
+
+    	it('should add a new user', function() {
+
+      		const newUser = generateUserData();
+
+      		return chai.request(app)
+        	.post('/users')
+        	.send(newUser)
+        	.then(function(res) {
+          		expect(res).to.have.status(201);
+          		expect(res).to.be.json;
+          		expect(res.body).to.be.a('object');
+          		expect(res.body).to.include.keys(
+            		'_id','userName', 'firstName', 'lastName', 'email');
+          			//Serialized model - id -vs actual model - _id -
+         		expect(res.body.id).to.not.be.null;
+          		expect(res.body.userName).to.equal(newUser.userName);
+          		expect(res.body.firstName).to.equal(newUser.firstName);
+          		expect(res.body.lastName).to.equal(newUser.lastName);
+          		expect(res.body.email).to.equal(newUser.email);
+          	return UserProfile.findById(res.body._id);
+        })
+        .then(function(listing) {
+        	//console.log("Listing below:");
+          	expect(listing.userName).to.equal(newUser.userName);
+          	expect(listing.firstName).to.equal(newUser.firstName);
+          	expect(listing.lastName).to.equal(newUser.lastName);
+          	expect(listing.email).to.equal(newUser.email);
+        });
+    	});
+  	});
+
+  	describe('PUT endpoint', function() {
+  		it('should update user personal info', function() {
+      		const updateData = {
+        		firstName: 'NewFirstName',
+        		lastName: 'NewLastName',
+      		};
+
+      return UserProfile
+        .findOne()
+        .then(function(user) {
+          updateData.id = user.id;
+
+          // make request then inspect it to make sure it reflects
+          // data we sent
+          return chai.request(app)
+            .put(`/users/${user.id}`)
+            .send(updateData);
+        })
+        .then(function(res) {
+          expect(res).to.have.status(204);
+
+          return UserProfile.findById(updateData.id);
+        })
+        .then(function(user) {
+          expect(user.firstName).to.equal(updateData.firstName);
+          expect(user.lastName).to.equal(updateData.lastName);
+        });
+    });
+  	});
+
+	describe('DELETE endpoint', function() {
+   
+    	it('delete a user by id', function() {
+
+     	 	let user;
+
+     		return UserProfile
+        	.findOne()
+        	.then(function(_user){
+        		user = _user;
+          		return chai.request(app).delete(`/users/${user.id}`);
+        	})
+        	.then(function(res) {
+          		expect(res).to.have.status(204);
+          		return UserProfile.findById(user.id);
+        	})
+        	.then(function(_user) {
+          	expect(_user).to.be.null;
+        	});
+    	});
+	});
+
+});//End of phone number API resource
+
 
 
 
