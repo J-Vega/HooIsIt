@@ -16,7 +16,7 @@ const userProfileSchema = mongoose.Schema({
 const userCommentSchema = mongoose.Schema({
     
     content: {type: String, required: true},
-    creator: [{type: Schema.Types.ObjectId, ref: 'UserProfile'}],
+    creator: {type: String , required: true},//[{type: Schema.Types.ObjectId, ref: 'UserProfile'}],
     created: {type: Date, required:true, default: Date.now}
 });
 
@@ -25,7 +25,7 @@ const phoneNumberSchema = mongoose.Schema({
     phoneNumber: {type: Number, required: true},
     flags: {type: Number, required: true},
     description: {type:String, required: true},
-    comments: [{type:String}],//[userCommentSchema],
+    comments: [userCommentSchema],
     created: {type: Date, default: Date.now}
 
 },{collection:"phoneNumberData"});
@@ -68,6 +68,7 @@ phoneNumberSchema.methods.serialize = function(){
   return{
     id: this._id,
     phoneNumber: this.phoneNumber,
+    flags: this.flags,
     description: this.description,
     comments: this.comments,
     created: this.created
