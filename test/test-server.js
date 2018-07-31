@@ -46,7 +46,10 @@ function generatePhoneNumberData(){
 		phoneNumber: phoneNumber.replace(/[^\d]/g,''),
     	flags: 1,
     	description: "Fake call posing as " + faker.company.companyName(),
-    	comments: ["Fake comment"],
+    	comments: {
+    		content: "Fake content",
+    		creator: "Author"
+    	},
     	created: faker.date.past()
 	}
 }
@@ -72,28 +75,28 @@ function tearDownDb() {
 	return mongoose.connection.db.dropDatabase();
 }
 
+
+describe('Phone number API resource', function(){
+
 	before(function() {
     	return runServer(TEST_DATABASE_URL, 8081);
   	});
-
- 
-  	afterEach(function() {
-  		return tearDownDb();
-  	});
-
-	after(function() {
-    	return closeServer();
-  	});
-
-describe('Phone number API resource', function(){
 
 	beforeEach(function() {
   		return seedPhoneNumberData();
   	});
 
-describe('Get endpoint', function(){
+  	 	afterEach(function() {
+  		return tearDownDb();
+  	});
 
-	it('should return all existing phone numbers', function(){
+  	 	after(function() {
+    	return closeServer();
+  	});
+
+	describe('Get endpoint', function(){
+
+		it('should return all existing phone numbers', function(){
 		
 		let res;
 		return chai.request(app)
@@ -109,12 +112,12 @@ describe('Get endpoint', function(){
 		.then(function(count){
 			expect(res.body).to.have.lengthOf(count);
 		});
-	})
-});
+		})
+	});
 
-describe('POST endpoint', function() {
+	describe('POST endpoint', function() {
 
-    it('should add a new phone number', function() {
+    	it('should add a new phone number', function() {
 
       const newListing = generatePhoneNumberData();
       //console.log(newListing);
@@ -141,75 +144,85 @@ describe('POST endpoint', function() {
           	expect(listing.flags).to.equal(newListing.flags);
           	expect(listing.description).to.equal(newListing.description);
         });
-    });
-  });
+    	});
+  	});
 
-// describe('PUT endpoint', function() {
+	// describe('PUT endpoint', function() {
 
-//     // strategy:
-//     //  1. Get an existing restaurant from db
-//     //  2. Make a PUT request to update that restaurant
-//     //  3. Prove restaurant returned by request contains data we sent
-//     //  4. Prove restaurant in db is correctly updated
-//     it('should add a new comment to the selected phone number', function() {
-//       const updateData = {
-//         comment: "New comment from test server!"
-//       };
+ //    // strategy:
+ //    //  1. Get an existing phone number from db
+ //    //  2. Make a PUT request to update that phone number
+ //    //  3. Push new comment into phone numbers comment array
+ //    //  3. Prove phone number contains comment we sent (last comment in array equals comment sent)
+ //    it('should add a new comment to the selected phone number', function() {
+ //      const updateData = {
+ //        comment: "New comment from test script!"
+ //      };
 
-//       return PhoneNumber
-//         .findOne()
-//         .then(function(listing) {
-//           updateData.id = restaurant.id;
+ //      return PhoneNumber
+ //        .findOne()
+ //        .then(function(listing) {
+ //          updateData.id = restaurant.id;
 
-//           // make request then inspect it to make sure it reflects
-//           // data we sent
-//           return chai.request(app)
-//             .put(`/list/${restaurant.id}`)
-//             .send(updateData);
-//         })
-//         .then(function(res) {
-//           expect(res).to.have.status(204);
+ //          // make request then inspect it to make sure it reflects
+ //          // data we sent
+ //          return chai.request(app)
+ //            .put(`/list/${restaurant.id}`)
+ //            .send(updateData);
+ //        })
+ //        .then(function(res) {
+ //          expect(res).to.have.status(204);
 
-//           return Restaurant.findById(updateData.id);
-//         })
-//         .then(function(listing) {
-//           //expect(restaurant.name).to.equal(updateData.name);
-//           //expect(restaurant.cuisine).to.equal(updateData.cuisine);
-//         });
-//     });
-//   });
+ //          return Restaurant.findById(updateData.id);
+ //        })
+ //        .then(function(listing) {
+ //          //expect(restaurant.name).to.equal(updateData.name);
+ //          //expect(restaurant.cuisine).to.equal(updateData.cuisine);
+ //        });
+ //    });
+ //  });
 	
 
-
-describe('DELETE endpoint', function() {
+	describe('DELETE endpoint', function() {
    
-    it('delete a phone number by id', function() {
+    	it('delete a phone number by id', function() {
 
-      let phoneNumber;
+      		let phoneNumber;
 
-      return PhoneNumber
-        .findOne()
-        .then(function(_phoneNumber) {
-          phoneNumber = _phoneNumber;
-          return chai.request(app).delete(`/list/${phoneNumber.id}`);
-        })
-        .then(function(res) {
-          expect(res).to.have.status(204);
-          return PhoneNumber.findById(phoneNumber.id);
-        })
-        .then(function(_phoneNumber) {
-          expect(_phoneNumber).to.be.null;
-        });
-    });
-  });
-
+      		return PhoneNumber
+        	.findOne()
+        	.then(function(_phoneNumber) {
+          		phoneNumber = _phoneNumber;
+          		return chai.request(app).delete(`/list/${phoneNumber.id}`);
+        	})
+        	.then(function(res) {
+          		expect(res).to.have.status(204);
+          		return PhoneNumber.findById(phoneNumber.id);
+        	})
+        	.then(function(_phoneNumber) {
+          		expect(_phoneNumber).to.be.null;
+        	});
+    	});
+  	});
 });//End of phone Number API Resource
 
 
 describe('User data API resource', function(){
 
+	before(function() {
+    	return runServer(TEST_DATABASE_URL, 8081);
+  	});
+
 	beforeEach(function() {
   		return seedUserData();
+  	});
+
+  	 	afterEach(function() {
+  		return tearDownDb();
+  	});
+
+  	 	after(function() {
+    	return closeServer();
   	});
 
 	describe('GET endpoint', function() {
@@ -317,7 +330,8 @@ describe('User data API resource', function(){
     	});
 	});
 
-});//End of phone number API resource
+});
+//End of phone number API resource
 
 
 
