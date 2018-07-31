@@ -97,21 +97,30 @@ app.put("/list/:id", (req, res) => {
   }
 
   let newComment = "";
-  const updateableFields = ['comments'];
+  let creator = "";
+  const updateableFields = ['comments','creator'];
+
+  //Need comment, username and user id content / creator
 
   //console.log("Adding comment to " +req.params.id);
 
   updateableFields.forEach(field => {
     if(field in req.body){
-      newComment = req.body[field];
-      console.log(newComment);
+      if(field === 'comments')
+      {
+        newComment = req.body[field];
+      }
+      else if(field === 'creator')
+      {
+        creator = req.body[field];
+      }
     }
   });
-  console.log(newComment); 
-  console.log(res);
-  PhoneNumber.findByIdAndUpdate(req.params.id, {$push : {comments: newComment}})//,{$push: {comments:"This is a comment pushed via mongo shell"}} )//req.params.id,{ $push: {comments:"N"}})
+  console.log("New comment is "+ newComment +"And creator is " +creator); 
+  //console.log(res);
+  PhoneNumber.findByIdAndUpdate(req.params.id, {$push : {"comments": newComment  }})//{"content":"Comment","created":"JVEGA"}}})//,creator: }})//,{$push: {comments:"This is a comment pushed via mongo shell"}} )//req.params.id,{ $push: {comments:"N"}})
   .then(phoneNumber => res.status(204).end())
-  .catch(err => res.status(500).json({ message: 'Internal server error!' })); 
+  .catch(err => res.status(500).json({ message: err })); 
 })
 
 app.delete('/list/:id', (req, res) => {
