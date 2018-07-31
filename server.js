@@ -34,7 +34,7 @@ app.get("/list", (req, res) => {
    // .populate("comment")//***Instead of pushing itself , push id of comment into array
     .exec() 
     .then(PhoneNumber => {
-      console.log(PhoneNumber);
+      //console.log(PhoneNumber);
       return res.json(PhoneNumber);
     })
     .catch(err => {
@@ -49,7 +49,7 @@ app.get("/list/:id", (req, res) => {
     .findById(req.params.id)
     .exec()
     .then(listing => {
-      console.log(listing);
+      //console.log(listing);
       return res.json(listing);
     })
     .catch(err => {
@@ -118,7 +118,9 @@ app.put("/list/:id", (req, res) => {
   });
   console.log("New comment is "+ newComment +"And creator is " +creator); 
   //console.log(res);
-  PhoneNumber.findByIdAndUpdate(req.params.id, {$push : {"comments": newComment  }})//{"content":"Comment","created":"JVEGA"}}})//,creator: }})//,{$push: {comments:"This is a comment pushed via mongo shell"}} )//req.params.id,{ $push: {comments:"N"}})
+  console.log(newComment);
+
+  PhoneNumber.findByIdAndUpdate(req.params.id, {$push : {"comments": {"content":`${newComment}`,"creator":`${creator}`}  }})//{"content":"Comment","created":"JVEGA"}}})//,creator: }})//,{$push: {comments:"This is a comment pushed via mongo shell"}} )//req.params.id,{ $push: {comments:"N"}})
   .then(phoneNumber => res.status(204).end())
   .catch(err => res.status(500).json({ message: err })); 
 })
