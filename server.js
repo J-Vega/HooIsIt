@@ -1,4 +1,5 @@
 const express = require('express');
+var cors = require('cors')
 const morgan = require('morgan');
 
 const mongoose = require('mongoose');
@@ -15,6 +16,25 @@ const {UserProfile,PhoneNumber,UserComment} = require('./models');
 //const { PhoneNumber } = require('./models');
 
 var ObjectId = require('mongodb').ObjectId;
+app.use(cors());
+app.use(function (req, res, next) {
+
+    // Website you wish to allow to connect
+    res.setHeader('Access-Control-Allow-Origin', '*');
+
+    // Request methods you wish to allow
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE');
+
+    // Request headers you wish to allow
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+    // Set to true if you need the website to include cookies in the requests sent
+    // to the API (e.g. in case you use sessions)
+    res.setHeader('Access-Control-Allow-Credentials', true);
+
+    // Pass to next layer of middleware
+    next();
+});
 
 app.get("/signup", (req, res) => {
   res.sendFile(__dirname + "/public/signup.html");
@@ -25,7 +45,7 @@ app.get("/seeddata", (req, res) => {
 });
 
 //List all phone numbers
-app.get("/list", (req, res) => {
+app.get("/list", cors(), (req, res) => {
   console.log("Finding all phone numbers");
   //console.log("list");
   PhoneNumber
@@ -44,9 +64,11 @@ app.get("/list", (req, res) => {
 });
 
 //List a specific phone number by id
-app.get("/list/:id", (req, res) => {
+
+app.get("/list/:id", cors(), (req, res) => {
+  console.log("searchNumber function called");
   PhoneNumber
-    .findById(req.params.id)
+    .findById(id)//(req.params.id)
     .exec()
     .then(listing => {
       //console.log(listing);
