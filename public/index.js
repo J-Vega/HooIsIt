@@ -7,8 +7,9 @@ function watchSubmit(){
 		console.log('clicked');
 		event.preventDefault();
 		const numberQuery = $(event.currentTarget).find('.js-query').val();
-		console.log("searching for " + numberQuery);
-		searchPhoneNumber(numberQuery,displaySearchData);
+		console.log("searching forrr " + numberQuery);
+		window.location.href = "https://stormy-tundra-36765.herokuapp.com/search/"+numberQuery;
+		//searchPhoneNumber(numberQuery,displaySearchData);
 		//getDataFromListing(displaySearchData);
 	});
 }
@@ -42,7 +43,7 @@ function displaySearchData(data){
 	else{
 		console.log("There's data!");
 	}
-	//console.log(data);
+	console.log(data);
 	debug = data;
 	const results = 
 		data.map((item,index) => renderResults(item,index));
@@ -55,9 +56,13 @@ function renderResults(result,index){
 	//console.log(index);
 	return `<p class="placeholder">${result["phoneNumber"]}<p><p>${result["flags"]}</p><p>${result["description"]}<p><p>${result["comments"]}<p>`;
 }
-console.log("Hello world");
+
 
 //$('.js-results').html("test");
 //getDataFromListing(displaySearchData);
 
-watchSubmit();
+//This calls the function, while using jQuery $ uses an event listener
+//watchSubmit();
+$(watchSubmit);
+
+
