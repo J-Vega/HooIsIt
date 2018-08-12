@@ -16,7 +16,7 @@ function watchSubmit(){
 function searchPhoneNumber(searchTerm,callback){
 	let query = {
 		//url: "https://stormy-tundra-36765.herokuapp.com/search/"+searchTerm,
-		url: "localhost:8080/search/"+searchTerm,
+		url: "https://stormy-tundra-36765.herokuapp.com/search/"+searchTerm,
 		dataType: 'json'
 		//success: callback
 	}
