@@ -1,12 +1,17 @@
 const express = require('express');
-var cors = require('cors')
+const cors = require('cors');
 const morgan = require('morgan');
+// const jsdom = require("jsdom");
+// const { JSDOM } = jsdom;
+// const {window} = new JSDOM();
+// const {document} = (new JSDOM('')).window;
+// global.document = document;
 
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
-
+ 
 const app = express();
-
+//var $ = require('jquery')(window);
 app.use(morgan("common"));
 app.use(express.static('public'));
 app.use(express.json());
@@ -16,6 +21,9 @@ const {UserProfile,PhoneNumber,UserComment} = require('./models');
 //const { PhoneNumber } = require('./models');
 
 var ObjectId = require('mongodb').ObjectId;
+
+// const dom = new JSDOM(`<!DOCTYPE html><p>Hello world</p>`);
+
 app.use(cors());
 app.use(function (req, res, next) {
 
@@ -47,7 +55,7 @@ app.get("/seeddata", (req, res) => {
 //List all phone numbers
 app.get("/list", cors(), (req, res) => {
   console.log("Finding all phone numbers");
-  //console.log("list");
+  console.log("list");
   PhoneNumber
     .find()
 
@@ -63,12 +71,28 @@ app.get("/list", cors(), (req, res) => {
     });
 });
 
+//Find specific phone number
+app.get("/search/:phoneNumber", cors(), (req, res) => {
+  console.log("searchNumber function called");
+  PhoneNumber
+    .findOne({phoneNumber:req.params.phoneNumber})
+    .exec()
+    .then(listing => {
+      //console.log(listing);
+      return res.json(listing);
+    })
+    .catch(err => {
+      console.log(err);
+      return res.status(500).json({ message: 'Internal server error' });
+    });
+});
+
 //List a specific phone number by id
 
 app.get("/list/:id", cors(), (req, res) => {
   console.log("searchNumber function called");
   PhoneNumber
-    .findById(id)//(req.params.id)
+    .findById(req.params.id)
     .exec()
     .then(listing => {
       //console.log(listing);
@@ -292,6 +316,47 @@ if (require.main === module) {
 
   runServer(DATABASE_URL).catch(err => console.error(err));
  };
+
+
+//--------------------jquery-----------------------//
+
+
+// function watchSubmit(){
+//   $('.js-search-form').submit(event => 
+//   {
+//     console.log('clicked');
+//     event.preventDefault();
+//     const inquiry = $(event.currentTarget).find('.js-query').val();
+//     console.log("searching for " + inquiry);
+//     getDataFromListing(displaySearchData);
+//   });
+// }
+
+// function getDataFromListing(input,callback){
+  
+//   let url = "localhost:8080/list"
+  
+//   input = url;
+
+//   $.getJSON(input,callback);
+// };
+
+// function displaySearchData(data){
+//   console.log("displaying search data");
+//   const results = data.map((item,index) => renderResults(item,index));
+//   $('.js-results').html(results);
+// }
+
+// function renderResults(results){
+//   return `<p>${results}<p>`;
+// }
+// console.log("Hello world");
+ 
+// $('.js-results').html("test");
+// getDataFromListing(displaySearchData);
+
+// watchSubmit();
+
 
 module.exports = { app, runServer, closeServer };
 
