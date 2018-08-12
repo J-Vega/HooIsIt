@@ -73,7 +73,10 @@ app.get("/list", cors(), (req, res) => {
 
 //Find specific phone number
 app.get("/search/:phoneNumber", cors(), (req, res) => {
-  console.log("searchNumber function called");
+
+  res.sendFile(__dirname + "/public/listing.html");
+  
+  console.log("searching for " +req.params.phoneNumber);
   PhoneNumber
     .findOne({phoneNumber:req.params.phoneNumber})
     .exec()
@@ -356,6 +359,7 @@ if (require.main === module) {
 // getDataFromListing(displaySearchData);
 
 // watchSubmit();
+
 
 
 module.exports = { app, runServer, closeServer };
