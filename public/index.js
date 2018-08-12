@@ -53,7 +53,7 @@ function displaySearchData(data){
 function renderResults(result,index){
 	//console.log(result);
 	//console.log(index);
-	return `<p>${result["phoneNumber"]}<p><p>${result["flags"]}</p><p>${result["description"]}<p><p>${result["comments"]}<p>`;
+	return `<p class="placeholder">${result["phoneNumber"]}<p><p>${result["flags"]}</p><p>${result["description"]}<p><p>${result["comments"]}<p>`;
 }
 console.log("Hello world");
 
