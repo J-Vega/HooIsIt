@@ -1,5 +1,3 @@
-let debug;
-
 
 function watchSubmit(){
 	$('.js-search-form').submit(event => 
@@ -7,7 +5,7 @@ function watchSubmit(){
 		console.log('clicked');
 		event.preventDefault();
 		const numberQuery = $(event.currentTarget).find('.js-query').val();
-		console.log("searching forrr " + numberQuery);
+		console.log("searching for " + numberQuery);
 		//window.location.href = "https://stormy-tundra-36765.herokuapp.com/search/"+numberQuery;
 		searchPhoneNumber(numberQuery,displaySearchData);
 		//getDataFromListing(displaySearchData);
@@ -15,13 +13,14 @@ function watchSubmit(){
 }
 
 function searchPhoneNumber(searchTerm,callback){
+	
 	let query = {
-		//url: "https://stormy-tundra-36765.herokuapp.com/search/"+searchTerm,
-		url: "https://stormy-tundra-36765.herokuapp.com/search/"+searchTerm,
+		//url: "https://stormy-tundra-36765.herokuapp.com/list",
+		url: `https://stormy-tundra-36765.herokuapp.com/search/${searchTerm}`,
 		dataType: 'json'
 		//success: callback
 	}
-	
+	console.log(query.url);
 	$.getJSON(query,callback);
 }
 
@@ -43,18 +42,30 @@ function displaySearchData(data){
 	else{
 		console.log("There's data!");
 	}
-	console.log(data);
-	debug = data;
-	const results = 
-		data[0].map((item,index) => renderResults(item,index));
-	console.log(`${results}`);
+	//console.log(data.phoneNumber);
+
+	//***********    Concern -- DID NOT use data.map since the listing is an object and not an array
+	//const results = data.phoneNumber.map((item,index) => renderResults(item,index));
+	//console.log(`${results}`);
+	const results = renderResults(data);
 	$('.js-results').html(results);
 }
 
-function renderResults(result,index){
-	//console.log(result);
+function renderResults(result){
+	console.log(result["phoneNumber"]);
+	console.log(result["flags"]);
+	console.log(result["description"]);
+	console.log(result["comments"]);
+	//Converts all comments and comment info into one large string of html content to add onto final results.
+	let commentList = "";//result.comments[0].content;
+	console.log(commentList);
+	for(i = 0; i < result["comments"].length; i++){
+		console.log(result.comments[i].content);
+		commentList += `<p class ="comment">'${result.comments[i].content}'</p><p class ="comment">Posted by: ${result.comments[i].creator} on ${result.comments[i].created}</p>`;
+	}
+	console.log(commentList);
 	//console.log(index);
-	return `<p class="placeholder">${result["phoneNumber"]}<p><p>${result["flags"]}</p><p>${result["description"]}<p><p>${result["comments"]}<p>`;
+	return `<p>Showing results for - ${result["phoneNumber"]}</p><p>This number has been flagged ${result["flags"]} time(s). </p><h3>Comments (${result["comments"].length}): </h3><p>${result["description"]}</p>${commentList}`// <p>${result["comments"]}<p>;
 }
 
 
