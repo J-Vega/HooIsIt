@@ -8,8 +8,8 @@ function watchSubmit(){
 		event.preventDefault();
 		const numberQuery = $(event.currentTarget).find('.js-query').val();
 		console.log("searching forrr " + numberQuery);
-		window.location.href = "https://stormy-tundra-36765.herokuapp.com/search/"+numberQuery;
-		//searchPhoneNumber(numberQuery,displaySearchData);
+		//window.location.href = "https://stormy-tundra-36765.herokuapp.com/search/"+numberQuery;
+		searchPhoneNumber(numberQuery,displaySearchData);
 		//getDataFromListing(displaySearchData);
 	});
 }
@@ -46,8 +46,8 @@ function displaySearchData(data){
 	console.log(data);
 	debug = data;
 	const results = 
-		data.map((item,index) => renderResults(item,index));
-	//console.log(`${results}`);
+		data[0].map((item,index) => renderResults(item,index));
+	console.log(`${results}`);
 	$('.js-results').html(results);
 }
 
