@@ -74,14 +74,14 @@ app.get("/list", cors(), (req, res) => {
 //Find specific phone number
 app.get("/search/:phoneNumber", cors(), (req, res) => {
 
-  res.sendFile(__dirname + "/public/listing.html");
+  //res.sendFile(__dirname + "/public/listing.html");
   
-  console.log("searching for " +req.params.phoneNumber);
+  console.log("searching forrrrrrr " +req.params.phoneNumber);
   PhoneNumber
     .findOne({phoneNumber:req.params.phoneNumber})
     .exec()
     .then(listing => {
-      //console.log(listing);
+      console.log(req.params.phoneNumber);
       return res.json(listing);
     })
     .catch(err => {
@@ -122,7 +122,6 @@ app.post("/list", (req, res) => {
       phoneNumber: req.body.phoneNumber,
       flags: 1,//Always start with 1
       description: req.body.description,
-      delete: 3,
       comments: req.body.comments
       //created: Date.now,
       //comments: "new comment"
