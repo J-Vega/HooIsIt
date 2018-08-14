@@ -74,7 +74,7 @@ app.get("/list", cors(), (req, res) => {
 //Find specific phone number
 app.get("/search/:phoneNumber", cors(), (req, res) => {
 
-  //res.sendFile(__dirname + "/public/listing.html");
+  res.sendFile(__dirname + "/public/listing.html");
   
   console.log("searching forrrrrrr " +req.params.phoneNumber);
   PhoneNumber
@@ -88,6 +88,12 @@ app.get("/search/:phoneNumber", cors(), (req, res) => {
       console.log(err);
       return res.status(500).json({ message: 'Internal server error' });
     });
+});
+
+app.get("/listing/:phoneNumber", cors(), (req, res) => {
+
+  res.sendFile(__dirname + "/public/listing.html");
+  
 });
 
 //List a specific phone number by id
