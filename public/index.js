@@ -2,7 +2,6 @@
 function watchSubmit(){
 	$('.js-search-form').submit(event => 
 	{
-		console.log('clicked');
 		event.preventDefault();
 		const numberQuery = $(event.currentTarget).find('.js-query').val();
 		console.log("searching for " + numberQuery);
@@ -10,6 +9,19 @@ function watchSubmit(){
 		searchPhoneNumber(numberQuery,displaySearchData);
 		//getDataFromListing(displaySearchData);
 	});
+
+	$('.js-submit-form').submit(event => 
+	{
+		event.preventDefault();
+		const submitQuery = $(event.currentTarget).find('.js-query').val();
+		const submitDescription = $(event.currentTarget).find('.js-query-submit').val();
+		console.log("Submitting " + submitQuery);
+		console.log("Description: " + submitDescription);
+		
+		addPhoneNumber(submitQuery,submitDescription);
+		//Add phone number to database
+
+	});	
 }
 
 function searchPhoneNumber(searchTerm,callback){
@@ -22,6 +34,46 @@ function searchPhoneNumber(searchTerm,callback){
 	}
 	console.log(query.url);
 	$.getJSON(query,callback);
+}
+
+function addPhoneNumber(number,description){
+	
+	// let query = {
+	// 	//url: "https://stormy-tundra-36765.herokuapp.com/list",
+	// 	url: `https://stormy-tundra-36765.herokuapp.com/list/`,
+	// 	method: "POST",
+	// 	phoneNumber: number,
+	// 	description: description,
+	// 	dataType: 'json'
+	// 	//success: callback
+	// }
+	
+	// $.post(`https://stormy-tundra-36765.herokuapp.com/list/`,
+	// {
+	// 	"phoneNumber":"7777777773",
+	// 	"description":"IRS Scammerss!"
+	// },
+		
+	// function(data, status){
+	// 	alert("Data: " + data + "\nStatus: " + status);
+	// });
+	// console.log("Submitted phone number to db");
+
+	$.ajax({
+    url: 'https://stormy-tundra-36765.herokuapp.com/list',
+    dataType: 'json',
+    type: 'post',
+    contentType: 'application/json',
+    data: JSON.stringify( { "phoneNumber": "9999991111", "description": "IRS Scam!"} ),
+    processData: false,
+    	success: function( data, textStatus, jQxhr ){
+        console.log("Success!");
+        //$('#response pre').html( JSON.stringify( data ) );
+    	},
+    	error: function( jqXhr, textStatus, errorThrown ){
+        console.log( errorThrown );
+    	}
+	});
 }
 
 //Get function to list all phone numbers 
