@@ -14,17 +14,26 @@
 	</head>
 	
 	<body>
+		<nav><form method="get"><input class="js-navSearch" type="search" required placeholder="###-###-####"><input type="submit" class="js-navButton" name="Search"></form></nav>
 		<main>
-			<h3>
-				Results
-			</h3>
+			<h3>Results</h3>
 		
-          			<h4>Listing for <p class = "js-phone-number">000-000-0000</p></h4>
-          			<p>Got a call from <p class = "js-phone-number">000-000-0000</p>? Help others by sharing your experience!</p>
+          		<h4>Listing for <p class = "js-phone-number" id ="js-phone-number-1">000-000-0000</p></h4>
+          		<p>Got a call from <p class = "js-phone-number" id ="js-phone-number-2">000-000-0000</p>? Help others by sharing your experience!</p>
+
+
 
 			<div class = "js-results"></div>
+			<!-- Hide comment form at first, display if there are already reports of the phone number being searched -->
+		<div class="addCommentForm">
+			<form method="put" class="js-add-comment-form">
+				<input class="js-add-comment-name" type="search" required placeholder="Your name?">
+				<input class="js-add-comment-content" type="search" required placeholder="What happened?">
+				<input type="submit" class="js-add-comment-button" name="Submit"></form></div>	
 		</main>
 		<script src="../server.js"></script>
+		
 		<script src="index.js"></script>
+		<script src="listing.js"></script>
 	</body>
 </html>
