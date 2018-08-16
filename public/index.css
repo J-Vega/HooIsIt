@@ -1,7 +1,16 @@
 html{
-	background-color: yellow;
+	background-color: #C5E8EE;
+}
+
+.title{
+	text-align: center;
 }
 
 .placeholder{
 	color: red;
+}
+
+/* Comment of a phone number, listed via renderresults function in index.js */
+.comment{
+
 }
