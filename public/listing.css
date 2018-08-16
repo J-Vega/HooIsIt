@@ -1,7 +1,21 @@
 p{
-	color: red;
+	color: black;
 }
 
 html{
-	background-color: grey;
+	background-color: lightgrey;
+}
+
+/*The div containing comment and author*/
+.commentBlock{
+	
+}
+
+.comment{
+	font-style: italic;
+}
+
+/*The person who posted the specific comment under that phone number*/
+.commentCreator{
+
 }
