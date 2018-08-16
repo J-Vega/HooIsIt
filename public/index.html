@@ -10,16 +10,16 @@
     	</script>
     	<link href="https://fonts.googleapis.com/css?family=Kanit" rel="stylesheet">
     	<link href="index.css" rel="stylesheet" type="text/css" />
-    	<link rel="stylesheet" href="float-grid.css"/>
+    	<!-- <link rel="stylesheet" href="float-grid.css"/> -->
 	</head>
 	
 	<body>
 		<main>
-			<p>
+			<h1 class ="title">
 				TeleTale
-			</p>
+			</h1>
 			<form action="#" class="js-search-form">
-				<label for="form-budget">
+				<label for="search-form">
           			Search Phone Number
         		</label>
         		<input type="tel" min="1" class ="js-query" placeholder="111-111-1111" required>
@@ -27,6 +27,24 @@
         			<p id="searchButtonText">Search</p>
       			</button>
 			</form>
+
+			<br><br><br>
+
+			<form action="#" class="js-submit-form">
+				<label for="submit-form"> 
+          			Add Phone Number
+        		</label>
+				<input type="tel" min="2000000000" class ="js-number-submit" placeholder="311-111-1111" required>
+
+				<label for="submit-form">
+          			Describe what happened.
+        		</label>
+        		<input class ="js-query-submit" placeholder="Fake IRS reps" required>
+				<button type ="submit" id= "submitButton" class ="submitButton">
+        			<p id="submitButtonText">Report Number</p>
+      			</button>
+			</form>
+
 
 			<div class = "js-results"></div>
 		</main>
