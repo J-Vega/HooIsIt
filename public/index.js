@@ -13,14 +13,13 @@ function watchSubmit(){
 	$('.js-submit-form').submit(event => 
 	{
 		event.preventDefault();
-		const submitQuery = $(event.currentTarget).find('.js-query').val();
+		const submitQuery = $(event.currentTarget).find('.js-number-submit').val();
 		const submitDescription = $(event.currentTarget).find('.js-query-submit').val();
 		console.log("Submitting " + submitQuery);
 		console.log("Description: " + submitDescription);
 		
 		addPhoneNumber(submitQuery,submitDescription);
 		//Add phone number to database
-
 	});	
 }
 
@@ -37,7 +36,7 @@ function searchPhoneNumber(searchTerm,callback){
 }
 
 function addPhoneNumber(number,description){
-	
+	console.log(`Adding ${number} with this desciprtion - ${description}.`);
 	// let query = {
 	// 	//url: "https://stormy-tundra-36765.herokuapp.com/list",
 	// 	url: `https://stormy-tundra-36765.herokuapp.com/list/`,
@@ -64,7 +63,7 @@ function addPhoneNumber(number,description){
     dataType: 'json',
     type: 'post',
     contentType: 'application/json',
-    data: JSON.stringify( { "phoneNumber": "9999991111", "description": "IRS Scam!"} ),
+    data: JSON.stringify( { "phoneNumber": `${number}`, "description": `${description}`} ),
     processData: false,
     	success: function( data, textStatus, jQxhr ){
         console.log("Success!");
@@ -92,15 +91,13 @@ function displaySearchData(data){
 		console.log("No data!");
 	}
 	else{
+		//***********    Concern -- DID NOT use data.map since the listing is an object and not an array
+		//const results = data.phoneNumber.map((item,index) => renderResults(item,index));
+		//console.log(`${results}`);
 		console.log("There's data!");
+		const results = renderResults(data);
+		$('.js-results').html(results);
 	}
-	//console.log(data.phoneNumber);
-
-	//***********    Concern -- DID NOT use data.map since the listing is an object and not an array
-	//const results = data.phoneNumber.map((item,index) => renderResults(item,index));
-	//console.log(`${results}`);
-	const results = renderResults(data);
-	$('.js-results').html(results);
 }
 
 function renderResults(result){
@@ -113,7 +110,7 @@ function renderResults(result){
 	console.log(commentList);
 	for(i = 0; i < result["comments"].length; i++){
 		console.log(result.comments[i].content);
-		commentList += `<p class ="comment">'${result.comments[i].content}'</p><p class ="comment">Posted by: ${result.comments[i].creator} on ${result.comments[i].created}</p>`;
+		commentList += `<div class ="commentBlock"><p class ="comment">'${result.comments[i].content}'</p><p class ="comment">Posted by: ${result.comments[i].creator} on ${result.comments[i].created}</p></div>`;
 	}
 	console.log(commentList);
 	//console.log(index);
