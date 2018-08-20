@@ -3,7 +3,12 @@
 //	and is used to do a GET request of whatever phone number is being searched / listed
 //js-phone-number
 
-let phoneNumber = 8214832444;
+//html5 
+//.com/search/23423423235
+
+//.com/search/?var=334445555
+
+let phoneNumber = window.location.search.slice(1); 
 let phoneId = "";
 
 function watchSubmit(){
@@ -22,10 +27,10 @@ function watchSubmit(){
 }
 
 function getNumberData(number, callback){
-	console.log("Searching...");
-
-	document.getElementById("js-phone-number-1").innerHTML = phoneNumber;
-	document.getElementById("js-phone-number-2").innerHTML = phoneNumber;
+	
+	//let numberFromUrl = number.slice(1);
+	//console.log(numberFromUrl);
+	document.getElementById("js-phone-number-1").innerHTML = number;
 	console.log(`Searching for phone number ${number}`);
 	
 	let query = {
@@ -60,20 +65,25 @@ function renderResults(result){
 	console.log(result);
 	let commentList = "";//result.comments[0].content;
 	for(i = 0; i < result["comments"].length; i++){
-		console.log(result.comments[i].content);
+		// console.log(result.comments[i].content);
 		commentList += `<p class ="comment">'${result.comments[i].content}'</p><p class ="commentCreator">Posted by: ${result.comments[i].creator} on ${result.comments[i].created}</p>`;
 	}
-	console.log(commentList);
+	// console.log(commentList);
 	//console.log(index);
 	savePostId(result["_id"]);
-	return `<h2>Showing results for - ${result["phoneNumber"]}</h2>
-	<h3>Type of call: ${result["description"]}</h3>
-	<h3>This number has been flagged ${result["flags"]} time(s). </h3>
-	<h4>Comments (${result["comments"].length}): </h4><p>${commentList}</p>`// <p>${result["comments"]}<p>;
-}
+
+	return `	
+				<h3>Previous reports for - ${result["phoneNumber"]}</h3>
+				<h3>Type of call: ${result["description"]}</h3>
+				
+				<h4>Comments (${result["comments"].length}): </h4><p>${commentList}</p>
+			`
+			// Most likely going to get rid of 'flags'
+			// <h3>This number has been flagged ${result["flags"]} time(s). </h3>
+	}
 
 function savePostId(id){
-	console.log(id);
+	// console.log(id);
 	phoneId = id;
 }
 
@@ -112,8 +122,8 @@ function addComment(author,comment){
     });
 }
 //document.getElementById("js-phone-number").innerHTML = phoneNumber;
-console.log("Page loaded - called from listing.js script.")
-watchSubmit();
+console.log(window.location.search);
+$(watchSubmit);
 hideCommentForm();
 getNumberData(phoneNumber, displaySearchData);
 
