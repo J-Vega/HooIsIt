@@ -96,8 +96,7 @@ app.get("/listing/:phoneNumber", cors(), (req, res) => {
   
 });
 
-//List a specific phone number by id
-
+//Get a specific phone number by id
 app.get("/list/:id", cors(), (req, res) => {
   console.log("searchNumber function called");
   PhoneNumber
@@ -113,6 +112,7 @@ app.get("/list/:id", cors(), (req, res) => {
     });
 });
 
+//Get all phone numbers
 app.post("/list", (req, res) => {
   const requiredFields = ['phoneNumber', 'description'];
   for (let i = 0; i < requiredFields.length; i++) {
@@ -139,6 +139,7 @@ app.post("/list", (req, res) => {
     });
 });
 
+//Add a new comment to phone number.
 app.put("/list/:id", (req, res) => {
   console.log(req.params.id + " " + req.body._id);
   // ensure that the id in the request path and the one in request body match
@@ -221,7 +222,7 @@ app.get("/users/:id", (req, res) => {
 
 //Creating a new user
 app.post("/users", (req, res) => {
-  const requiredFields = ['userName', 'firstName', 'lastName', 'email'];
+  const requiredFields = ['userName', 'firstName', 'lastName'];
   for (let i = 0; i < requiredFields.length; i++) {
     const field = requiredFields[i];
     if (!(field in req.body)) {
@@ -234,10 +235,7 @@ app.post("/users", (req, res) => {
     .create({
       userName: req.body.userName,
       firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      email: req.body.email
-      //created: Date.now,
-      //userComments: []
+      lastName: req.body.lastName
     })
     .then(listing => res.status(201).json(listing))
     .catch(err => {
