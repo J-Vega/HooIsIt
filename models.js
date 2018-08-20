@@ -1,15 +1,16 @@
-
-
 'use strict';
 
 const mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+
+const bcrypt = require('bcryptjs');
 
 const userProfileSchema = mongoose.Schema({
 	
   	userName: {type: String, required: true, unique: true},
   	firstName: {type: String, required: true},
   	lastName: {type: String, required: true},
+    password: {type: String, required: true},
   	created: {type: Date, default: Date.now},
     userComments: [{type:Schema.Types.ObjectId, ref: 'UserComment'}]
 },{collection:"userdata"});
@@ -60,6 +61,14 @@ userCommentSchema.methods.serialize = function(){
     creator: this.displayName,
     created: this.created
   };
+};
+
+UserSchema.methods.validatePassword = function(password) {
+  return bcrypt.compare(password, this.password);
+};
+
+UserSchema.statics.hashPassword = function(password) {
+  return bcrypt.hash(password, 10);
 };
 
 const UserProfile = mongoose.model('UserProfile', userProfileSchema);
