@@ -6,6 +6,9 @@ const morgan = require('morgan');
 // const {window} = new JSDOM();
 // const {document} = (new JSDOM('')).window;
 // global.document = document;
+const bodyParser = require('body-parser');
+
+const jsonParser = bodyParser.json();
 
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
@@ -221,26 +224,239 @@ app.get("/users/:id", (req, res) => {
 });
 
 //Creating a new user
-app.post("/users", (req, res) => {
-  const requiredFields = ['userName', 'firstName', 'lastName'];
-  for (let i = 0; i < requiredFields.length; i++) {
-    const field = requiredFields[i];
-    if (!(field in req.body)) {
-      const message = `Missing \`${field}\` in request body`;
-      console.error(message);
-      return res.status(400).send(message);
-    }
+// app.post("/users", jsonParser, (req, res) => {
+//   const requiredFields = ['userName', 'firstName', 'lastName', 'password'];
+//   for (let i = 0; i < requiredFields.length; i++) {
+//     const field = requiredFields[i];
+//     //If a field is missing, send 422 validation error
+//     if (!(field in req.body)) {
+//       const message = `Missing \`${field}\` in request body`;
+//       console.error(message);
+//       return res.status(422).send(message);
+//     }
+//   }
+
+//   const stringFields = ['userName', 'firstName', 'lastName', 'password'];
+//   const nonStringField = stringFields.find(
+//     field => field in req.body && typeof req.body[field] !== 'string'
+//   );
+
+//   if (nonStringField) {
+//     return res.status(422).json({
+//       code: 422,
+//       reason: 'ValidationError',
+//       message: 'Incorrect field type: expected string',
+//       location: nonStringField
+//     });
+//   }
+
+//   const explicityTrimmedFields = ['userName', 'password'];
+//   const nonTrimmedField = explicityTrimmedFields.find(
+//     field => req.body[field].trim() !== req.body[field]
+//   );
+
+//   if (nonTrimmedField) {
+//     return res.status(422).json({
+//       code: 422,
+//       reason: 'ValidationError',
+//       message: 'Cannot start or end with a space',
+//       location: nonTrimmedField
+//     });
+//   }
+
+//   const sizedFields = {
+
+//     userName: {
+//       min: 6
+//     },
+//     password:{
+//       min: 8,
+//       max: 24
+//     }
+
+//   };
+
+//   const tooSmallField = Object.keys(sizedFields).find(
+//     field =>
+//       'min' in sizedFields[field] &&
+//             req.body[field].trim().length < sizedFields[field].min
+//   );
+//   const tooLargeField = Object.keys(sizedFields).find(
+//     field =>
+//       'max' in sizedFields[field] &&
+//             req.body[field].trim().length > sizedFields[field].max
+//   );
+
+//   if (tooSmallField || tooLargeField) {
+//     return res.status(422).json({
+//       code: 422,
+//       reason: 'ValidationError',
+//       message: tooSmallField
+//         ? `Must be at least ${sizedFields[tooSmallField]
+//           .min} characters long`
+//         : `Must be at most ${sizedFields[tooLargeField]
+//           .max} characters long`,
+//       location: tooSmallField || tooLargeField
+//     });
+//   }
+
+//   let {userName, password, firstName = '', lastName = ''} = req.body;
+//   // Username and password come in pre-trimmed, otherwise we throw an error
+//   // before this
+//   firstName = firstName.trim();
+//   lastName = lastName.trim();
+
+//   return UserProfile.find({userName})
+//   .count()
+//   .then(count => {
+//     if(count > 0){
+//     return Promise.reject({
+//       code: 422,
+//       reason: 'ValidationError',
+//       message: 'Username already taken',
+//       location: 'username'
+//     });
+//   }
+//   return UserProfile.hashPassword(password);
+//   })
+//   .then(hash => {
+//     UserProfile.create({
+//       userName: req.body.userName,
+//       firstName: req.body.firstName,
+//       password: hash,
+//       lastName: req.body.lastName
+//     });
+//   })
+//     .then(listing => res.status(201).json(listing)
+//     .catch(err => {
+//       console.error(err);
+//       res.status(500).json({message: 'Failed creating new user'});
+//     }))
+// });
+
+app.post('/users/', jsonParser, (req, res) => {
+  const requiredFields = ['userName', 'password'];
+  const missingField = requiredFields.find(field => !(field in req.body));
+
+  if (missingField) {
+    return res.status(422).json({
+      code: 422,
+      reason: 'ValidationError',
+      message: 'Missing field',
+      location: missingField
+    });
   }
-  UserProfile
-    .create({
-      userName: req.body.userName,
-      firstName: req.body.firstName,
-      lastName: req.body.lastName
+
+  const stringFields = ['userName', 'password', 'firstName', 'lastName'];
+  const nonStringField = stringFields.find(
+    field => field in req.body && typeof req.body[field] !== 'string'
+  );
+
+  if (nonStringField) {
+    return res.status(422).json({
+      code: 422,
+      reason: 'ValidationError',
+      message: 'Incorrect field type: expected string',
+      location: nonStringField
+    });
+  }
+
+  // If the username and password aren't trimmed we give an error.  Users might
+  // expect that these will work without trimming (i.e. they want the password
+  // "foobar ", including the space at the end).  We need to reject such values
+  // explicitly so the users know what's happening, rather than silently
+  // trimming them and expecting the user to understand.
+  // We'll silently trim the other fields, because they aren't credentials used
+  // to log in, so it's less of a problem.
+  const explicityTrimmedFields = ['userName', 'password'];
+  const nonTrimmedField = explicityTrimmedFields.find(
+    field => req.body[field].trim() !== req.body[field]
+  );
+
+  if (nonTrimmedField) {
+    return res.status(422).json({
+      code: 422,
+      reason: 'ValidationError',
+      message: 'Cannot start or end with whitespace',
+      location: nonTrimmedField
+    });
+  }
+
+  const sizedFields = {
+    userName: {
+      min: 1
+    },
+    password: {
+      min: 8,
+      // bcrypt truncates after 72 characters, so let's not give the illusion
+      // of security by storing extra (unused) info
+      max: 72
+    }
+  };
+  const tooSmallField = Object.keys(sizedFields).find(
+    field =>
+      'min' in sizedFields[field] &&
+            req.body[field].trim().length < sizedFields[field].min
+  );
+  const tooLargeField = Object.keys(sizedFields).find(
+    field =>
+      'max' in sizedFields[field] &&
+            req.body[field].trim().length > sizedFields[field].max
+  );
+
+  if (tooSmallField || tooLargeField) {
+    return res.status(422).json({
+      code: 422,
+      reason: 'ValidationError',
+      message: tooSmallField
+        ? `Must be at least ${sizedFields[tooSmallField]
+          .min} characters long`
+        : `Must be at most ${sizedFields[tooLargeField]
+          .max} characters long`,
+      location: tooSmallField || tooLargeField
+    });
+  }
+
+  let {userName, password, firstName = '', lastName = ''} = req.body;
+  // Username and password come in pre-trimmed, otherwise we throw an error
+  // before this
+  firstName = firstName.trim();
+  lastName = lastName.trim();
+
+  return UserProfile.find({userName})
+    .count()
+    .then(count => {
+      if (count > 0) {
+        // There is an existing user with the same username
+        return Promise.reject({
+          code: 422,
+          reason: 'ValidationError',
+          message: 'Username already taken',
+          location: 'username'
+        });
+      }
+      // If there is no existing user, hash the password
+      return UserProfile.hashPassword(password);
     })
-    .then(listing => res.status(201).json(listing))
+    .then(hash => {
+      return UserProfile.create({
+        userName,
+        password: hash,
+        firstName,
+        lastName
+      });
+    })
+    .then(user => {
+      return res.status(201).json(user.serialize());
+    })
     .catch(err => {
-      console.error(err);
-      res.status(500).json({message: 'Failed creating new user'});
+      // Forward validation errors on to the client, otherwise give a 500
+      // error because something unexpected has happened
+      if (err.reason === 'ValidationError') {
+        return res.status(err.code).json(err);
+      }
+      console.log(err);
+      res.status(500).json({code: 500, message: 'Internal server error'});
     });
 });
 
@@ -258,7 +474,7 @@ app.put('/users/:id', (req, res) => {
   // if the user sent over any of the updatableFields, we udpate those values
   // in document
   const toUpdate = {};
-  const updateableFields = ['firstName', 'lastName', 'email', 'userName'];
+  const updateableFields = ['firstName', 'lastName', 'userName'];
 
   updateableFields.forEach(field => {
     if (field in req.body) {
