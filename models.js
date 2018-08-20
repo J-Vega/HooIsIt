@@ -1,3 +1,5 @@
+
+
 'use strict';
 
 const mongoose = require('mongoose');
@@ -8,7 +10,6 @@ const userProfileSchema = mongoose.Schema({
   	userName: {type: String, required: true, unique: true},
   	firstName: {type: String, required: true},
   	lastName: {type: String, required: true},
-    email: {type: String, required: true, unique: true},
   	created: {type: Date, default: Date.now},
     userComments: [{type:Schema.Types.ObjectId, ref: 'UserComment'}]
 },{collection:"userdata"});
@@ -29,29 +30,6 @@ const phoneNumberSchema = mongoose.Schema({
     created: {type: Date, default: Date.now}
 
 },{collection:"phoneNumberData"});
-
-// const testCommentSchema = mongoose.Schema({
-//     //Not sure if to include required or not - must include user id of person who created it
-//     //content: {type:PhoneNumber },
-//     created: {type: Date, default: Date.now}
-// });
-
-// const testdataSchema = mongoose.Schema({
-//   phoneNumber: {type: Number, required: true, unique: true},
-//   flags: {type: Number, required: true},
-//   description: {type: String, required: true},
-//   comments: [{type:String}],
-//   created: {type: Date, default: Date.now}
-// },{collection:"testdata"});
-
-// userProfileSchema.virtual('virtualDisplayName').get(function() {
-//   return `${this.fullName.firstName} ${this.fullName.lastName}`.trim();
-// });
-
-// commentSchema.pre('findOne', function(next){
-//   this.populate(displayName);
-//   next();
-// });
 
 userProfileSchema.methods.serialize = function(){
   return {
@@ -86,11 +64,8 @@ userCommentSchema.methods.serialize = function(){
 
 const UserProfile = mongoose.model('UserProfile', userProfileSchema);
 const PhoneNumber = mongoose.model('PhoneNumber', phoneNumberSchema);
-const UserComment = mongoose.model('UserComment', userCommentSchema)
-//const Comment = mongoose.model('Comment', commentSchema);
-// const testdata = mongoose.model('testdata', testdataSchema);
-// const testcomment = mongoose.model('testcomment', testCommentSchema);
+const UserComment = mongoose.model('UserComment', userCommentSchema);
 
-module.exports = {UserProfile,PhoneNumber,UserComment};// testdata, testcomment};
+module.exports = {UserProfile,PhoneNumber,UserComment};
 
 
