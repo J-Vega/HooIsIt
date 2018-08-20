@@ -5,26 +5,59 @@ function watchSubmit(){
 		event.preventDefault();
 		const numberQuery = $(event.currentTarget).find('.js-query').val();
 		console.log("searching for " + numberQuery);
-		//window.location.href = "https://stormy-tundra-36765.herokuapp.com/search/"+numberQuery;
-		searchPhoneNumber(numberQuery,displaySearchData);
+		window.location.href = "file:///Users/JVega/Desktop/Projects/TeleTale/public/listing.html?"+numberQuery;
+		//searchPhoneNumber(numberQuery,displaySearchData);
 		//getDataFromListing(displaySearchData);
 	});
 
 	$('.js-submit-form').submit(event => 
 	{
 		event.preventDefault();
-		const submitQuery = $(event.currentTarget).find('.js-number-submit').val();
-		const submitDescription = $(event.currentTarget).find('.js-query-submit').val();
+		const submitCreator = $(event.currentTarget).find('.js-submit-name').val();
+		const submitQuery = $(event.currentTarget).find('.js-submit-number').val();
+		const category = $(event.currentTarget).find('.js-submit-category').val();
+		const comment = $(event.currentTarget).find('.js-submit-comment').val();
+		//Change description in schema to category
+		const submitData = {
+			"phoneNumber": submitQuery, 
+			"description": category,
+			"comments": [{
+				"content": comment,
+				"creator": submitCreator
+			}],
+		};
+
+		console.log("Creator " + submitCreator);
 		console.log("Submitting " + submitQuery);
-		console.log("Description: " + submitDescription);
+		console.log("Description: " + category);
+		console.log("Initial comment: " + comment);
 		
-		addPhoneNumber(submitQuery,submitDescription);
+		addPhoneNumber(submitData);//,submitDescription);
+		$('.post-response').show();
 		//Add phone number to database
 	});	
+
+	//Register New User
+	$('.js-register-form').submit(event => 
+	{
+		event.preventDefault();
+		const query = $(event.currentTarget).find('.js-query').val();
+		
+		const newUser = {
+			"firstName": $(event.currentTarget).find('.js-register-first-name').val(),
+			"lastName": $(event.currentTarget).find('.js-register-last-name').val(),
+			"userName": $(event.currentTarget).find('.js-register-user-name').val(),
+			"password": $(event.currentTarget).find('.js-register-password').val()
+		
+		};
+		console.log("Registering:" + newUser.firstName + newUser.lastName + newUser.userName);
+		registerUser(newUser);
+
+		console.log("Registered new user!");
+	});
 }
 
 function searchPhoneNumber(searchTerm,callback){
-	
 	let query = {
 		//url: "https://stormy-tundra-36765.herokuapp.com/list",
 		url: `https://stormy-tundra-36765.herokuapp.com/search/${searchTerm}`,
@@ -35,38 +68,18 @@ function searchPhoneNumber(searchTerm,callback){
 	$.getJSON(query,callback);
 }
 
-function addPhoneNumber(number,description){
-	console.log(`Adding ${number} with this desciprtion - ${description}.`);
-	// let query = {
-	// 	//url: "https://stormy-tundra-36765.herokuapp.com/list",
-	// 	url: `https://stormy-tundra-36765.herokuapp.com/list/`,
-	// 	method: "POST",
-	// 	phoneNumber: number,
-	// 	description: description,
-	// 	dataType: 'json'
-	// 	//success: callback
-	// }
-	
-	// $.post(`https://stormy-tundra-36765.herokuapp.com/list/`,
-	// {
-	// 	"phoneNumber":"7777777773",
-	// 	"description":"IRS Scammerss!"
-	// },
-		
-	// function(data, status){
-	// 	alert("Data: " + data + "\nStatus: " + status);
-	// });
-	// console.log("Submitted phone number to db");
+function addPhoneNumber(data){//number,description){
 
 	$.ajax({
     url: 'https://stormy-tundra-36765.herokuapp.com/list',
     dataType: 'json',
     type: 'post',
     contentType: 'application/json',
-    data: JSON.stringify( { "phoneNumber": `${number}`, "description": `${description}`} ),
+    data: JSON.stringify( data ),
+    	//{ "phoneNumber": `${number}`, "description": `${description}`} ),
     processData: false,
     	success: function( data, textStatus, jQxhr ){
-        console.log("Success!");
+        console.log("Successfully posted data.");
         //$('#response pre').html( JSON.stringify( data ) );
     	},
     	error: function( jqXhr, textStatus, errorThrown ){
@@ -117,12 +130,25 @@ function renderResults(result){
 	return `<p>Showing results for - ${result["phoneNumber"]}</p><p>This number has been flagged ${result["flags"]} time(s). </p><h3>Comments (${result["comments"].length}): </h3><p>${result["description"]}</p>${commentList}`// <p>${result["comments"]}<p>;
 }
 
+function registerUser(userData){
+	$.ajax({
+    url: 'https://stormy-tundra-36765.herokuapp.com/users/',
+    dataType: 'json',
+    type: 'post',
+    contentType: 'application/json',
+    data: JSON.stringify( userData ),
+    	//{ "phoneNumber": `${number}`, "description": `${description}`} ),
+    processData: false,
+    	success: function( data, textStatus, jQxhr ){
+        console.log("Successfully posted data.");
+        //$('#response pre').html( JSON.stringify( data ) );
+    	},
+    	error: function( jqXhr, textStatus, errorThrown ){
+        console.log( errorThrown );
+    	}
+	});
+}
 
-//$('.js-results').html("test");
-//getDataFromListing(displaySearchData);
-
-//This calls the function, while using jQuery $ uses an event listener
-//watchSubmit();
+$('.post-response').hide();
 $(watchSubmit);
-
 
