@@ -58,13 +58,15 @@ function generateUserData(){
 	var userName = "user"+faker.random.word();
 	var firstName = faker.name.firstName();
 	var lastName = faker.name.lastName();
-	var email = faker.random.word()+"@"+faker.random.word()+".com";
+  var password = "abcd123456";
+	//var email = faker.random.word()+"@"+faker.random.word()+".com";
 
 	return{
 		userName: userName,
     	firstName: firstName,
     	lastName: lastName,
-    	email: email,
+    	//email: email,
+      password: password,
     	comments: [],
     	created: faker.date.past()
 	}
@@ -259,21 +261,23 @@ describe('User data API resource', function(){
           		expect(res).to.be.json;
           		expect(res.body).to.be.a('object');
           		expect(res.body).to.include.keys(
-            		'_id','userName', 'firstName', 'lastName', 'email');
+            		'id','userName', 'firstName', 'lastName');//, 'email');
           			//Serialized model - id -vs actual model - _id -
          		expect(res.body.id).to.not.be.null;
           		expect(res.body.userName).to.equal(newUser.userName);
           		expect(res.body.firstName).to.equal(newUser.firstName);
           		expect(res.body.lastName).to.equal(newUser.lastName);
-          		expect(res.body.email).to.equal(newUser.email);
-          	return UserProfile.findById(res.body._id);
+              expect(res.body.password).to.not.equal(null);
+          		//expect(res.body.email).to.equal(newUser.email);
+          	return UserProfile.findById(res.body.id);
         })
         .then(function(listing) {
         	//console.log("Listing below:");
           	expect(listing.userName).to.equal(newUser.userName);
           	expect(listing.firstName).to.equal(newUser.firstName);
           	expect(listing.lastName).to.equal(newUser.lastName);
-          	expect(listing.email).to.equal(newUser.email);
+            expect(listing.password).to.not.equal(null);
+          	//expect(listing.email).to.equal(newUser.email);
         });
     	});
   	});
