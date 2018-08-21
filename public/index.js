@@ -1,11 +1,13 @@
 
+let baseUrl = "https://stormy-tundra-36765.herokuapp.com/";
+
 function watchSubmit(){
 	$('.js-search-form').submit(event => 
 	{
 		event.preventDefault();
 		const numberQuery = $(event.currentTarget).find('.js-query').val();
 		console.log("searching for " + numberQuery);
-		window.location.href = "file:///Users/JVega/Desktop/Projects/TeleTale/public/listing.html?"+numberQuery;
+		window.location.href = `listing.html?${numberQuery}`;//`${baseUrl}/search/`+numberQuery;
 		//searchPhoneNumber(numberQuery,displaySearchData);
 		//getDataFromListing(displaySearchData);
 	});
@@ -41,18 +43,21 @@ function watchSubmit(){
 	$('.js-register-form').submit(event => 
 	{
 		event.preventDefault();
-		const query = $(event.currentTarget).find('.js-query').val();
-		
+
 		const newUser = {
 			"firstName": $(event.currentTarget).find('.js-register-first-name').val(),
 			"lastName": $(event.currentTarget).find('.js-register-last-name').val(),
 			"userName": $(event.currentTarget).find('.js-register-user-name').val(),
+			"email": $(event.currentTarget).find('.js-register-email').val(),
 			"password": $(event.currentTarget).find('.js-register-password').val()
 		
 		};
-		console.log("Registering:" + newUser.firstName + newUser.lastName + newUser.userName);
+		console.log("Registering: " +newUser.firstName);
+		console.log("Registering: " +newUser.lastName);
+		console.log("Registering: " +newUser.userName);
+		console.log("Registering: " +newUser.email);
 		registerUser(newUser);
-
+		//$('.js-success-message').show();
 		console.log("Registered new user!");
 	});
 }
@@ -148,7 +153,7 @@ function registerUser(userData){
     	}
 	});
 }
-
+$('.js-success-message').hide();
 $('.post-response').hide();
 $(watchSubmit);
 
