@@ -7,23 +7,25 @@
 //.com/search/23423423235
 
 //.com/search/?var=334445555
+$('.no-data').hide();
+$('.has-data').hide();
 
 let phoneNumber = window.location.search.slice(1); 
 let phoneId = "";
 
 function watchSubmit(){
-	$('.js-add-comment-form').submit(event => 
-	{ 
-		event.preventDefault();
-		const commentAuthor = $(event.currentTarget).find('.js-add-comment-name').val();
-		const newComment = $(event.currentTarget).find('.js-add-comment-content').val();
+	// $('.js-add-comment-form').submit(event => 
+	// { 
+	// 	event.preventDefault();
+	// 	const commentAuthor = $(event.currentTarget).find('.js-add-comment-name').val();
+	// 	const newComment = $(event.currentTarget).find('.js-add-comment-content').val();
 		
-		console.log(`${commentAuthor} said: "${newComment}"`);
+	// 	console.log(`${commentAuthor} said: "${newComment}"`);
 
-		//PUT request for phone number posting
-		addComment(commentAuthor,newComment);
+	// 	//PUT request for phone number posting
+	// 	addComment(commentAuthor,newComment);
 
-	});	
+	// });	
 }
 
 function getNumberData(number, callback){
@@ -35,7 +37,7 @@ function getNumberData(number, callback){
 	
 	let query = {
 		//url: "https://stormy-tundra-36765.herokuapp.com/list",
-		url: `https://stormy-tundra-36765.herokuapp.com/search/${number}`,
+		url: `/search/${number}`,
 		dataType: 'json'
 		//success: callback
 	}
@@ -44,15 +46,20 @@ function getNumberData(number, callback){
 }
 
 function displaySearchData(data){
+	console.log("Displaying data");
 	if(data == null){
 		console.log("No data!");
+		
+		$('.no-data').show();
 	}
 	else{
 		//***********    Concern -- DID NOT use data.map since the listing is an object and not an array
 		//const results = data.phoneNumber.map((item,index) => renderResults(item,index));
 		//console.log(`${results}`);
 		console.log("There's data!");
-		const results = renderResults(data);
+		$('.has-data').show();
+		
+		const results = renderListing(data);
 		$('.js-results').html(results);
 
 		//Since there is data for that phone number, display the comment form so users can add one
@@ -61,17 +68,20 @@ function displaySearchData(data){
 }
 
 //js-results is where listing info is returned
-function renderResults(result){
+function renderListing(result){
 	console.log(result);
 	let commentList = "";//result.comments[0].content;
 	for(i = 0; i < result["comments"].length; i++){
 		// console.log(result.comments[i].content);
-		commentList += `<p class ="comment">'${result.comments[i].content}'</p><p class ="commentCreator">Posted by: ${result.comments[i].creator} on ${result.comments[i].created}</p>`;
+		commentList += `
+		<div class = "commentBlock"><p class ="comment">'${result.comments[i].content}'</p>
+		<p class ="commentCreator">Posted by: ${result.comments[i].creator} 
+			on ${result.comments[i].created.slice(0,10)}</p></div>`;
 	}
 	// console.log(commentList);
 	//console.log(index);
 	savePostId(result["_id"]);
-
+	console.log(result["_id"]);
 	return `	
 				<h3>Previous reports for - ${result["phoneNumber"]}</h3>
 				<h3>Type of call: ${result["description"]}</h3>
@@ -83,7 +93,7 @@ function renderResults(result){
 	}
 
 function savePostId(id){
-	// console.log(id);
+	console.log(id);
 	phoneId = id;
 }
 
@@ -99,7 +109,7 @@ function addComment(author,comment){
         'Accept': 'application/json',
         'Content-Type': 'application/json' 
     	},
-        url: `https://stormy-tundra-36765.herokuapp.com/list/${phoneId}`,
+        url: `/list/${phoneId}`,
 
         type: 'PUT',
 
@@ -121,8 +131,7 @@ function addComment(author,comment){
 
     });
 }
-//document.getElementById("js-phone-number").innerHTML = phoneNumber;
-console.log(window.location.search);
+
 $(watchSubmit);
 hideCommentForm();
 getNumberData(phoneNumber, displaySearchData);
