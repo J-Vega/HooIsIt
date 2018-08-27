@@ -10,29 +10,54 @@
     	</script>
     	<link href="https://fonts.googleapis.com/css?family=Kanit" rel="stylesheet">
     	<link href="index.css" rel="stylesheet" type="text/css" />
-    	<!-- <link rel="stylesheet" href="float-grid.css"/> -->
+    	<link rel="stylesheet" href="float-grid.css"/>
 	</head>
 	
 	<body>
-		<main>
-			<!-- <h1 class ="title">
-				Hoo Is It
-			</h1> -->
-			<img src ="OwlCloseup.jpg">
-
-			<br>
-
-			<form action="#" class="js-search-form">
-				<label for="search-form">
-          			Search Phone Number
+		<nav>
+			<p class ="signup-link">Register for Free</p>
+			<div class="nav-signin"><form action="#" class="js-signin-form">
+				<label class ="sign-in-label" for="js-signin-username">
+          			Hoo Are You?
         		</label>
-        		<input type="tel" min="1" class ="js-query" placeholder="111-111-1111" required>
-				<button type ="submit" id= "searchButton" class ="searchButton">
-        			<p id="searchButtonText">HOO?!?</p>
+        		<input type="string" id ="js-signin-username" placeholder="OwlBundy" required>
+        		<label class ="sign-in-label" for="js-signin-password">
+          			Password
+        		</label>
+        		<input type="string" id ="js-signin-password" placeholder="Password" required>
+
+				<button type ="submit" id= "searchButton" class ="signInButton">
+        			Sign In
       			</button>
 			</form>
+			</div>
+			<div class="js-user-info"><a href="/profile" id="js-user-name" class="js-user-name">UserName</a><button class="js-logout-button"type="submit">Log Out</button>
+			</div>
+		
+		</nav>
 
-			<br>
+		<main>
+			<div class ="row logo"><img class ="col-2" src="./OwlCloseup.jpg"><h1 class ="title">HooIsIt</h1>
+
+			<p class ="col-2 description">Find and report telemarketers, scams, and other unwanted calls.</p></div>
+			
+
+			
+			<div class="row">
+				<div class ="col-1">
+					<form action="#" class="js-search-form">
+						<label for="search-form">
+		          			Unknown number caw you?
+		        		</label>
+		        		<input type="tel" min="1" class ="js-query searchBar" placeholder="111-111-1111" required>
+						<button type ="submit" id= "searchButton" class ="searchButton">
+		        			See Hoo It Is!
+		      			</button>
+					</form> 
+				</div>
+			</div>
+
+	
 
 					<!-- <form action="#" class="js-submit-form">
 						<label for="submit-form"> 
@@ -49,9 +74,9 @@
 		      			</button>
 					</form> -->
 
-			<br>
 
-			<form action="#" class="js-submit-form">
+			<!-- MOVING TO LISTING.HTML - LANDING PAGE WILL ONLY HAVE SEARCH BAR -->
+			<!-- <form action="#" class="js-submit-form">
 
 				<label>Hoo are you?</label>
 				<input type="text" class ="js-submit-name" placeholder="Owl Bundy" required>
@@ -64,28 +89,55 @@
 					<option value="Telemarketer">Telemarketer</option>
 				  	<option value="IRS / Government">IRS / Government</option>
 				  	<option value="Student Loan">Student Loan</option>
-				  	<option value="Charity">Charity</option>
-				  	<option value="Sweepstake">Sweepstake</option>
+				  	<option value="Charity">Charity</option>				
 				  	<option value="Sweepstake / Timeshare">Sweepstake / Timeshare</option>
 				  	<option value="Other">Other</option>
 				</select>
 
 				<label>Share your experience, don't be too fowl!</label>
-				<input class ="js-submit-comment" placeholder="Fake IRS reps" required>
+				<input maxLength="30" class ="js-submit-comment" placeholder="Fake IRS reps" required>
 					<button type ="submit" id= "submitButton" class ="submitButton">
         				<p id="submitButtonText">
         					Report Number
         				</p>
       				</button>
-			</form>
+			</form> -->
 
-			<br>
+
 			<div class ="post-response">Successfully posted!</div>
 
 
-			<div class = "js-results"></div>
+			<!-- <div class = "js-results"></div> -->
+
+
+			 
+      <div class="js-signup-popup-window" aria-live="assertive">
+      	<h3 class ="register-title">Create an account</h3>
+        <form method="post" class="js-register-form">
+        	<label for="js-register-first-name">First Name</label>
+				<input class="js-register-first-name" type="search" required placeholder="First Name">
+			<label for="js-register-last-name">Last Name</label>
+				<input class="js-register-last-name" type="search" required placeholder="Last Name">
+			<label for="js-register-email">Email</label>
+				<input class="js-register-email" type="email" required placeholder="Email">
+			<label for="js-register-user-name">User Name</label>
+				<input class="js-register-user-name" type="search" required placeholder="User Name">
+			<label for="js-register-password">Password</label>
+				<input class="js-register-password" type="search" required placeholder="Password">
+
+			<input type="submit" class="js-register-button" name="Register">
+			
+			<p class ="cancel-signup">Cancel</p>
+		</form>
+
+
+      </div>
+
+
 		</main>
-		<script src="../server.js"></script>
+		
 		<script src="index.js"></script>
+		<!-- <script src="signup.js"></script> -->
+		 
 	</body>
 </html>
