@@ -4,15 +4,17 @@
 if(sessionStorage.token != null){
 	$('.js-signin-form').hide();
 	$('.signup-link').hide();
+	$('.help-notification').show();
+	$('.signin-notification').hide();
 	document.getElementById("js-user-name").innerHTML = sessionStorage.userName;
 }
 else{
 	$('.js-user-info').hide();
 	$('.js-signin-form').show();
 	$('.signup-link').show();
+	$('.help-notification').hide();
+	$('.signin-notification').show();
 }
-let baseUrl = "https://stormy-tundra-36765.herokuapp.com/";
-
 
 function watchSubmit(){
 	$('.js-search-form').submit(event => 
@@ -20,7 +22,7 @@ function watchSubmit(){
 		event.preventDefault();
 		const numberQuery = $(event.currentTarget).find('.js-query').val();
 		console.log("searching for " + numberQuery);
-		window.location.href = `listing.html?${numberQuery}`;//`${baseUrl}/search/`+numberQuery;
+		window.location.href = `listing.html?${numberQuery}`;
 		//searchPhoneNumber(numberQuery,displaySearchData);
 		//getDataFromListing(displaySearchData);
 	});
@@ -28,8 +30,8 @@ function watchSubmit(){
 	$('.js-submit-form').submit(event => 
 	{
 		event.preventDefault();
-		const submitCreator = $(event.currentTarget).find('.js-submit-name').val();
-		const submitQuery = $(event.currentTarget).find('.js-submit-number').val();
+		const submitCreator = sessionStorage.userName;//$(event.currentTarget).find('.js-submit-name').val();
+		const submitQuery = window.location.search.slice(1); //$(event.currentTarget).find('.js-submit-number').val();
 		const category = $(event.currentTarget).find('.js-submit-category').val();
 		const comment = $(event.currentTarget).find('.js-submit-comment').val();
 		//Change description in schema to category
@@ -101,9 +103,7 @@ function watchSubmit(){
 		const password = $(event.currentTarget).find('#js-signin-password').val();
 
 		signInUser(userName,password);
-		//window.location.href = `listing.html?${numberQuery}`;//`${baseUrl}/search/`+numberQuery;
-		//searchPhoneNumber(numberQuery,displaySearchData);
-		//getDataFromListing(displaySearchData);
+	
 	});
 
 	$('.js-logout-button').on('click', function() {   
@@ -111,6 +111,9 @@ function watchSubmit(){
     });
 
 	$('.signup-link').on('click', function() {   
+		 	$('.js-signup-popup-window').show(300);
+	    });
+	$('.register-link').on('click', function() { 
 		 	$('.js-signup-popup-window').show(300);
 	    });
 
@@ -204,7 +207,7 @@ function renderResults(result){
 	}
 	console.log(commentList);
 	//console.log(index);
-	return `<p>Showing results for - ${result["phoneNumber"]}</p><p>This number has been flagged ${result["flags"]} time(s). </p><h3>Comments (${result["comments"].length}): </h3><p>${result["description"]}</p>${commentList}`// <p>${result["comments"]}<p>;
+	return `<p>Showing results for - ${result["phoneNumber"]}</p><p class= "comment-header">Comments (${result["comments"].length}): </h3><p>${result["description"]}</p>${commentList}`// <p>${result["comments"]}<p>;
 }
 function addCommentToUser(){
 	$.ajax({
@@ -263,12 +266,13 @@ function signInUser(userName, password){
 	}
 
 	$.ajax(settings).done(function (res) {
-		console.log("User name: " + userName);
+		//console.log("User name: " + userName);
 		console.log(res);
 		sessionStorage.setItem('userName', userName);
 		sessionStorage.setItem('token', res.authToken);
+		sessionStorage.setItem('id', res);
 		console.log(res);
-		window.location.replace("/index.html");
+		window.location.reload();
 		
 	});
 }
@@ -276,7 +280,7 @@ function signInUser(userName, password){
 function logOutUser(){
 	console.log("Logging out..."); 
     sessionStorage.clear();
-    window.location.replace("/index.html");
+    window.location.reload();
 }
 
 $('.js-success-message').hide();
