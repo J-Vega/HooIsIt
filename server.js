@@ -250,7 +250,7 @@ app.get("/users", (req, res) => {
 
 app.get("/users/:username", (req, res) => {
   UserProfile
-    .findOne({username:req.params.userName})
+    .findOne({userName:req.params.username})
     .exec()
     .then(listing => {
       console.log(listing);
