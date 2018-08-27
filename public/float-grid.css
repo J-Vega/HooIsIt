@@ -1,0 +1,47 @@
+html{
+	margin-left: 12px;
+	margin-right: 12px;
+}
+
+*{
+	box-sizing: border-box;
+
+}
+
+.row{
+  max-width: 1000px;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 15px;
+}
+
+.row::before,
+.row::after {
+  display: table;
+  content: '';
+}
+
+.row::after {
+  clear: both;
+}
+
+@media only screen and (min-width:260px){
+	.col-1{
+		float: left;
+		width: 95%;
+		margin-left: 2.5%;
+		margin-right: 2.5%;
+	}
+}
+
+@media only screen and (min-width:540px){
+
+}
+
+@media only screen and (min-width:768px){
+
+}
+
+@media only screen and (min-width:1024px){
+
+}
