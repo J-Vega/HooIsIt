@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang = en>
+	<head>
+    	<meta charset="utf-8">
+    	<title></title>
+    	<script
+          src="https://code.jquery.com/jquery-3.2.1.min.js"
+          integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+          crossorigin="anonymous">      
+    	</script>
+    	<link href="https://fonts.googleapis.com/css?family=Kanit" rel="stylesheet">
+    	<link href="index.css" rel="stylesheet" type="text/css" />
+    	<link rel="stylesheet" href="float-grid.css"/>
+	</head>
+
+  <body>
+    <nav>
+      <p class ="signup-link">Register for Free</p>
+      <div class="nav-signin"><form action="#" class="js-signin-form">
+        <label class ="sign-in-label" for="js-signin-username">
+                Hoo Are You?
+            </label>
+            <input type="string" id ="js-signin-username" placeholder="OwlBundy" required>
+            <label class ="sign-in-label" for="js-signin-password">
+                Password
+            </label>
+            <input type="string" id ="js-signin-password" placeholder="Password" required>
+
+        <button type ="submit" id= "searchButton" class ="signInButton">
+              Sign In
+            </button>
+      </form>
+      </div>
+      <div class="js-user-info"><a href="/profile" id="js-user-name" class="js-user-name">UserName</a><button class="js-logout-button"type="submit">Log Out</button>
+      </div>
+    
+    </nav>
+
+      
+
+      <main>
+        <p class ="account-info-header">Account Info</p>
+        <p class ="profile-signin-notification">Please log into your account to view account details.</p>
+
+          <div class="js-results card">
+          
+            <!-- <img src="img.jpg" alt="John" style="width:100%">
+            <h1>John Doe</h1>
+            <p class="title">CEO & Founder, Example</p>
+            <p>Harvard University</p>
+            <a href="#"><i class="fa fa-dribbble"></i></a> 
+            <a href="#"><i class="fa fa-twitter"></i></a> 
+            <a href="#"><i class="fa fa-linkedin"></i></a> 
+            <a href="#"><i class="fa fa-facebook"></i></a> 
+            <p><button>Contact</button></p> -->
+          </div>
+      </main>
+      <script src="index.js"></script>
+      <script src="profile.js"></script>
+    </body>
+    </html>
