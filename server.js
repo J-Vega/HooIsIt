@@ -1,6 +1,8 @@
+
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
+const passport = require('passport');
 // const jsdom = require("jsdom");
 // const { JSDOM } = jsdom;
 // const {window} = new JSDOM();
@@ -12,12 +14,23 @@ const jsonParser = bodyParser.json();
 
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
- 
+
+const {localStrategy,jwtStrategy} = require('./auth/strategies.js');
+const authRoute = require('./auth/router.js');
+console.log(authRoute);
 const app = express();
 //var $ = require('jquery')(window);
 app.use(morgan("common"));
 app.use(express.static('public'));
-app.use(express.json());
+//app.use(express.json());
+passport.use('localAuth',localStrategy);
+passport.use('jwtAuth',jwtStrategy);
+//Tell express you want to use passport
+app.use(passport.initialize());
+app.use(bodyParser.json());
+
+app.use('/auth',function(req,res,next){ console.log(req.body); next()},authRoute);
+
 
 const { PORT, DATABASE_URL} = require('./config');
 const {UserProfile,PhoneNumber,UserComment} = require('./models');
@@ -29,7 +42,7 @@ var ObjectId = require('mongodb').ObjectId;
 
 app.use(cors());
 app.use(function (req, res, next) {
-
+    console.log(req.body);
     // Website you wish to allow to connect
     res.setHeader('Access-Control-Allow-Origin', '*');
 
@@ -37,15 +50,22 @@ app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE');
 
     // Request headers you wish to allow
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 
     // Set to true if you need the website to include cookies in the requests sent
     // to the API (e.g. in case you use sessions)
     res.setHeader('Access-Control-Allow-Credentials', true);
 
+    if(req.method === 'OPTIONS'){
+
+      return res.sendStatus(204);
+    }
+
     // Pass to next layer of middleware
     next();
 });
+
+
 
 app.get("/signup", (req, res) => {
   res.sendFile(__dirname + "/public/signup.html");
@@ -54,6 +74,11 @@ app.get("/signup", (req, res) => {
 app.get("/seeddata", (req, res) => {
   res.sendFile(__dirname + "/seed-data.js");
 });
+
+//Added to router for auth middleware
+// app.get("/profile", (req, res) => {
+//   res.sendFile(__dirname + "/public/profile.html");
+// });
 
 //List all phone numbers
 app.get("/list", cors(), (req, res) => {
@@ -77,7 +102,7 @@ app.get("/list", cors(), (req, res) => {
 //Find specific phone number
 app.get("/search/:phoneNumber", cors(), (req, res) => {
 
-  res.sendFile(__dirname + "/public/listing.html");
+  //res.sendFile(__dirname + "/public/listing.html");
   
   console.log("searching forrrrrrr " +req.params.phoneNumber);
   PhoneNumber
@@ -209,9 +234,23 @@ app.get("/users", (req, res) => {
     });
 });
 
-app.get("/users/:id", (req, res) => {
+// app.get("/users/:id", (req, res) => {
+//   UserProfile
+//     .findById(req.params.id)
+//     .exec()
+//     .then(listing => {
+//       console.log(listing);
+//       return res.json(listing);
+//     })
+//     .catch(err => {
+//       console.log(err);
+//       return res.status(500).json({ message: 'Internal server error' });
+//     });
+// });
+
+app.get("/users/:username", (req, res) => {
   UserProfile
-    .findById(req.params.id)
+    .findOne({username:req.params.userName})
     .exec()
     .then(listing => {
       console.log(listing);
@@ -223,7 +262,13 @@ app.get("/users/:id", (req, res) => {
     });
 });
 
-//Creating a new user
+app.get("/profile",(req, res) => {
+  console.log("Accessing user profile")
+  res.sendFile(__dirname + "/public/profile.html");
+  //window.location.replace("/profile.html");
+});
+
+
 // app.post("/users", jsonParser, (req, res) => {
 //   const requiredFields = ['userName', 'firstName', 'lastName', 'password'];
 //   for (let i = 0; i < requiredFields.length; i++) {
@@ -334,8 +379,9 @@ app.get("/users/:id", (req, res) => {
 //     }))
 // });
 
+//Creating a new user
 app.post('/users/', jsonParser, (req, res) => {
-  const requiredFields = ['userName', 'password'];
+  const requiredFields = ['userName', 'password', 'firstName', 'lastName', 'email'];
   const missingField = requiredFields.find(field => !(field in req.body));
 
   if (missingField) {
@@ -347,7 +393,7 @@ app.post('/users/', jsonParser, (req, res) => {
     });
   }
 
-  const stringFields = ['userName', 'password', 'firstName', 'lastName'];
+  const stringFields = ['userName', 'password', 'firstName', 'lastName', 'email'];
   const nonStringField = stringFields.find(
     field => field in req.body && typeof req.body[field] !== 'string'
   );
@@ -387,7 +433,7 @@ app.post('/users/', jsonParser, (req, res) => {
       min: 1
     },
     password: {
-      min: 8,
+      min: 4,
       // bcrypt truncates after 72 characters, so let's not give the illusion
       // of security by storing extra (unused) info
       max: 72
@@ -417,11 +463,12 @@ app.post('/users/', jsonParser, (req, res) => {
     });
   }
 
-  let {userName, password, firstName = '', lastName = ''} = req.body;
+  let {userName, password, email = '', firstName = '', lastName = ''} = req.body;
   // Username and password come in pre-trimmed, otherwise we throw an error
   // before this
   firstName = firstName.trim();
   lastName = lastName.trim();
+  email = email.trim();
 
   return UserProfile.find({userName})
     .count()
@@ -439,9 +486,11 @@ app.post('/users/', jsonParser, (req, res) => {
       return UserProfile.hashPassword(password);
     })
     .then(hash => {
+      console.log(`${userName} ${firstName} ${lastName} ${email}`)
       return UserProfile.create({
         userName,
         password: hash,
+        email,
         firstName,
         lastName
       });
@@ -503,7 +552,7 @@ let server;
 function runServer(databaseUrl, port = PORT) {
   console.log(databaseUrl);
   return new Promise((resolve, reject) => {
-    mongoose.connect(databaseUrl, err => {
+    mongoose.connect(databaseUrl, {useNewUrlParser: true}, err => {
       if (err) {
         return reject(err);
       }
@@ -537,49 +586,7 @@ function closeServer() {
 if (require.main === module) {
 
   runServer(DATABASE_URL).catch(err => console.error(err));
- };
-
-
-//--------------------jquery-----------------------//
-
-
-// function watchSubmit(){
-//   $('.js-search-form').submit(event => 
-//   {
-//     console.log('clicked');
-//     event.preventDefault();
-//     const inquiry = $(event.currentTarget).find('.js-query').val();
-//     console.log("searching for " + inquiry);
-//     getDataFromListing(displaySearchData);
-//   });
-// }
-
-// function getDataFromListing(input,callback){
-  
-//   let url = "localhost:8080/list"
-  
-//   input = url;
-
-//   $.getJSON(input,callback);
-// };
-
-// function displaySearchData(data){
-//   console.log("displaying search data");
-//   const results = data.map((item,index) => renderResults(item,index));
-//   $('.js-results').html(results);
-// }
-
-// function renderResults(results){
-//   return `<p>${results}<p>`;
-// }
-// console.log("Hello world");
- 
-// $('.js-results').html("test");
-// getDataFromListing(displaySearchData);
-
-// watchSubmit();
-
-
+};
 
 module.exports = { app, runServer, closeServer };
 
