@@ -1,5 +1,83 @@
 html{
-	background-color: #C5E8EE;
+	min-height:100%;
+	width: 100%;
+  	
+    /*url(./OwlCloseup.jpg) no-repeat center center fixed;*/
+  	
+  	/*background-size:100% 80%;*/
+  	margin: auto;
+  	background-color: #e8e8e8;
+  	text-align: center;
+  	font-family: "Market Sans",Arial,sans-serif;
+	
+}
+
+/*Brown #c5b893*/
+main{
+	margin-top: 80px;
+}
+h1,h2,h3,h4,h5{
+	color: white;
+}
+.logo{
+	clear: both;
+}
+.submitButton{
+	background-color: blue;
+}
+
+.searchButton:hover{
+	border-color: yellow;
+	cursor: pointer;
+}
+.searchButton{
+	background-color: #9a8c62;
+	font-size: 20px;
+}
+
+p{
+	font-size: 20px;
+	color: white;
+	
+}
+
+.title{
+	font-size: 48px;
+	color: yellow;
+	text-shadow: 1px 1px black;
+	position: absolute;
+    right: 52%;
+    top: 10%;
+    margin: auto !important;
+    font-size: 28px;
+}
+
+.description{
+	font-size: 24px;
+	color: #9a8c62;	
+}
+nav{
+	align-items: center;
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 500;
+    background: #e2e2e2;
+    box-shadow: 0 1px 0 0 rgba(0,0,0,0.066);
+    box-sizing: border-box;
+    height: 60px;
+    margin-bottom: 40px;
+    box-shadow: 0px 5px 8px grey;
+}
+.nav-signin{
+	margin: 0px auto !important;
+	position: relative;
+	top: 20px;
+}
+.navTitle{
+	float: left;
+	margin-left: 5%;
 }
 img{
 	display: block;
@@ -7,14 +85,148 @@ img{
     margin-right: auto;
 }
 .title{
+	clear: right;
 	text-align: center;
 }
-
-.placeholder{
-	color: red;
+.js-search-form,.js-submit-form{
+	text-align: center;
+}
+.js-search-form label{
+	font-size: 20px;
+	color: #9a8c62;
+	
+}
+.signup-link{
+	color: blue;
+	float: left;
+	margin-left: 30px;
+}
+.js-signin-form{
+	font-size: 20px;
+	display: inline-block;
+	float: right;
+	margin-right: 5%;
+}
+.js-register-form{
+	padding-top: 10px;
+	padding-bottom: 10px;
+	margin: 20px;
+	text-align: center;
+	background-color: grey;
+}
+.register-link{
+	color: blue;
+	text-decoration: underline;
+	text-shadow: none;
+}
+.register-link:hover,.signup-link:hover{
+	color: yellow;
+	cursor: pointer;
+}
+.register-title{
+	color: black;
 }
 
+.js-user-info{
+	    float: right;
+    margin-top: 18px;
+    margin-right: 12px;
+}
+
+.js-user-name{
+	margin-right:12px;
+}
+.js-signup-popup-window{
+	
+	text-align: center;
+	
+}
+
+.cancel-signup:hover{
+	color: orange;
+	cursor: pointer;
+}
+
+.js-register-form input,.js-submit-form input{
+	width: 60%;
+	margin-top: 14px;
+	font-size: 20px;
+	border: 1px;
+}
+.sign-in-label{
+	color: yellow;
+}
+
+label{
+	color: white;
+	text-align: center;
+	/*text-shadow: 1px 1px black;*/
+}
+.js-register-form label{
+	display: block;
+	margin-top: 12px;
+
+}
+.js-register-button{
+	margin-top: 40px;
+}
+.js-register-button:hover{
+	cursor: pointer;
+	background-color: yellow;
+}
+
+.searchBar,.searchButton{
+	height: 48px;
+	margin-top: 12px;
+	margin-bottom: 12px;
+	text-align: center;
+	transition: all .1s linear;
+	width: 100%;
+}
+.searchBar{
+	font-size: 24px;
+}
+
+
+.js-submit-form{
+	background-color: lightgrey;
+	padding: 12px;
+}
+.js-results{
+	margin-top: 12px;
+	background-color: lightgrey;
+	padding: 12px;
+}
+
+.js-signup-popup-window{
+  background-color: white;
+  border:5px solid #FF0000;
+  z-index: 20;
+  
+  height: 60%;
+  width: 60%;
+  overflow: auto;
+  margin: auto;
+  position: fixed;
+  top: 0; left: 0; bottom: 0; right: 0;
+  border: solid black;
+}
+.inline{
+	display: inline-block;
+}
+.result-header{
+	display: inline-block;
+}
+.comment-header{
+	font-size: 20px;
+	color: white;
+}
 /* Comment of a phone number, listed via renderresults function in index.js */
 .comment{
 
+}
+
+.commentBlock{
+	border-radius: 15px;
+	background-color: grey;
 }
