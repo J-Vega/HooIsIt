@@ -11,6 +11,7 @@ const userProfileSchema = mongoose.Schema({
   	firstName: {type: String, required: true},
   	lastName: {type: String, required: true},
     password: {type: String, required: true},
+    email: {type: String, required: true},
   	created: {type: Date, default: Date.now}//,
     //userComments: [{type:Schema.Types.ObjectId, ref: 'UserComment'}]
 },{collection:"userdata"});
@@ -38,7 +39,7 @@ userProfileSchema.methods.serialize = function(){
     userName: this.userName,
     firstName: this.firstName,
     lastName: this.lastName,
-    //email: this.email,
+    email: this.email,
     userComments: this.userComments,
     created: this.created
   };
