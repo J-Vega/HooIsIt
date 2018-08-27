@@ -1,5 +1,18 @@
 
+
+//If user is signed in, hide the sign in section, and show the user info section in the nav
+if(sessionStorage.token != null){
+	$('.js-signin-form').hide();
+	$('.signup-link').hide();
+	document.getElementById("js-user-name").innerHTML = sessionStorage.userName;
+}
+else{
+	$('.js-user-info').hide();
+	$('.js-signin-form').show();
+	$('.signup-link').show();
+}
 let baseUrl = "https://stormy-tundra-36765.herokuapp.com/";
+
 
 function watchSubmit(){
 	$('.js-search-form').submit(event => 
@@ -60,6 +73,64 @@ function watchSubmit(){
 		//$('.js-success-message').show();
 		console.log("Registered new user!");
 	});
+
+	function registerUser(userData){
+	$.ajax({
+    url: '/users/',
+    dataType: 'json',
+    type: 'post',
+    contentType: 'application/json',
+    data: JSON.stringify( userData ),
+    	//{ "phoneNumber": `${number}`, "description": `${description}`} ),
+    processData: false,
+    	success: function( data, textStatus, jQxhr ){
+        console.log("Successfully posted data.");
+        //$('#response pre').html( JSON.stringify( data ) );
+    	},
+    	error: function( jqXhr, textStatus, errorThrown ){
+        console.log( errorThrown );
+    	}
+		});
+	
+	}
+
+	$('.js-signin-form').submit(event => 
+	{
+		event.preventDefault();
+		const userName = $(event.currentTarget).find('#js-signin-username').val();
+		const password = $(event.currentTarget).find('#js-signin-password').val();
+
+		signInUser(userName,password);
+		//window.location.href = `listing.html?${numberQuery}`;//`${baseUrl}/search/`+numberQuery;
+		//searchPhoneNumber(numberQuery,displaySearchData);
+		//getDataFromListing(displaySearchData);
+	});
+
+	$('.js-logout-button').on('click', function() {   
+	 	logOutUser();
+    });
+
+	$('.signup-link').on('click', function() {   
+		 	$('.js-signup-popup-window').show(300);
+	    });
+
+	$('.cancel-signup').on('click', function() {   
+		$('.js-signup-popup-window').hide(300);
+	});
+
+	$('.js-add-comment-form').submit(event => 
+	{ 
+		event.preventDefault();
+		const commentAuthor = sessionStorage.userName; //$(event.currentTarget).find('.js-add-comment-name').val();
+		const newComment = $(event.currentTarget).find('.js-add-comment-content').val();
+		
+		console.log(`${commentAuthor} said: "${newComment}"`);
+
+		//PUT request for phone number posting
+		addComment(commentAuthor,newComment);
+
+	});
+	    
 }
 
 function searchPhoneNumber(searchTerm,callback){
@@ -74,9 +145,9 @@ function searchPhoneNumber(searchTerm,callback){
 }
 
 function addPhoneNumber(data){//number,description){
-
+	
 	$.ajax({
-    url: 'https://stormy-tundra-36765.herokuapp.com/list',
+    url: '/list',
     dataType: 'json',
     type: 'post',
     contentType: 'application/json',
@@ -128,16 +199,16 @@ function renderResults(result){
 	console.log(commentList);
 	for(i = 0; i < result["comments"].length; i++){
 		console.log(result.comments[i].content);
-		commentList += `<div class ="commentBlock"><p class ="comment">'${result.comments[i].content}'</p><p class ="comment">Posted by: ${result.comments[i].creator} on ${result.comments[i].created}</p></div>`;
+		let newComment = `<div class ="commentBlock"><p class ="comment">'${result.comments[i].content}'</p><p class ="comment">Posted by: ${result.comments[i].creator} on ${result.comments[i].created}</p></div>`;
+		commentList += newComment;
 	}
 	console.log(commentList);
 	//console.log(index);
 	return `<p>Showing results for - ${result["phoneNumber"]}</p><p>This number has been flagged ${result["flags"]} time(s). </p><h3>Comments (${result["comments"].length}): </h3><p>${result["description"]}</p>${commentList}`// <p>${result["comments"]}<p>;
 }
-
-function registerUser(userData){
+function addCommentToUser(){
 	$.ajax({
-    url: 'https://stormy-tundra-36765.herokuapp.com/users/',
+    url: '/users/',
     dataType: 'json',
     type: 'post',
     contentType: 'application/json',
@@ -151,9 +222,65 @@ function registerUser(userData){
     	error: function( jqXhr, textStatus, errorThrown ){
         console.log( errorThrown );
     	}
+	});	
+}
+
+// function registerUser(userData){
+// 	$.ajax({
+//     url: '/users/',
+//     dataType: 'json',
+//     type: 'post',
+//     contentType: 'application/json',
+//     data: JSON.stringify( userData ),
+//     	//{ "phoneNumber": `${number}`, "description": `${description}`} ),
+//     processData: false,
+//     	success: function( data, textStatus, jQxhr ){
+//         console.log("Successfully posted data.");
+//         //$('#response pre').html( JSON.stringify( data ) );
+//     	},
+//     	error: function( jqXhr, textStatus, errorThrown ){
+//         console.log( errorThrown );
+//     	}
+// 	});
+// }
+
+function signInUser(userName, password){
+	
+	console.log("Starting sign in post request");
+
+	var settings = {
+		"async": true,
+	  	"crossDomain": true,
+	  	"url": "/auth/login",
+	  	"method": "POST",
+	  	"headers": {
+	    	"Content-Type": "application/json",
+	    	"Cache-Control": "no-cache",
+	    	"Postman-Token": "a84b2ea0-684a-4a57-9d3e-236418c81321"
+		},
+  		"processData": false,
+  		"data": "{\n\t\"username\":\""+userName+"\",\n\t\"password\":\""+password+"\"\n}"
+	}
+
+	$.ajax(settings).done(function (res) {
+		console.log("User name: " + userName);
+		console.log(res);
+		sessionStorage.setItem('userName', userName);
+		sessionStorage.setItem('token', res.authToken);
+		console.log(res);
+		window.location.replace("/index.html");
+		
 	});
 }
+
+function logOutUser(){
+	console.log("Logging out..."); 
+    sessionStorage.clear();
+    window.location.replace("/index.html");
+}
+
 $('.js-success-message').hide();
+$('.js-signup-popup-window').hide();
 $('.post-response').hide();
 $(watchSubmit);
 
