@@ -14,48 +14,57 @@ html{
 
 /*Brown #c5b893*/
 main{
-	margin-top: 80px;
+	margin-top: 180px;
 }
 h1,h2,h3,h4,h5{
-	color: white;
+	color: black;
 }
 .logo{
 	clear: both;
 }
 .submitButton{
-	background-color: blue;
+	width: 40%;
+	background-color: #84734b;
 }
 
 .searchButton:hover{
-	border-color: yellow;
+	border-color: #f2e69b;
+	color: #f2e69b;
+	background-color: #84734b;
 	cursor: pointer;
+
 }
 .searchButton{
-	background-color: #9a8c62;
+	background-color: #c0ab73;
 	font-size: 20px;
 }
 
-p{
+/*p{
 	font-size: 20px;
-	color: white;
+	color: black;
 	
-}
+}*/
 
 .title{
 	font-size: 48px;
 	color: yellow;
 	text-shadow: 1px 1px black;
 	position: absolute;
-    right: 52%;
+    right: 73%;
     top: 10%;
     margin: auto !important;
     font-size: 28px;
 }
 
 .description{
-	font-size: 24px;
-	color: #9a8c62;	
+	font-size: 18px;
+	color: #9d8d56;	
 }
+
+.description-list{
+	list-style-type: none;
+}
+
 nav{
 	align-items: center;
     position: fixed;
@@ -66,12 +75,12 @@ nav{
     background: #e2e2e2;
     box-shadow: 0 1px 0 0 rgba(0,0,0,0.066);
     box-sizing: border-box;
-    height: 60px;
+    height: 90px;
     margin-bottom: 40px;
     box-shadow: 0px 5px 8px grey;
 }
 .nav-signin{
-	margin: 0px auto !important;
+	/*margin: 0px auto !important;*/
 	position: relative;
 	top: 20px;
 }
@@ -79,14 +88,32 @@ nav{
 	float: left;
 	margin-left: 5%;
 }
-img{
-	display: block;
-    margin-left: auto;
-    margin-right: auto;
+
+.search-container{
+	margin-top: 50px;
 }
+
 .title{
 	clear: right;
 	text-align: center;
+}
+
+/*.main-container{
+	border: 1px solid brown;
+}*/
+.hoo-logo{
+	height: 50px;
+}
+.homepage-icon{
+	float: left;
+    margin-left: 50px;
+    height: 100%;
+    padding: 15px;
+}
+.hooisit-logo{
+	height: 200px;
+	margin-left: auto;
+    margin-right: auto;
 }
 .js-search-form,.js-submit-form{
 	text-align: center;
@@ -98,33 +125,74 @@ img{
 }
 .signup-link{
 	color: blue;
-	float: left;
-	margin-left: 30px;
+	/*float: right;*/
+}
+.signin-link{
+	color: blue;
+	/*float: right;*/
 }
 .js-signin-form{
 	font-size: 20px;
 	display: inline-block;
 	float: right;
 	margin-right: 5%;
+	padding-left: 14px;
+    padding-right: 14px;
+    margin: 20px;
+    text-align: left;
+    background-color: #f3f3f3;
+}
+.js-signin-form input{
+	vertical-align: text-bottom;
+	font-size: 16px;
+    padding: 12px;
+    width: 100%;
 }
 .js-register-form{
-	padding-top: 10px;
-	padding-bottom: 10px;
+	padding-left: 14px;
+    padding-right: 14px;
 	margin: 20px;
-	text-align: center;
-	background-color: grey;
+	text-align: left;
+	background-color: #f3f3f3;
+}
+
+.js-register-form label{
+	font-weight: bold;
+	color: black;
+
+}
+
+.js-signin-form{
+	
+
+}
+
+.js-signin-form input{
+	    width: 100%;
+    padding: 12px 25px;
+    font-size: 15px;
+    border: 1px solid #c1c1c1;
+}
+
+.js-phone-number{
+	font-weight: bold;
+	font-size: 18px;
 }
 .register-link{
 	color: blue;
-	text-decoration: underline;
 	text-shadow: none;
 }
-.register-link:hover,.signup-link:hover{
-	color: yellow;
+.register-link:hover,.signup-link:hover,.signin-link:hover{
+	text-decoration: underline;
+	font-weight: bold;
 	cursor: pointer;
 }
 .register-title{
 	color: black;
+}
+.avatar{
+	width: 25%;
+    border-radius: 50%;
 }
 
 .js-user-info{
@@ -136,45 +204,74 @@ img{
 .js-user-name{
 	margin-right:12px;
 }
-.js-signup-popup-window{
-	
-	text-align: center;
-	
+.login-signup-container p{
+	display: inline-block;
 }
-
+.cancel-signup{
+	/*width: auto;*/
+	display: block;
+	margin-left: 12px;
+    padding: 10px 18px;
+    background-color: #ff5f1f;
+}
 .cancel-signup:hover{
-	color: orange;
+	opacity: 0.6;
 	cursor: pointer;
 }
 
-.js-register-form input,.js-submit-form input{
-	width: 60%;
+.js-register-form input{
+	width: 100%;
+    padding: 12px 25px;
+	font-size: 15px;
+	border: 1px solid #c1c1c1;
+}
+
+label p{
+	margin: 0;
+    margin-top: 10px;
+    text-align: left;
+    margin-left: 5px;
+}
+.comment-label{
+	float: left;
+}
+.float-right{
+	float: right !important;
+}
+.js-submit-comment{
+	width: 100%;
+	height: 60px;
 	margin-top: 14px;
+	margin-bottom: 14px;
 	font-size: 20px;
-	border: 1px;
+	border: 1px solid black;
 }
 .sign-in-label{
-	color: yellow;
+	color: #9a8c62;
 }
 
 label{
-	color: white;
+	color: black;
 	text-align: center;
 	/*text-shadow: 1px 1px black;*/
 }
-.js-register-form label{
-	display: block;
+
+.js-register-button,.signInButton{
+	background-color: #93f18e;
 	margin-top: 12px;
-
 }
-.js-register-button{
-	margin-top: 40px;
-}
-.js-register-button:hover{
+.js-register-button:hover,.signInButton:hover{
 	cursor: pointer;
-	background-color: yellow;
+	background-color: #62e85b;
 }
 
+.signinbutton{
+
+}
+.register-bottom-container{
+	margin-top: 15px;
+	background-color: grey;
+}
 .searchBar,.searchButton{
 	height: 48px;
 	margin-top: 12px;
@@ -184,7 +281,7 @@ label{
 	width: 100%;
 }
 .searchBar{
-	font-size: 24px;
+	font-size: 20px;
 }
 
 
@@ -198,22 +295,46 @@ label{
 	padding: 12px;
 }
 
-.js-signup-popup-window{
-  background-color: white;
-  border:5px solid #FF0000;
+.js-signup-popup-window,.js-signin-popup-window{
+  background-color: #f3f3f3;
   z-index: 20;
-  
   height: 60%;
-  width: 60%;
+  width: 50%;
+  max-width: 450px;
   overflow: auto;
   margin: auto;
   position: fixed;
   top: 0; left: 0; bottom: 0; right: 0;
-  border: solid black;
+  border: 1px solid grey;
 }
+
+/* The close button (x) */
+.close {
+    position: absolute;
+    right: 25px;
+    top: -21px;
+    color: #000;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: red;
+    cursor: pointer;
+}
+
 .inline{
 	display: inline-block;
 }
+
+.notification-container{
+	background-color: #9a8c62;
+}
+.notification-container p{
+	display: inline-block;
+}
+
 .result-header{
 	display: inline-block;
 }
@@ -223,10 +344,69 @@ label{
 }
 /* Comment of a phone number, listed via renderresults function in index.js */
 .comment{
+	font-size: 18px;
+	position: relative;
+    top: 12px;
+    z-index: 3;
+}
 
+.commenter{
+	font-size: 12px;
+	position: relative;
+    top: 12px;
+    /*left: 250px;*/
+    z-index: 3;
 }
 
 .commentBlock{
+	text-align: left;
+    padding-left: 18px;
 	border-radius: 15px;
-	background-color: grey;
+	background-color: #f3efdb;
+	width: 70%;
 }
+
+.commentBlock:after{
+	content: '';
+	position: relative;
+	bottom: -30px;
+    left: 35px;
+	width: 0;
+	height: 0;
+	border: 39px solid transparent;
+	border-top-color: #f3efdb;
+	border-bottom: 0;
+	border-left: 0;
+	margin-left: -19px;
+	margin-bottom: -38px;
+}
+
+.backFade{
+  background-color: black;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.5);
+  z-index: 5;
+}
+
+.js-delete-user{
+	-webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    background-color: white; 
+    color: black; 
+    border: 2px solid #f44336;
+}
+
+.js-delete-user:hover {
+    background-color: #f44336;
+    color: white;
+}
+
+
+
+
+
+
