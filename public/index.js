@@ -6,6 +6,8 @@ if(sessionStorage.token != null){
 	$('.signup-link').hide();
 	$('.help-notification').show();
 	$('.signin-notification').hide();
+	$('.toggle-logged-in').show();
+	
 	document.getElementById("js-user-name").innerHTML = sessionStorage.userName;
 }
 else{
@@ -13,6 +15,8 @@ else{
 	$('.js-signin-form').show();
 	$('.signup-link').show();
 	$('.help-notification').hide();
+	$('.js-submit-form').hide();
+	$('.toggle-logged-in').hide();
 	$('.signin-notification').show();
 }
 
@@ -76,7 +80,70 @@ function watchSubmit(){
 		console.log("Registered new user!");
 	});
 
-	function registerUser(userData){
+	$('.js-signin-form').submit(event => 
+	{
+		event.preventDefault();
+		const userName = $(event.currentTarget).find('#js-signin-username').val();
+		const password = $(event.currentTarget).find('#js-signin-password').val();
+
+		signInUser(userName,password);
+	
+	});
+
+	$('.js-logout-button').on('click', function() {   
+	 	logOutUser();
+    });
+
+	$('.signup-link').on('click', function() {   
+		 	$('.js-signup-popup-window').show(300);
+		 	$('.backFade').show();
+	});
+	$('.signin-link').on('click', function() {   
+		 	$('.js-signin-popup-window').show(300);
+		 	$('.backFade').show();
+	    });
+	$('.register-link').on('click', function() { 
+		 	$('.js-signup-popup-window').show(300);
+		 	$('.backFade').show();
+	    });
+
+	$('.cancel').on('click', function() {   
+		$('.js-signup-popup-window').hide(300);
+		$('.js-signin-popup-window').hide(300);
+		$('.backFade').hide();
+	});
+
+	$('.js-add-comment-form').submit(event => { 
+		event.preventDefault();
+		const commentAuthor = sessionStorage.userName; //$(event.currentTarget).find('.js-add-comment-name').val();
+		const newComment = $(event.currentTarget).find('.js-add-comment-content').val();
+		
+		console.log(`${commentAuthor} said: "${newComment}"`);
+
+		//PUT request for phone number posting
+		addComment(commentAuthor,newComment);
+
+	});
+
+	$('.js-delete-user').click(event =>{
+		// console.log("deleting user: " + sessionStorage.userName);
+		// deleteUser();
+		var r = confirm("Are you sure you want to delete your account?");
+		if (r == true) {
+			deleteUser();
+    		console.log("Deleted!");
+		} else {
+    		console.log("Never mind!");
+		}
+
+	})
+
+	  // $('.js-delete-prompt').click(event => {
+	  // 		$('.delete-popup').show();
+	  // })
+}
+
+function registerUser(userData){
 	$.ajax({
     url: '/users/',
     dataType: 'json',
@@ -96,50 +163,11 @@ function watchSubmit(){
 	
 	}
 
-	$('.js-signin-form').submit(event => 
-	{
-		event.preventDefault();
-		const userName = $(event.currentTarget).find('#js-signin-username').val();
-		const password = $(event.currentTarget).find('#js-signin-password').val();
-
-		signInUser(userName,password);
-	
-	});
-
-	$('.js-logout-button').on('click', function() {   
-	 	logOutUser();
-    });
-
-	$('.signup-link').on('click', function() {   
-		 	$('.js-signup-popup-window').show(300);
-	    });
-	$('.register-link').on('click', function() { 
-		 	$('.js-signup-popup-window').show(300);
-	    });
-
-	$('.cancel-signup').on('click', function() {   
-		$('.js-signup-popup-window').hide(300);
-	});
-
-	$('.js-add-comment-form').submit(event => 
-	{ 
-		event.preventDefault();
-		const commentAuthor = sessionStorage.userName; //$(event.currentTarget).find('.js-add-comment-name').val();
-		const newComment = $(event.currentTarget).find('.js-add-comment-content').val();
-		
-		console.log(`${commentAuthor} said: "${newComment}"`);
-
-		//PUT request for phone number posting
-		addComment(commentAuthor,newComment);
-
-	});
-	    
-}
-
 function searchPhoneNumber(searchTerm,callback){
 	let query = {
 		//url: "https://stormy-tundra-36765.herokuapp.com/list",
 		url: `https://stormy-tundra-36765.herokuapp.com/search/${searchTerm}`,
+		type: 'get',
 		dataType: 'json'
 		//success: callback
 	}
@@ -202,7 +230,12 @@ function renderResults(result){
 	console.log(commentList);
 	for(i = 0; i < result["comments"].length; i++){
 		console.log(result.comments[i].content);
-		let newComment = `<div class ="commentBlock"><p class ="comment">'${result.comments[i].content}'</p><p class ="comment">Posted by: ${result.comments[i].creator} on ${result.comments[i].created}</p></div>`;
+		let newComment = `
+			<div class ="commentBlock">
+				<p class ="comment">'${result.comments[i].content}'</p>
+				<p class ="commenter">Posted by: ${result.comments[i].creator} on ${result.comments[i].created}</p>
+			</div>
+			`;
 		commentList += newComment;
 	}
 	console.log(commentList);
@@ -262,7 +295,17 @@ function signInUser(userName, password){
 	    	"Postman-Token": "a84b2ea0-684a-4a57-9d3e-236418c81321"
 		},
   		"processData": false,
-  		"data": "{\n\t\"username\":\""+userName+"\",\n\t\"password\":\""+password+"\"\n}"
+  		success: function( data, textStatus, jQxhr ){
+        console.log("Success!");
+        
+        //$('#response pre').html( JSON.stringify( data ) );
+    	},
+    	error: function( jqXhr, textStatus, errorThrown ){
+        alert("Incorrect log in info.");
+        console.log( errorThrown );
+    	}, 
+  		"data": "{\n\t\"username\":\""+userName+"\",\n\t\"password\":\""+password+"\"\n}",
+
 	}
 
 	$.ajax(settings).done(function (res) {
@@ -270,7 +313,7 @@ function signInUser(userName, password){
 		console.log(res);
 		sessionStorage.setItem('userName', userName);
 		sessionStorage.setItem('token', res.authToken);
-		sessionStorage.setItem('id', res);
+		//sessionStorage.setItem('id', res);
 		console.log(res);
 		window.location.reload();
 		
@@ -283,8 +326,57 @@ function logOutUser(){
     window.location.reload();
 }
 
+function deleteUser(){
+	console.log("deleting user: " +sessionStorage.userName);
+	let query = {
+		//url: "https://stormy-tundra-36765.herokuapp.com/list",
+		url: `/users/${sessionStorage.userName}`,
+		dataType: 'json'
+		//success: callback
+	}
+	console.log("getting json data from - " + query.url);
+	$.getJSON(query,removeFromDb);
+
+
+
+	//Get user id by searching db by username
+}
+
+function removeFromDb(data){
+	// data._id;
+	$.ajax({
+
+		headers: { 
+        'Accept': 'application/json',
+        'Content-Type': 'application/json' 
+    	},
+        url: `/users/${data._id}`,
+
+        type: 'DELETE',
+
+        processData: false,
+    	success: function( data, textStatus, jQxhr ){
+        console.log("Success!");
+        
+        //$('#response pre').html( JSON.stringify( data ) );
+    	},
+    	error: function( jqXhr, textStatus, errorThrown ){
+        console.log( errorThrown );
+    	} 
+
+    });
+	sessionStorage.clear();
+	window.location.reload();
+
+}
+if(sessionStorage != null){
+	// findUser();
+}
+
+$('.backFade').hide();
 $('.js-success-message').hide();
 $('.js-signup-popup-window').hide();
+$('.js-signin-popup-window').hide();
 $('.post-response').hide();
 $(watchSubmit);
 
