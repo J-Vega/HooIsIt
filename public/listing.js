@@ -14,18 +14,16 @@ let phoneNumber = window.location.search.slice(1);
 let phoneId = "";
 
 function watchSubmit(){
-	// $('.js-add-comment-form').submit(event => 
-	// { 
-	// 	event.preventDefault();
-	// 	const commentAuthor = $(event.currentTarget).find('.js-add-comment-name').val();
-	// 	const newComment = $(event.currentTarget).find('.js-add-comment-content').val();
+	$('.js-listing-search').submit(event => 
+	{ 
+		event.preventDefault();
+
+		const numberQuery = $(event.currentTarget).find('.js-navSearch').val();
 		
-	// 	console.log(`${commentAuthor} said: "${newComment}"`);
+		
+		window.location.href = `listing.html?${numberQuery}`;
 
-	// 	//PUT request for phone number posting
-	// 	addComment(commentAuthor,newComment);
-
-	// });	
+	});	
 }
 
 function getNumberData(number, callback){
@@ -51,6 +49,7 @@ function displaySearchData(data){
 		console.log("No data!");
 		
 		$('.no-data').show();
+		$('.js-results').html("<p>There are currently no comments.</p>");
 	}
 	else{
 		//***********    Concern -- DID NOT use data.map since the listing is an object and not an array
@@ -70,12 +69,14 @@ function displaySearchData(data){
 //js-results is where listing info is returned
 function renderListing(result){
 	console.log(result);
+	// Reverses comments, so most recent is rendered first.
+	result["comments"].reverse();
 	let commentList = "";//result.comments[0].content;
 	for(i = 0; i < result["comments"].length; i++){
 		// console.log(result.comments[i].content);
 		commentList += `
 		<div class = "commentBlock"><p class ="comment">'${result.comments[i].content}'</p>
-		<p class ="commentCreator">Posted by: ${result.comments[i].creator} 
+		<p class ="commenter">Posted by: ${result.comments[i].creator} 
 			on ${result.comments[i].created.slice(0,10)}</p></div>`;
 	}
 	// console.log(commentList);
@@ -123,6 +124,7 @@ function addComment(author,comment){
         processData: false,
     	success: function( data, textStatus, jQxhr ){
         console.log("Success!");
+
         //$('#response pre').html( JSON.stringify( data ) );
     	},
     	error: function( jqXhr, textStatus, errorThrown ){
