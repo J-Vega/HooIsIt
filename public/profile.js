@@ -1,10 +1,7 @@
 console.log(sessionStorage);
 
-function watchSubmit(){
-	console.log('hi');
-}
-
 function getProfileData(searchTerm,callback){
+	console.log("Searching user name " +searchTerm);
 	let query = {
 		//url: "https://stormy-tundra-36765.herokuapp.com/list",
 		url: `/users/${searchTerm}`,
@@ -38,6 +35,7 @@ function renderUserData(result){
 console.log("hello from profile.js");
 
 if(sessionStorage.userName != null){
+	console.log("Session storage not null... searching profile.")
 	$('.profile-signin-notification').hide();
 	$('.account-info-header').show();
 	getProfileData(sessionStorage.userName,displayUserData);
@@ -46,5 +44,4 @@ else {
 	$('.profile-signin-notification').show();
 	$('.account-info-header').hide();
 }
-
-$(watchSubmit);
+$('.delete-popup').hide();
