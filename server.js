@@ -140,6 +140,58 @@ app.get("/list/:id", cors(), (req, res) => {
     });
 });
 
+function filterCommentsFromUser(phoneNumber, userName){
+  let commentList = [];
+  phoneNumber.comments.filter(xComment => xComment.creator === userName)
+  .forEach(comment => commentList.push(comment));
+  console.log(commentList);
+  let commentData = {
+      "phoneNumber":phoneNumber.phoneNumber,
+      "comments":commentList
+  };
+  return commentData;//`<p>${phoneNumber.phoneNumber}</p> <p>${commentList}</p>`;
+};
+
+//Searches all entries with a comment created by specified user name
+app.get("/comments/:userName", cors(), (req, res) => {
+  console.log("searching comments posted by: "+ req.params.userName);
+  PhoneNumber
+    .find({"comments":{$elemMatch:{creator:req.params.userName}}})
+    .exec()
+    .then(phoneNumbers => phoneNumbers .forEach (listing => {
+      console.log("Results below...");
+      filterCommentsFromUser(listing,req.params.userName);
+      // var commentList = [];
+      // for(var i=0; i < listing.length;i++){
+      //   console.log(`${listing[i].comments.entries}`);  
+      // }
+      console.log(listing.phoneNumber);
+      return res.json(filterCommentsFromUser(listing,req.params.userName));
+    }))
+    .catch(err => {
+      console.log(err);
+      return res.status(500).json({ message: 'Internal server error' });
+    });
+});
+
+const removeCommentsForUser = (phoneNumber, userName) =>
+  phoneNumber.comments.filter(xComment => xComment.creator === userName)
+  .forEach(comment => phoneNumber.comments.remove(comment));
+
+app.delete("/comments/:userName", cors(), (req, res) => {
+  console.log("deleting all comments posted by: "+ req.params.userName);
+  PhoneNumber
+    .find(
+      {})
+    .then(phoneNumbers => phoneNumbers .forEach(
+      ph => { 
+        removeCommentsForUser(ph,req.params.userName);
+      ph.save(); }))//console.log(comment))))
+    .then(listing => res.status(204).end())
+    .catch(err => res.status(500).json({message: "Error deleting listing"}));
+});
+
+
 //Get all phone numbers
 app.post("/list", (req, res) => {
   const requiredFields = ['phoneNumber', 'description'];
@@ -216,6 +268,8 @@ app.delete('/list/:id', (req, res) => {
 });
 
 
+
+
 //--------- User Profile CRUD Operations ------------//
 app.get("/users", (req, res) => {
   console.log("Finding all registered users");
@@ -262,8 +316,22 @@ app.get("/users/:username", (req, res) => {
     });
 });
 
+app.get("/users/:id", (req, res) => {
+  UserProfile
+    .findOne({id:req.params._id})
+    .exec()
+    .then(listing => {
+      console.log(listing);
+      return res.json(listing);
+    })
+    .catch(err => {
+      console.log(err);
+      return res.status(500).json({ message: 'Internal server error' });
+    });
+});
+
 app.get("/profile",(req, res) => {
-  console.log("Accessing user profile")
+  console.log("Accessing user profile");
   res.sendFile(__dirname + "/public/profile.html");
   //window.location.replace("/profile.html");
 });
