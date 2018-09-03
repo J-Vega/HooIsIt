@@ -1,3 +1,6 @@
+
+/*Main brown #9d8d56 */
+
 html{
 	margin-left: 12px;
 	margin-right: 12px;
@@ -7,9 +10,14 @@ html{
 	box-sizing: border-box;
 
 }
-
+.full-row{
+	width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  
+}
 .row{
-  max-width: 1000px;
+  max-width: 800px;
   margin-right: auto;
   margin-left: auto;
   margin-top: 15px;
@@ -32,16 +40,116 @@ html{
 		margin-left: 2.5%;
 		margin-right: 2.5%;
 	}
+	.col-2{
+		float: left;
+		width: 95%;
+		margin-left: 2.5%;
+		margin-right: 2.5%;
+	}
+	.col-3{
+		float: left;
+		width: 95%;
+		margin-left: 2.5%;
+		margin-right: 2.5%;
+	}
+	.col-4{
+		float: left;
+		width: 34%;
+		margin-left: 8%;
+		margin-right: 8%;
+	}
+	.responsive-list-container{
+		margin-left: 0 !important;
+		border-left: none;
+	    padding-left: 10px;
+	    text-align: center;
+	}
+
 }
 
 @media only screen and (min-width:540px){
-
+	.col-1{
+		float: left;
+		width: 95%;
+		margin-left: 2.5%;
+		margin-right: 2.5%;
+	}
+	.col-2{
+		float: left;
+		width: 95%;
+		margin-left: 2.5%;
+		margin-right: 2.5%;
+	}
+	.col-3{
+		float: left;
+		width: 95%;
+		margin-left: 2.5%;
+		margin-right: 2.5%;
+	}
+	.col-4{
+		float: left;
+		width: 95%;
+		margin-left: 2.5%;
+		margin-right: 2.5%;
+	}
 }
 
 @media only screen and (min-width:768px){
-
+	.col-1{
+		float: left;
+		width: 95%;
+		margin-left: 2.5%;
+		margin-right: 2.5%;
+	}
+	.col-2{
+		float: left;
+		width: 45%;
+    	margin-left: 2.5%;
+    	margin-right: 2.5%;
+	}
+	.col-3{
+		float: left;
+		width: 28.3%;
+		margin-left: 2.5%;
+		margin-right: 2.5%;
+	}
+	.col-4{
+		float: left;
+		width: 20%;
+		margin-left: 2.5%;
+		margin-right: 2.5%;
+	}
+	.responsive-list-container{
+		margin-left: 0 !important;
+		border-left: 2px solid #c0ab73;
+	    padding-left: 10px;
+	    text-align: left;
+	}
 }
 
 @media only screen and (min-width:1024px){
-
+	.col-1{
+		float: left;
+		width: 95%;
+		margin-left: 2.5%;
+		margin-right: 2.5%;
+	}
+	.col-2{
+		float: left;
+		width: 45%;
+    	margin-left: 2.5%;
+    	margin-right: 2.5%;
+	}
+	.col-3{
+		float: left;
+		width: 28.3%;
+		margin-left: 2.5%;
+		margin-right: 2.5%;
+	}
+	.col-4{
+		float: left;
+		width: 20%;
+		margin-left: 2.5%;
+		margin-right: 2.5%;
+	}
 }
