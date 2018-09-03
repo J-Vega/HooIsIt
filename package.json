@@ -33,7 +33,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/J-Vega/TeleTale.git"
+    "url": "https://github.com/J-Vega/HooIsIt"
   },
   "directories": {
     "test": "test"
@@ -41,7 +41,7 @@
   "author": "Jonathan Vega",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/J-Vega/TeleTale/issues"
+    "url": "https://github.com/J-Vega/HooIsIt/issues"
   },
-  "homepage": "https://github.com/J-Vega/TeleTale#readme"
+  "homepage": "https://github.com/J-Vega/HooIsIt#readme"
 }
