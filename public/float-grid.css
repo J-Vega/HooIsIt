@@ -17,7 +17,7 @@ html{
   
 }
 .row{
-  max-width: 800px;
+  max-width: 750px;
   margin-right: auto;
   margin-left: auto;
   margin-top: 15px;
@@ -54,15 +54,22 @@ html{
 	}
 	.col-4{
 		float: left;
-		width: 34%;
-		margin-left: 8%;
-		margin-right: 8%;
+		width: 99%;
+		margin-left: 1%;
+		margin-right: 1%;
 	}
 	.responsive-list-container{
 		margin-left: 0 !important;
 		border-left: none;
 	    padding-left: 10px;
 	    text-align: center;
+	    padding: 0;
+	}
+	.search-container{
+		padding-top: 10px;
+	}
+	.homepage-icon{
+		display: none;
 	}
 
 }
@@ -88,10 +95,14 @@ html{
 	}
 	.col-4{
 		float: left;
-		width: 95%;
-		margin-left: 2.5%;
-		margin-right: 2.5%;
+		width: 40%;
+		margin-left: 5%;
+		margin-right: 5%;
 	}
+	.homepage-icon{
+		display: block;
+	}
+	
 }
 
 @media only screen and (min-width:768px){
@@ -124,6 +135,9 @@ html{
 		border-left: 2px solid #c0ab73;
 	    padding-left: 10px;
 	    text-align: left;
+	}
+	.search-container{
+		margin-top: 50px;
 	}
 }
 
