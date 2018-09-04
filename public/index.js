@@ -134,10 +134,12 @@ function watchSubmit(){
 
 	$('.signup-link').on('click', function() {   
 		 	$('.js-signup-popup-window').show(300);
+		 	$('.js-signin-popup-window').hide();
 		 	$('.backFade').show();
 	});
 	$('.signin-link').on('click', function() {   
 		 	$('.js-signin-popup-window').show(300);
+		 	$('.js-signup-popup-window').hide();
 		 	$('.backFade').show();
 	    });
 	$('.register-link').on('click', function() { 
@@ -192,10 +194,13 @@ function registerUser(userData){
     processData: false,
     	success: function( data, textStatus, jQxhr ){
         console.log("Successfully posted data.");
+        window.alert("Successfully registered! Now sign in with your info!");
+        window.location.reload();
         //$('#response pre').html( JSON.stringify( data ) );
     	},
     	error: function( jqXhr, textStatus, errorThrown ){
         console.log( errorThrown );
+        window.alert("Uh oh... something went wrong. Please try again later.");
     	}
 		});
 	
