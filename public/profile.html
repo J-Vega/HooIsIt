@@ -14,7 +14,7 @@
 	</head>
 
   <body>
-    <nav>
+   <nav>
       <div class ="full-row">
         <div class ="col-4">
         <a class ="homepage-icon" href="/">
@@ -24,10 +24,13 @@
 
         <div class="col-4 float-right login-signup-container">
           <div class="js-user-info"><a href="/profile" id="js-user-name" class="js-user-name">UserName</a>
-          <button class="js-logout-button"type="submit">Log Out</button></div>
-          <p class ="signup-link">Register </p>
-          <p> or </p>
-          <p class ="signin-link"> Sign In</p>
+            <button class="js-logout-button"type="submit">Log Out</button>
+          </div>
+          <div class ="guest-info">
+            <p class ="signup-link">Register </p>
+            <p> or </p>
+            <p class ="signin-link"> Sign In</p>
+          </div>
         </div>
 
         <!-- <div class="col-2 nav-signin"><form action="#" class="js-signin-form">
@@ -53,23 +56,31 @@
       
 
       <main>
-        <p class ="account-info-header">Account Info</p>
-        <p class ="profile-signin-notification">Please log into your account to view account details.</p>
+        <div class="row">
+          <div class ="col-2">
+            <p class ="account-info-header">Account Info</p>
+            <p class ="profile-signin-notification">Please log into your account to view account details.</p>
 
-          <div class="js-results card row">
-          
-            <!-- <img src="img.jpg" alt="John" style="width:100%">
-            <h1>John Doe</h1>
-            <p class="title">CEO & Founder, Example</p>
-            <p>Harvard University</p>
-            <a href="#"><i class="fa fa-dribbble"></i></a> 
-            <a href="#"><i class="fa fa-twitter"></i></a> 
-            <a href="#"><i class="fa fa-linkedin"></i></a> 
-            <a href="#"><i class="fa fa-facebook"></i></a> 
-            <p><button>Contact</button></p> -->
-          
+            <div class="js-results card">
+            
+              <!-- <img src="img.jpg" alt="John" style="width:100%">
+              <h1>John Doe</h1>
+              <p class="title">CEO & Founder, Example</p>
+              <p>Harvard University</p>
+              <a href="#"><i class="fa fa-dribbble"></i></a> 
+              <a href="#"><i class="fa fa-twitter"></i></a> 
+              <a href="#"><i class="fa fa-linkedin"></i></a> 
+              <a href="#"><i class="fa fa-facebook"></i></a> 
+              <p><button>Contact</button></p> -->
+            
+            </div>
+            <button class="js-delete-user toggle-logged-in">Delete User</button>
           </div>
-          <button class="js-delete-user toggle-logged-in">Delete User</button>
+          <div class ="col-2">
+                <p class ="account-info-header">Recent Activity</p>
+                <div class ="user-comments"></div>
+          </div>
+        </div>
           
           <div class="js-signup-popup-window" aria-live="assertive">
             <h2 class ="register-title">Create a free account</h2>
