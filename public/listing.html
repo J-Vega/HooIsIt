@@ -2,14 +2,16 @@
 <html lang = en>
 	<head>
     	<meta charset="utf-8">
-    	<title></title>
+    	<title>HooIsIt</title>
     	<script
           src="https://code.jquery.com/jquery-3.2.1.min.js"
           integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
           crossorigin="anonymous">      
     	</script>
+    	<meta name="description" content="Free, instant, and hassle-free suspicious phone number search and reporting app. Search unknown and unwanted phone numbers listed on your caller ID to discover and report scammers, telemarketers, and more.">
+  		<meta name="keywords" content="Phone Number, Search, Free, Instant, Telemarketers, Report">
+  		<meta name="author" content="Jonathan Vega">
     	<link href="https://fonts.googleapis.com/css?family=Kanit" rel="stylesheet">
-    	<link href="listing.css" rel="stylesheet" type="text/css" />
     	<link href="index.css" rel="stylesheet" type="text/css" />
     	<link rel="stylesheet" href="float-grid.css"/>
 	</head>
@@ -18,157 +20,127 @@
 		<nav>
 			<div class ="full-row">
 				<div class ="col-4">
-				<a class ="homepage-icon" href="/">
-				<img class ="hoo-logo" src="./hoo.png" alt="The word who spelt H O O, with wide owl eyeballs replacing the oh's">
-				</a>
+					<a class ="homepage-icon" href="/">
+					<img class ="hoo-logo" src="./hoo.png" alt="The word who spelt H O O, with wide owl eyeballs replacing the oh's">
+					</a>
 				</div>
 
-				<div class="col-4 float-right login-signup-container">
-					<div class="js-user-info"><a href="/profile" id="js-user-name" class="js-user-name">UserName</a>
-						<button class="js-logout-button"type="submit">Log Out</button>
-					</div>
+				<div class="col-4 float-right login-signup-container" aria-live="assertive">
+					<div class="js-user-info">
+						<a href="/profile" id="js-user-name" class="js-user-name">
+							UserName
+						</a>
+						<button class="js-logout-button"type="submit">
+							Log Out
+						</button>
+					</div>					
 					<div class ="guest-info">
 						<p class ="signup-link">Register </p>
 						<p> or </p>
 						<p class ="signin-link"> Sign In</p>
 					</div>
-				</div>
-
-				<!-- <div class="col-2 nav-signin"><form action="#" class="js-signin-form">
-					<label class ="sign-in-label" for="js-signin-username">
-	          			Hoo Are You?
-	        		</label>
-	        		<input type="string" id ="js-signin-username" placeholder="OwlBundy" required>
-	        		<label class ="sign-in-label" for="js-signin-password">
-	          			Password
-	        		</label>
-	        		<input type="string" id ="js-signin-password" placeholder="Password" required>
-
-					<button type ="submit" id= "searchButton" class ="signInButton">
-	        			Sign In
-	      			</button>
-					</form>
-				</div> -->
-				
-					
+				</div>									
 			</div>
 		</nav>
-		<main>
-				
+
+		<main>	
 			<div class ="main-container" aria-live="assertive">
 				<!-- If GET request on page load has data, show has-data header... -->
           		<div class ="inline result-header">
-          		<p class="inline has-data">Search results for:</p>
-          		<!-- ...if not, show no-data -->
-          		<p class="inline no-data">There are currently no reports for </p>
-          		<p class = "inline js-phone-number" id ="js-phone-number-1">000-000-0000</p>
-         
+	          		<p class="inline has-data">Search results for:</p>
+	          		<!-- ...if not, show no-data -->
+	          		<p class="inline no-data">There are currently no reports for </p>
+	          		<p class = "inline js-phone-number" id ="js-phone-number-1">000-000-0000</p>
           		</div>
 
-          		<form method="get" class="js-listing-search"><input class="js-navSearch" type="search" required placeholder="New Search"><input type="submit" class="js-navButton" value="Search"></form>
-
-          		<br>
+          		<form method="get" class="js-listing-search"><input class="js-navSearch" type="number" required placeholder="New Search"><input type="submit" class="js-navButton" value="Search">
+          		</form><br>
 
           		<div class="row notification-container">
-          			<!-- <p>Got a call from this number?</p> -->
           			<p class ="help-notification inline">Help others by sharing below!</p>
           			<p class="register-link signin-notification inline"> Register for free </p> 
           			<p class ="signin-notification inline"> or </p> <p class ="signin-link signin-notification inline"> sign in</p> <p class ="signin-notification inline"> and share your experience!</p>
-          		</div>
- 				
- 				<br>
+          		</div><br>
 
- 				
- 					
- 					<form action="#" class="row no-data js-submit-form" aria-live="assertive">
+ 				<form action="#" class="row no-data js-submit-form" aria-live="assertive">
  						
- 						<div class="col-2 label-container">
-							<label class="comment-label">
-								Share your experience, don't be too fowl!
-							</label>
-						</div>
+ 					<div class="col-2 label-container">
+						<label class="comment-label">
+							Share your experience, don't be too fowl!
+						</label>
+					</div>
 
- 						<div class="col-2 call-type-container">
-							<div class ="float-right">
-								<label>Type of Call</label>
-								<select class="js-submit-category">
-									<option value="Telemarketer">Telemarketer</option>
-								  	<option value="IRS / Government">IRS / Government</option>
-								  	<option value="Student Loan">Student Loan</option>
-								  	<option value="Charity">Charity</option>				
-								  	<option value="Sweepstake / Timeshare">Sweepstake / Timeshare</option>
-								  	<option value="Other">Other</option>
-								</select>
-							</div>
+					<div class="col-2 call-type-container">
+						<div class ="float-right">
+							<label>Type of Call</label>
+							<select class="js-submit-category">
+								<option value="Telemarketer">Telemarketer</option>
+							  	<option value="IRS / Government">IRS / Government</option>
+							  	<option value="Student Loan">Student Loan</option>
+							  	<option value="Charity">Charity</option>				
+							  	<option value="Sweepstake / Timeshare">Sweepstake / Timeshare</option>
+							  	<option value="Other">Other</option>
+							</select>
 						</div>
+					</div>
 					
 						
-						<div class="col-1">
-							<input maxLength="75" class ="js-submit-comment" placeholder="Fake IRS reps" required>
-						</div>
+					<div class="col-1">
+						<input maxLength="75" class ="js-submit-comment" placeholder="Fake IRS reps" required>
+					</div>
 						
-						<div class="col-1">
-							<button type ="submit" id= "submitButton" class ="submitButton">
-			        			<p id="submitButtonText">
-			        				Post Comment
-			        			</p>
-		      				</button>
+					<div class="col-1">
+						<button type ="submit" id="postComment" class ="submitButton">
+		        			<p>
+		        				Post Comment
+		        			</p>
+	      				</button>
 
-		      			</div>
+	      			</div>
 		      			
-					</form>
+				</form>
 
-					<form action="#" class="row has-data js-add-comment-form">
+				<form action="#" class="row js-add-comment-form">
  						
- 						<div class="col-2 label-container">
-							<label class="comment-label">
-								Share your experience, don't be too fowl!
-							</label>
-						</div>
+					<div class="col-2 label-container">
+						<label class="comment-label">
+							Share your experience, don't be too fowl!
+						</label>
+					</div>
 
- 						<div class="col-2 call-type-container">
-							<div class ="float-right">
-								<label>Type of Call</label>
-								<select class="js-submit-category">
-									<option value="Telemarketer">Telemarketer</option>
-								  	<option value="IRS / Government">IRS / Government</option>
-								  	<option value="Student Loan">Student Loan</option>
-								  	<option value="Charity">Charity</option>				
-								  	<option value="Sweepstake / Timeshare">Sweepstake / Timeshare</option>
-								  	<option value="Other">Other</option>
-								</select>
-							</div>
+					<div class="col-2 call-type-container">
+						<div class ="float-right">
+							<label>Type of Call</label>
+							<select class="js-submit-category">
+								<option value="Telemarketer">Telemarketer</option>
+							  	<option value="IRS / Government">IRS / Government</option>
+							  	<option value="Student Loan">Student Loan</option>
+							  	<option value="Charity">Charity</option>				
+							  	<option value="Sweepstake / Timeshare">Sweepstake / Timeshare</option>
+							  	<option value="Other">Other</option>
+							</select>
 						</div>
+					</div>
 					
 						
-						<div class="col-1">
-							<input maxLength="75" class ="js-submit-comment" placeholder="Fake IRS reps" required>
-						</div>
+					<div class="col-1">
+						<input maxLength="75" class ="js-submit-comment" placeholder="Fake IRS reps" required>
+					</div>
 						
-						<div class="col-1">
-							<button type ="submit" id= "submitButton" class ="submitButton">
-			        			<p id="submitButtonText">
-			        				Add Comment
-			        			</p>
-		      				</button>
-		      				
-		      			</div>
-		      			
-					</form>
+					<div class="col-1">
+						<button type ="submit" id= "addComment" class ="submitButton">
+		        			<p>
+		        				Add Comment
+		        			</p>
+	      				</button>			
+	      			</div>		
+				</form>
 			</div>
-				<!-- Hide comment form at first, display if there are already reports of the phone number being searched -->
-	<!-- 	<div class="addCommentForm">
-			<form method="put" class="js-add-comment-form">
-				<input class="js-add-comment-name" type="search" required placeholder="Your name?">
-				<input class="js-add-comment-content" type="search" required placeholder="What happened?">
-				<input type="submit" class="js-add-comment-button" name="Submit">
-			</form>
-		</div> -->
 
-		<div class = "js-results row"></div>
-		<div class="js-signup-popup-window" aria-live="assertive">
+			<div class = "js-results row"></div>
+			<div class="js-signup-popup-window" aria-live="assertive">
 		      	<h2 class ="register-title">Create a free account</h2>
-		      	<!-- <img class ="avatar" src="OwlCloseup.jpg" alt="Brown owl with yellow eyes and a blank stare."> -->
+
 		      	<p class ="cancel close">x</p>
 		        <form method="post" class="js-register-form">
 		        	<label for="js-register-first-name"><p>First Name</p></label>
@@ -180,37 +152,32 @@
 					<label for="js-register-user-name"><p>User Name</p></label>
 						<input class="js-register-user-name" type="search" required placeholder="User Name">
 					<label for="js-register-password"><p>Password</p></label>
-						<input class="js-register-password" type="search" required placeholder="Password">
+						<input type="password" class="js-register-password"  required placeholder="Password">
 
 					<input type="submit" class="js-register-button" name="Register">
-					<!-- <div class = "register-bottom-container">
-						<button class ="cancel cancel-signup">Cancel</button>
-					</div> -->
 				</form>
 		    </div>
 
-		    <div class="js-signin-popup-window" aria-live="assertive">
+		    <div class="js-signin-popup-window" aria-live="assertive">		      	
+		      	<h2 class ="register-title">Sign In</h2>
 
-		      	
-		      		<h2 class ="register-title">Sign In</h2>
-		      		<p class ="cancel close">x</p>
-		      		<form action="#" class="js-signin-form">
-							<label class ="sign-in-label" for="js-signin-username">
-			          			<p>Hoo Are You?</p>
-			        		</label>
-			        		<input type="string" id ="js-signin-username" placeholder="OwlBundy" required>
-			        		<label class ="sign-in-label" for="js-signin-password">
-			          			<p>Password</p>
-			        		</label>
-			        		<input type="string" id ="js-signin-password" placeholder="Password" required>
+		      	<p class ="cancel close">x</p>
 
-							<input type ="submit" class ="signInButton" name="Sign In">
-			      			
-							</form>
+	      		<form action="#" class="js-signin-form">
+					<label class ="sign-in-label" for="js-signin-username">
+	          			<p>Hoo Are You?</p>
+	        		</label>
+	        		<input type="string" id ="js-signin-username" placeholder="OwlBundy" required>
+	        		<label class ="sign-in-label" for="js-signin-password">
+	          			<p>Password</p>
+	        		</label>
+	        		<input type="password" id ="js-signin-password" placeholder="Password" required>
+					<input type ="submit" class ="signInButton" name="Sign In">
+				</form>
 			</div>
-		     <div class="backFade" style="">
-		     	
-		     </div>
+
+		    <div class="backFade" style="">
+		    </div>
 		</main>
 		
 		<script src="listing.js"></script>
