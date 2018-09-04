@@ -22,7 +22,7 @@
         </a>
         </div>
 
-        <div class="col-4 float-right login-signup-container">
+        <div class="col-4 float-right login-signup-container" aria-live="assertive">
           <div class="js-user-info"><a href="/profile" id="js-user-name" class="js-user-name">UserName</a>
             <button class="js-logout-button"type="submit">Log Out</button>
           </div>
@@ -57,7 +57,7 @@
 
       <main>
         <div class="row">
-          <div class ="col-2">
+          <div class ="col-2" aria-live="assertive">
             <p class ="account-info-header">Account Info</p>
             <p class ="profile-signin-notification">Please log into your account to view account details.</p>
 
@@ -76,7 +76,7 @@
             </div>
             <button class="js-delete-user toggle-logged-in">Delete User</button>
           </div>
-          <div class ="col-2">
+          <div class ="col-2" aria-live="assertive">
                 <p class ="account-info-header">Recent Activity</p>
                 <div class ="user-comments"></div>
           </div>
