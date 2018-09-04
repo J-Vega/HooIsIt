@@ -147,7 +147,7 @@ app.get("/comments/:userName", cors(), (req, res) => {
     .find({"comments":{$elemMatch:{creator:req.params.userName}}})
     .exec()
     .then(listing => {
-      console.log("Results below...");
+      console.log("Results below..."); 
       //var commentList = [];//Will return list of comments **after filtered properly
       // for(var i=0; i < listing.length;i++){
       //   console.log(`${listing[i].comments.entries}`);  
