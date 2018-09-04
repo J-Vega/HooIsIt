@@ -14,7 +14,7 @@ html{
 
 /*Brown #c5b893*/
 main{
-	margin-top: 180px;
+	margin-top: 120px;
 }
 h1,h2,h3,h4,h5{
 	color: black;
@@ -89,10 +89,6 @@ nav{
 	margin-left: 5%;
 }
 
-.search-container{
-	margin-top: 50px;
-}
-
 .title{
 	clear: right;
 	text-align: center;
@@ -134,24 +130,23 @@ nav{
 	color: blue;
 	/*float: right;*/
 }
-.js-signin-form{
+
+.guest-info{
+	padding-top: 15px;
+}
+/*.js-signin-form{
 	font-size: 20px;
 	display: inline-block;
-	float: right;
+	
 	margin-right: 5%;
 	padding-left: 14px;
     padding-right: 14px;
     margin: 20px;
     text-align: left;
     background-color: #f3f3f3;
-}
-.js-signin-form input{
-	vertical-align: text-bottom;
-	font-size: 16px;
-    padding: 12px;
-    width: 100%;
-}
-.js-register-form{
+}*/
+
+.js-register-form,.js-signin-form{
 	padding-left: 14px;
     padding-right: 14px;
 	margin: 20px;
@@ -159,22 +154,10 @@ nav{
 	background-color: #f3f3f3;
 }
 
-.js-register-form label{
+.js-register-form label, .js-signin-form label{
 	font-weight: bold;
 	color: black;
 
-}
-
-.js-signin-form{
-	
-
-}
-
-.js-signin-form input{
-	    width: 100%;
-    padding: 12px 25px;
-    font-size: 15px;
-    border: 1px solid #c1c1c1;
 }
 
 .js-phone-number{
@@ -224,7 +207,7 @@ nav{
 	cursor: pointer;
 }
 
-.js-register-form input{
+.js-register-form input,.js-signin-form input{
 	width: 100%;
     padding: 12px 25px;
 	font-size: 15px;
@@ -237,6 +220,11 @@ label p{
     text-align: left;
     margin-left: 5px;
 }
+
+.call-type-container,.label-container{
+	margin-bottom: 15px;
+}
+
 .comment-label{
 	margin-top: 12px;
 	margin-bottom: 12px;
@@ -381,10 +369,10 @@ label{
 	text-align: center;
 	margin: auto;
 	margin-bottom: 18px;
-    padding-left: 18px;
 	border-radius: 15px;
 	background-color: #f3efdb;
-	width: 65%;
+	width: 90%;
+	max-width: 700px;
 }
 
 .commentBlock:after{
