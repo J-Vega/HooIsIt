@@ -55,7 +55,7 @@
 		</nav>
 		<main>
 				
-			<div class ="main-container aria-live="assertive">
+			<div class ="main-container" aria-live="assertive">
 				<!-- If GET request on page load has data, show has-data header... -->
           		<div class ="inline result-header">
           		<p class="inline has-data">Search results for:</p>
@@ -65,7 +65,7 @@
          
           		</div>
 
-          		<form method="get" class="js-listing-search"><input class="js-navSearch" type="search" required placeholder="###-###-####"><input type="submit" class="js-navButton" value="Search"></form>
+          		<form method="get" class="js-listing-search"><input class="js-navSearch" type="search" required placeholder="New Search"><input type="submit" class="js-navButton" value="Search"></form>
 
           		<br>
 
@@ -80,15 +80,15 @@
 
  				
  					
- 					<form action="#" class="row no-data js-submit-form">
+ 					<form action="#" class="row no-data js-submit-form" aria-live="assertive">
  						
- 						<div class="col-2">
+ 						<div class="col-2 label-container">
 							<label class="comment-label">
 								Share your experience, don't be too fowl!
 							</label>
 						</div>
 
- 						<div class="col-2">
+ 						<div class="col-2 call-type-container">
 							<div class ="float-right">
 								<label>Type of Call</label>
 								<select class="js-submit-category">
@@ -120,13 +120,13 @@
 
 					<form action="#" class="row has-data js-add-comment-form">
  						
- 						<div class="col-2">
+ 						<div class="col-2 label-container">
 							<label class="comment-label">
 								Share your experience, don't be too fowl!
 							</label>
 						</div>
 
- 						<div class="col-2">
+ 						<div class="col-2 call-type-container">
 							<div class ="float-right">
 								<label>Type of Call</label>
 								<select class="js-submit-category">
@@ -195,13 +195,13 @@
 		      		<h2 class ="register-title">Sign In</h2>
 		      		<p class ="cancel close">x</p>
 		      		<form action="#" class="js-signin-form">
-							<!-- <label class ="sign-in-label" for="js-signin-username">
-			          			Hoo Are You?
-			        		</label> -->
+							<label class ="sign-in-label" for="js-signin-username">
+			          			<p>Hoo Are You?</p>
+			        		</label>
 			        		<input type="string" id ="js-signin-username" placeholder="OwlBundy" required>
-			        		<!-- <label class ="sign-in-label" for="js-signin-password">
-			          			Password
-			        		</label> -->
+			        		<label class ="sign-in-label" for="js-signin-password">
+			          			<p>Password</p>
+			        		</label>
 			        		<input type="string" id ="js-signin-password" placeholder="Password" required>
 
 							<input type ="submit" class ="signInButton" name="Sign In">
