@@ -1,29 +1,7 @@
 
 
 //If user is signed in, hide the sign in section, and show the user info section in the nav
-if(sessionStorage.token != null){
-	$('.js-signin-form').hide();
-	$('.js-user-info').show();
-	// $('.signup-link').hide();
-	// $('.signin-link').hide();
-	$('.guest-info').hide();
-	$('.help-notification').show();
-	$('.signin-notification').hide();
-	$('.toggle-logged-in').show();
-	
-	document.getElementById("js-user-name").innerHTML = sessionStorage.userName;
-}
-else{
-	$('.js-user-info').hide();
-	$('.js-signin-form').show();
-	// $('.signup-link').show();
-	// $('.signin-link').show();
-	$('.guest-info').show();
-	$('.help-notification').hide();
-	$('.js-submit-form').hide();
-	$('.toggle-logged-in').hide();
-	$('.signin-notification').show();
-}
+
 
 function watchSubmit(){
 	$('.js-search-form').submit(event => 
@@ -31,21 +9,18 @@ function watchSubmit(){
 		event.preventDefault();
 		const numberQuery = $(event.currentTarget).find('.js-query').val();
 		const parsedQuery = numberQuery.replace(/-/g,'');
-		//.replace(/\$|,/g, '')
-
-		console.log("searching for " + parsedQuery);
 		window.location.href = `listing.html?${parsedQuery}`;
-		//searchPhoneNumber(numberQuery,displaySearchData);
-		//getDataFromListing(displaySearchData);
 	});
 
 	$('.js-submit-form').submit('click',event => 
 	{
 		event.preventDefault();
-		const submitCreator = sessionStorage.userName;//$(event.currentTarget).find('.js-submit-name').val();
-		const submitQuery = window.location.search.slice(1); //$(event.currentTarget).find('.js-submit-number').val();
+		if(sessionStorage.token != null){
+		const submitCreator = sessionStorage.userName;
+		const submitQuery = window.location.search.slice(1);
 		const category = $(event.currentTarget).find('.js-submit-category').val();
 		const comment = $(event.currentTarget).find('.js-submit-comment').val();
+
 		//Change description in schema to category
 		const submitData = {
 			"phoneNumber": submitQuery, 
@@ -55,51 +30,31 @@ function watchSubmit(){
 				"creator": submitCreator
 			}],
 		};
-
-		console.log("Creator " + submitCreator);
-		console.log("Submitting " + submitQuery);
-		console.log("Description: " + category);
-		console.log("Initial comment: " + comment);
 		
-		addPhoneNumber(submitData);//,submitDescription);
-		$('.post-response').show();
-		//Add phone number to database
+		addPhoneNumber(submitData);
+			$('.post-response').show();
+		}
+		else{
+			alert("Please Sign In to post a comment.");	
+		}
 	});	
 	$('.js-add-comment-form').submit( event => 
 	{
 		event.preventDefault();
-		const submitCreator = sessionStorage.userName;//$(event.currentTarget).find('.js-submit-name').val();
-		//const submitQuery = window.location.search.slice(1); //$(event.currentTarget).find('.js-submit-number').val();
-		//const category = $(event.currentTarget).find('.js-submit-category').val();
+		const submitCreator = sessionStorage.userName;
 		const comment = $(event.currentTarget).find('.js-submit-comment').val();
-		//Change description in schema to category
-		// const submitData = {
-		// 	"phoneNumber": submitQuery, 
-		// 	"description": category,
-		// 	"comments": [{
-		// 		"content": comment,
-		// 		"creator": submitCreator
-		// 	}],
-		// };
 
-		// console.log("Creator " + submitCreator);
-		// console.log("Submitting " + submitQuery);
-		// console.log("Description: " + category);
-		// console.log("Initial comment: " + comment);
-		console.log(`User ${sessionStorage.userName} added comment: ${comment}!`);
-		var r = confirm(`Submit the following comment?\n\n ${comment}`);
+		var r = confirm(`Post Comment? \n\nYou can't change it after this (not yet)!\n\n ${comment}`);
 		if (r == true) {
 			addComment(sessionStorage.userName,comment);
 		} 
 		else {
-    		console.log("Never mind!");
 		}
 		
 		$('.post-response').show();
-		//Add phone number to database
+	
 	});	
 
-	//Register New User
 	$('.js-register-form').submit(event => 
 	{
 		event.preventDefault();
@@ -112,13 +67,9 @@ function watchSubmit(){
 			"password": $(event.currentTarget).find('.js-register-password').val()
 		
 		};
-		console.log("Registering: " +newUser.firstName);
-		console.log("Registering: " +newUser.lastName);
-		console.log("Registering: " +newUser.userName);
-		console.log("Registering: " +newUser.email);
+
 		registerUser(newUser);
-		//$('.js-success-message').show();
-		console.log("Registered new user!");
+		
 	});
 
 	$('.js-signin-form').submit(event => 
@@ -156,22 +107,10 @@ function watchSubmit(){
 		$('.backFade').hide();
 	});
 
-	// $('.js-add-comment-form').submit(event => { 
-	// 	event.preventDefault();
-	// 	const commentAuthor = sessionStorage.userName; //$(event.currentTarget).find('.js-add-comment-name').val();
-	// 	const newComment = $(event.currentTarget).find('.js-add-comment-content').val();
-		
-	// 	console.log(`${commentAuthor} said: "${newComment}"`);
-
-	// 	//PUT request for phone number posting
-	// 	addComment(commentAuthor,newComment);
-
-	// });
-
 	$('.js-delete-user').click(event =>{
 		// console.log("deleting user: " + sessionStorage.userName);
 		// deleteUser();
-		var r = confirm("Are you sure you want to delete your account?");
+		var r = confirm("Are you sure you want to delete your account?\n This will also delete ALL of your comments!");
 		if (r == true) {
 			deleteUser();
     		console.log("Deleted!");
@@ -181,9 +120,6 @@ function watchSubmit(){
 
 	})
 
-	  // $('.js-delete-prompt').click(event => {
-	  // 		$('.delete-popup').show();
-	  // })
 }
 
 function registerUser(userData){
@@ -193,17 +129,14 @@ function registerUser(userData){
     type: 'post',
     contentType: 'application/json',
     data: JSON.stringify( userData ),
-    	//{ "phoneNumber": `${number}`, "description": `${description}`} ),
+    	
     processData: false,
     	success: function( data, textStatus, jQxhr ){
-        console.log("Successfully posted data.");
-        window.alert("Successfully registered! Now sign in with your info!");
-        window.location.reload();
-        //$('#response pre').html( JSON.stringify( data ) );
+        	window.alert("Successfully registered! Now sign in with your info!");
+        	window.location.reload();
     	},
     	error: function( jqXhr, textStatus, errorThrown ){
-        console.log( errorThrown );
-        window.alert("Uh oh... something went wrong. Please try again later.");
+        	window.alert("Uh oh... something went wrong. Please try again later.");
     	}
 		});
 	
@@ -211,17 +144,14 @@ function registerUser(userData){
 
 function searchPhoneNumber(searchTerm,callback){
 	let query = {
-		//url: "https://stormy-tundra-36765.herokuapp.com/list",
 		url: `https://stormy-tundra-36765.herokuapp.com/search/${searchTerm}`,
 		type: 'get',
 		dataType: 'json'
-		//success: callback
 	}
-	console.log(query.url);
 	$.getJSON(query,callback);
 }
 
-function addPhoneNumber(data){//number,description){
+function addPhoneNumber(data){
 	
 	$.ajax({
     url: '/list',
@@ -229,14 +159,12 @@ function addPhoneNumber(data){//number,description){
     type: 'post',
     contentType: 'application/json',
     data: JSON.stringify( data ),
-    	//{ "phoneNumber": `${number}`, "description": `${description}`} ),
     processData: false,
     	success: function( data, textStatus, jQxhr ){
-        console.log("Successfully posted data.");
-        //$('#response pre').html( JSON.stringify( data ) );
+        window.location.reload();
+      
     	},
     	error: function( jqXhr, textStatus, errorThrown ){
-        console.log( errorThrown );
     	}
 	});
 }
@@ -246,7 +174,6 @@ function getDataFromListing(callback){
 	let query = {
 		url: "https://stormy-tundra-36765.herokuapp.com/list",
 		dataType: 'json'
-		//success: callback
 	}
 	
 	$.getJSON(query,callback);
@@ -272,7 +199,7 @@ function renderResults(result){
 	console.log(result["description"]);
 	console.log(result["comments"]);
 	//Converts all comments and comment info into one large string of html content to add onto final results.
-	let commentList = "";//result.comments[0].content;
+	let commentList = "";
 	console.log(commentList);
 	for(i = 0; i < result["comments"].length; i++){
 		console.log(result.comments[i].content);
@@ -284,8 +211,7 @@ function renderResults(result){
 			`;
 		commentList += newComment;
 	}
-	console.log(commentList);
-	//console.log(index);
+	
 	return `<p>Showing results for - ${result["phoneNumber"]}</p><p class= "comment-header">Comments (${result["comments"].length}): </h3><p>${result["description"]}</p>${commentList}`// <p>${result["comments"]}<p>;
 }
 function addCommentToUser(){
@@ -295,36 +221,14 @@ function addCommentToUser(){
     type: 'post',
     contentType: 'application/json',
     data: JSON.stringify( userData ),
-    	//{ "phoneNumber": `${number}`, "description": `${description}`} ),
     processData: false,
     	success: function( data, textStatus, jQxhr ){
-        console.log("Successfully posted data.");
-        //$('#response pre').html( JSON.stringify( data ) );
     	},
     	error: function( jqXhr, textStatus, errorThrown ){
         console.log( errorThrown );
     	}
 	});	
 }
-
-// function registerUser(userData){
-// 	$.ajax({
-//     url: '/users/',
-//     dataType: 'json',
-//     type: 'post',
-//     contentType: 'application/json',
-//     data: JSON.stringify( userData ),
-//     	//{ "phoneNumber": `${number}`, "description": `${description}`} ),
-//     processData: false,
-//     	success: function( data, textStatus, jQxhr ){
-//         console.log("Successfully posted data.");
-//         //$('#response pre').html( JSON.stringify( data ) );
-//     	},
-//     	error: function( jqXhr, textStatus, errorThrown ){
-//         console.log( errorThrown );
-//     	}
-// 	});
-// }
 
 function signInUser(userName, password){
 	
@@ -344,7 +248,6 @@ function signInUser(userName, password){
   		success: function( data, textStatus, jQxhr ){
         console.log("Success!");
         
-        //$('#response pre').html( JSON.stringify( data ) );
     	},
     	error: function( jqXhr, textStatus, errorThrown ){
         alert("Incorrect log in info.");
@@ -355,19 +258,16 @@ function signInUser(userName, password){
 	}
 
 	$.ajax(settings).done(function (res) {
-		//console.log("User name: " + userName);
-		console.log(res);
+		
+		//Adds user name and JWT to session storage, 
+		//	to update pages appropriately when they are logged in.
 		sessionStorage.setItem('userName', userName);
 		sessionStorage.setItem('token', res.authToken);
-		//sessionStorage.setItem('id', res);
-		console.log(res);
-		window.location.reload();
-		
+		window.location.reload();	
 	});
 }
 
 function logOutUser(){
-	console.log("Logging out..."); 
     sessionStorage.clear();
     window.location.reload();
 }
@@ -375,21 +275,14 @@ function logOutUser(){
 function deleteUser(){
 	console.log("deleting user: " +sessionStorage.userName);
 	let query = {
-		//url: "https://stormy-tundra-36765.herokuapp.com/list",
 		url: `/users/${sessionStorage.userName}`,
 		dataType: 'json'
-		//success: callback
 	}
 	console.log("getting json data from - " + query.url);
 	$.getJSON(query,removeFromDb);
-
-
-
-	//Get user id by searching db by username
 }
 
 function removeFromDb(data){
-	// data._id;
 	$.ajax({
 
 		headers: { 
@@ -404,19 +297,39 @@ function removeFromDb(data){
     	success: function( data, textStatus, jQxhr ){
         console.log("Success!");
         
-        //$('#response pre').html( JSON.stringify( data ) );
     	},
     	error: function( jqXhr, textStatus, errorThrown ){
         console.log( errorThrown );
     	} 
-
     });
 	sessionStorage.clear();
 	window.location.reload();
 
 }
-if(sessionStorage != null){
-	// findUser();
+
+//Changes page html depending on whether the user is signed in, 
+//	or if the search results has data.
+function toggleHtml(){
+	if(sessionStorage.token != null){
+		$('.js-signin-form').hide();
+		$('.js-user-info').show();
+		$('.js-add-comment-form').show();
+		$('.guest-info').hide();
+		$('.help-notification').show();
+		$('.signin-notification').hide();
+		$('.toggle-logged-in').show();
+		document.getElementById("js-user-name").innerHTML = sessionStorage.userName;
+	}
+	else{
+		$('.js-user-info').hide();
+		$('.js-signin-form').show();
+		$('.js-add-comment-form').hide();
+		$('.guest-info').show();
+		$('.help-notification').hide();
+		$('.js-submit-form').hide();
+		$('.toggle-logged-in').hide();
+		$('.signin-notification').show();
+	}
 }
 
 $('.backFade').hide();
@@ -424,5 +337,7 @@ $('.js-success-message').hide();
 $('.js-signup-popup-window').hide();
 $('.js-signin-popup-window').hide();
 $('.post-response').hide();
+
+toggleHtml();
 $(watchSubmit);
 
