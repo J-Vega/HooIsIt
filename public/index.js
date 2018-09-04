@@ -3,7 +3,10 @@
 //If user is signed in, hide the sign in section, and show the user info section in the nav
 if(sessionStorage.token != null){
 	$('.js-signin-form').hide();
-	$('.signup-link').hide();
+	$('.js-user-info').show();
+	// $('.signup-link').hide();
+	// $('.signin-link').hide();
+	$('.guest-info').hide();
 	$('.help-notification').show();
 	$('.signin-notification').hide();
 	$('.toggle-logged-in').show();
@@ -13,7 +16,9 @@ if(sessionStorage.token != null){
 else{
 	$('.js-user-info').hide();
 	$('.js-signin-form').show();
-	$('.signup-link').show();
+	// $('.signup-link').show();
+	// $('.signin-link').show();
+	$('.guest-info').show();
 	$('.help-notification').hide();
 	$('.js-submit-form').hide();
 	$('.toggle-logged-in').hide();
@@ -31,7 +36,7 @@ function watchSubmit(){
 		//getDataFromListing(displaySearchData);
 	});
 
-	$('.js-submit-form').submit(event => 
+	$('.js-submit-form').submit('click',event => 
 	{
 		event.preventDefault();
 		const submitCreator = sessionStorage.userName;//$(event.currentTarget).find('.js-submit-name').val();
@@ -54,6 +59,39 @@ function watchSubmit(){
 		console.log("Initial comment: " + comment);
 		
 		addPhoneNumber(submitData);//,submitDescription);
+		$('.post-response').show();
+		//Add phone number to database
+	});	
+	$('.js-add-comment-form').submit( event => 
+	{
+		event.preventDefault();
+		const submitCreator = sessionStorage.userName;//$(event.currentTarget).find('.js-submit-name').val();
+		//const submitQuery = window.location.search.slice(1); //$(event.currentTarget).find('.js-submit-number').val();
+		//const category = $(event.currentTarget).find('.js-submit-category').val();
+		const comment = $(event.currentTarget).find('.js-submit-comment').val();
+		//Change description in schema to category
+		// const submitData = {
+		// 	"phoneNumber": submitQuery, 
+		// 	"description": category,
+		// 	"comments": [{
+		// 		"content": comment,
+		// 		"creator": submitCreator
+		// 	}],
+		// };
+
+		// console.log("Creator " + submitCreator);
+		// console.log("Submitting " + submitQuery);
+		// console.log("Description: " + category);
+		// console.log("Initial comment: " + comment);
+		console.log(`User ${sessionStorage.userName} added comment: ${comment}!`);
+		var r = confirm(`Submit the following comment?\n\n ${comment}`);
+		if (r == true) {
+			addComment(sessionStorage.userName,comment);
+		} 
+		else {
+    		console.log("Never mind!");
+		}
+		
 		$('.post-response').show();
 		//Add phone number to database
 	});	
@@ -113,17 +151,17 @@ function watchSubmit(){
 		$('.backFade').hide();
 	});
 
-	$('.js-add-comment-form').submit(event => { 
-		event.preventDefault();
-		const commentAuthor = sessionStorage.userName; //$(event.currentTarget).find('.js-add-comment-name').val();
-		const newComment = $(event.currentTarget).find('.js-add-comment-content').val();
+	// $('.js-add-comment-form').submit(event => { 
+	// 	event.preventDefault();
+	// 	const commentAuthor = sessionStorage.userName; //$(event.currentTarget).find('.js-add-comment-name').val();
+	// 	const newComment = $(event.currentTarget).find('.js-add-comment-content').val();
 		
-		console.log(`${commentAuthor} said: "${newComment}"`);
+	// 	console.log(`${commentAuthor} said: "${newComment}"`);
 
-		//PUT request for phone number posting
-		addComment(commentAuthor,newComment);
+	// 	//PUT request for phone number posting
+	// 	addComment(commentAuthor,newComment);
 
-	});
+	// });
 
 	$('.js-delete-user').click(event =>{
 		// console.log("deleting user: " + sessionStorage.userName);
