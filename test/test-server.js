@@ -6,8 +6,6 @@ const faker = require('faker');
 const mongoose = require('mongoose');
 
 const {app, closeServer, runServer} = require("../server.js");
-//const closeServer = require('../server.js');
-//const runServer = require('../server.js');
 
 //makes 'expect' syntax available
 const expect = chai.expect;
@@ -24,7 +22,6 @@ function seedPhoneNumberData() {
 	for(let i = 1; i <= 5; i++){
 		testData.push(generatePhoneNumberData());
 	}
-	//console.log("Adding test data");
 	return PhoneNumber.insertMany(testData);
 }
 
@@ -34,7 +31,6 @@ function seedUserData() {
 	for(let i = 1; i <= 5; i++){
 		testData.push(generateUserData());
 	}
-	//console.log("Adding test data");
 	return UserProfile.insertMany(testData);
 }
 
@@ -73,7 +69,6 @@ function generateUserData(){
 }
 
 function tearDownDb() {
-	//console.warn('Deleting database');
 	return mongoose.connection.db.dropDatabase();
 }
 
@@ -334,8 +329,7 @@ describe('User data API resource', function(){
     	});
 	});
 
-});
-//End of phone number API resource
+});//End of user data API resource
 
 
 
