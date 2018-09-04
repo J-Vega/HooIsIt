@@ -22,27 +22,27 @@
 ### Step 1
 Guest users and registered users may use the search bar to locate existing reports of a phone number.
   
- ![ScreenShot]https://github.com/J-Vega/HooIsIt/blob/master/GuideImages/HomePage.png
+ ![ScreenShot](https://github.com/J-Vega/HooIsIt/blob/master/GuideImages/HomePage.png | width=100)
   
   
 ### Step 2
 Guest users may sign up for a free account by providing their name, email, a unique username, and password.
 
-![ScreenShot](https://github.com/J-Vega/HooIsIt/blob/master/GuideImages/RegisterForm.png)
+![ScreenShot](https://github.com/J-Vega/HooIsIt/blob/master/GuideImages/RegisterForm.png | width=100)
 
 ### Step 3 
 Users may sign into their account, allowing them to make posts or access their own profile page.
 
-![ScreenShot](https://github.com/J-Vega/HooIsIt/blob/master/GuideImages/ViewComments.png)
+![ScreenShot](https://github.com/J-Vega/HooIsIt/blob/master/GuideImages/ViewComments.png | width=100)
 
 ### Step 4
 On the profile page, the user may view their comment history and delete their accounts. Deleting their account will also delete all comments they have posted.
 
-![ScreenShot](https://github.com/J-Vega/HooIsIt/blob/master/GuideImages/ViewComments.png)
+![ScreenShot](https://github.com/J-Vega/HooIsIt/blob/master/GuideImages/ViewComments.png | width=100)
 
-![ScreenShot](https://github.com/J-Vega/HooIsIt/blob/master/GuideImages/AccountInfo.png)
+![ScreenShot](https://github.com/J-Vega/HooIsIt/blob/master/GuideImages/AccountInfo.png | width=100)
 
-![ScreenShot](https://github.com/J-Vega/HooIsIt/blob/master/GuideImages/DeleteAccountConfirmation.png)
+![ScreenShot](https://github.com/J-Vega/HooIsIt/blob/master/GuideImages/DeleteAccountConfirmation.png | width=100)
 
 
 ## CRUD OPERATIONS
