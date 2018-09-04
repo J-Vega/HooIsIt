@@ -6,7 +6,7 @@ html{
   	
   	/*background-size:100% 80%;*/
   	margin: auto;
-  	background-color: #e8e8e8;
+  	background-color: #f1f1f1;
   	text-align: center;
   	font-family: "Market Sans",Arial,sans-serif;
 	
@@ -27,7 +27,7 @@ h1,h2,h3,h4,h5{
 	background-color: #84734b;
 }
 
-.searchButton:hover{
+.searchButton:hover,.submitButton:hover{
 	border-color: #f2e69b;
 	color: #f2e69b;
 	background-color: #84734b;
@@ -118,6 +118,9 @@ nav{
 .js-search-form,.js-submit-form{
 	text-align: center;
 }
+.js-search-form{
+	margin-top: 15px;
+}
 .js-search-form label{
 	font-size: 20px;
 	color: #9a8c62;
@@ -196,8 +199,7 @@ nav{
 }
 
 .js-user-info{
-	    float: right;
-    margin-top: 18px;
+    margin-top: 30px;
     margin-right: 12px;
 }
 
@@ -206,6 +208,9 @@ nav{
 }
 .login-signup-container p{
 	display: inline-block;
+}
+.login-signup-container{
+	float: right !important;
 }
 .cancel-signup{
 	/*width: auto;*/
@@ -233,10 +238,11 @@ label p{
     margin-left: 5px;
 }
 .comment-label{
-	float: left;
+	margin-top: 12px;
+	margin-bottom: 12px;
 }
 .float-right{
-	float: right !important;
+	
 }
 .js-submit-comment{
 	width: 100%;
@@ -329,7 +335,7 @@ label{
 }
 
 .notification-container{
-	background-color: #9a8c62;
+	background-color: lightgrey;
 }
 .notification-container p{
 	display: inline-block;
@@ -338,6 +344,19 @@ label{
 .result-header{
 	display: inline-block;
 }
+.user-comments{
+	background-color: lightgrey;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+.profile-number{
+	text-decoration: none;
+	color: blue;
+}
+.profile-number:hover{
+	font-weight: bold;
+}
+
 .comment-header{
 	font-size: 20px;
 	color: white;
@@ -359,11 +378,13 @@ label{
 }
 
 .commentBlock{
-	text-align: left;
+	text-align: center;
+	margin: auto;
+	margin-bottom: 18px;
     padding-left: 18px;
 	border-radius: 15px;
 	background-color: #f3efdb;
-	width: 70%;
+	width: 65%;
 }
 
 .commentBlock:after{
