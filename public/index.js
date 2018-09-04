@@ -30,8 +30,11 @@ function watchSubmit(){
 	{
 		event.preventDefault();
 		const numberQuery = $(event.currentTarget).find('.js-query').val();
-		console.log("searching for " + numberQuery);
-		window.location.href = `listing.html?${numberQuery}`;
+		const parsedQuery = numberQuery.replace(/-/g,'');
+		//.replace(/\$|,/g, '')
+
+		console.log("searching for " + parsedQuery);
+		window.location.href = `listing.html?${parsedQuery}`;
 		//searchPhoneNumber(numberQuery,displaySearchData);
 		//getDataFromListing(displaySearchData);
 	});
