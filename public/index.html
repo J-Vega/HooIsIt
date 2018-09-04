@@ -2,12 +2,15 @@
 <html lang = en>
 	<head>
     	<meta charset="utf-8">
-    	<title></title>
+    	<title>HooIsIt</title>
     	<script
           src="https://code.jquery.com/jquery-3.2.1.min.js"
           integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
           crossorigin="anonymous">      
     	</script>
+    	<meta name="description" content="Free, instant, and hassle-free suspicious phone number search and reporting app. Search unknown and unwanted phone numbers listed on your caller ID to discover and report scammers, telemarketers, and more.">
+  		<meta name="keywords" content="Phone Number, Search, Free, Instant, Telemarketers, Report">
+  		<meta name="author" content="Jonathan Vega">
     	<link href="https://fonts.googleapis.com/css?family=Kanit" rel="stylesheet">
     	<link href="index.css" rel="stylesheet" type="text/css" />
     	<link rel="stylesheet" href="float-grid.css"/>
@@ -18,7 +21,7 @@
 			<div class ="full-row">
 				<div class ="col-4">
 				<a class ="homepage-icon" href="/">
-				<img class ="hoo-logo" src="./hoo.png" alt="The word who spelt H O O, with wide owl eyeballs replacing the oh's">
+				<img class ="hoo-logo" src="./hoo.png" alt="The word who, spelt H O O, with wide owl eyeballs replacing the oh's">
 				</a>
 				</div>
 
@@ -32,31 +35,13 @@
 						<p class ="signin-link"> Sign In</p>
 					</div>
 				</div>
-
-				<!-- <div class="col-2 nav-signin"><form action="#" class="js-signin-form">
-					<label class ="sign-in-label" for="js-signin-username">
-	          			Hoo Are You?
-	        		</label>
-	        		<input type="string" id ="js-signin-username" placeholder="OwlBundy" required>
-	        		<label class ="sign-in-label" for="js-signin-password">
-	          			Password
-	        		</label>
-	        		<input type="string" id ="js-signin-password" placeholder="Password" required>
-
-					<button type ="submit" id= "searchButton" class ="signInButton">
-	        			Sign In
-	      			</button>
-					</form>
-				</div> -->
-				
-					
 			</div>
 		</nav>
 
 		<main>
 			<div class ="row logo">
 				<div class="col-2">
-					<a href ='/'><img class ="hooisit-logo" src="./hooisit.png" alt="Face of a brown owl with yellow eyes, who has an annoyed stare."></a>
+					<a href ='/'><img class ="hooisit-logo" src="./hooisit.png" alt="Logo of the phrase 'Who Is It.' The word who is spelt H O O, and its oh's contain the eyes of an owl."></a>
 				</div>
 				<div class="col-2 responsive-list-container">
 					<ul class ="description-list">
@@ -66,42 +51,29 @@
 					</ul>
 				</div>
 			</div>
-			
 
-			
 			<div class="row">
-				
-					<form action="#" class="js-search-form">
-						<div class ="col-1 search-container">
-						<label for="search-form">
-		          			Hoo gave you a caw?
-		        		</label>
-		        		</div>
-		        		<div class ="col-2 search-container">
-		        		<input type="tel" min="1" class ="js-query searchBar" placeholder="111-111-1111" required>
-		        		</div>
-		        		<div class ="col-2 search-container">
-						<button type ="submit" id= "searchButton" class ="searchButton">
-		        			See Hoo It Is!
-		      			</button>
-		      			</div>
-					</form> 
-				
+				<form action="#" class="js-search-form">
+					<div class ="col-1 search-container">
+					<label for="search-form">
+	          			Hoo gave you a caw?
+	        		</label>
+	        		</div>
+	        		<div class ="col-2 search-container">
+	        		<input type="number" min="1" class ="js-query searchBar" placeholder="111-111-1111" required>
+	        		</div>
+	        		<div class ="col-2 search-container">
+					<button type ="submit" id= "searchButton" class ="searchButton">
+	        			See Hoo It Is!
+	      			</button>
+	      			</div>
+				</form> 	
 			</div>
 
-	
-
-
 			<div class ="post-response">Successfully posted!</div>
-
-
-			<!-- <div class = "js-results"></div> -->
-
-
 			 
 		    <div class="js-signup-popup-window" aria-live="assertive">
 		      	<h2 class ="register-title">Create a free account</h2>
-		      	<!-- <img class ="avatar" src="OwlCloseup.jpg" alt="Brown owl with yellow eyes and a blank stare."> -->
 		      	<p class ="cancel close">x</p>
 		        <form method="post" class="js-register-form">
 		        	<label for="js-register-first-name"><p>First Name</p></label>
@@ -113,41 +85,31 @@
 					<label for="js-register-user-name"><p>User Name</p></label>
 						<input class="js-register-user-name" type="search" required placeholder="User Name">
 					<label for="js-register-password"><p>Password</p></label>
-						<input class="js-register-password" type="search" required placeholder="Password">
+						<input class="js-register-password" type="password" required placeholder="Password">
 
 					<input type="submit" class="js-register-button" name="Register">
-					<!-- <div class = "register-bottom-container">
-						<button class ="cancel cancel-signup">Cancel</button>
-					</div> -->
+					
 				</form>
 		    </div>
 
-		    <div class="js-signin-popup-window" aria-live="assertive">
+		    <div class="js-signin-popup-window" aria-live="assertive">      	
+	      		<h2 class ="register-title">Sign In</h2>
+	      		<p class ="cancel close">x</p>
+	      		<form action="#" class="js-signin-form">
+					<label class ="sign-in-label" for="js-signin-username">
+	          			Hoo Are You?
+	        		</label>
+	        		<input type="string" id ="js-signin-username" placeholder="OwlBundy" required>
+	        		<label class ="sign-in-label" for="js-signin-password">
+	          			Password
+	        		</label>
+	        		<input type="password" id ="js-signin-password" placeholder="Password" required>
 
-		      	
-		      		<h2 class ="register-title">Sign In</h2>
-		      		<p class ="cancel close">x</p>
-		      		<form action="#" class="js-signin-form">
-							<!-- <label class ="sign-in-label" for="js-signin-username">
-			          			Hoo Are You?
-			        		</label> -->
-			        		<input type="string" id ="js-signin-username" placeholder="OwlBundy" required>
-			        		<!-- <label class ="sign-in-label" for="js-signin-password">
-			          			Password
-			        		</label> -->
-			        		<input type="string" id ="js-signin-password" placeholder="Password" required>
-
-							<input type ="submit" class ="signInButton" name="Sign In">
-			      			
-							</form>
+					<input type ="submit" class ="signInButton" name="Sign In">
+				</form>
 			</div>
-		     <div class="backFade" style="">
-		     	
-		     </div>
+		    <div class="backFade" style=""></div>
 		</main>
-		
-		<script src="index.js"></script>
-		<!-- <script src="signup.js"></script> -->
-		 
+		<script src="index.js"></script> 
 	</body>
 </html>
