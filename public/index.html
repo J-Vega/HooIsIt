@@ -24,10 +24,13 @@
 
 				<div class="col-4 float-right login-signup-container">
 					<div class="js-user-info"><a href="/profile" id="js-user-name" class="js-user-name">UserName</a>
-					<button class="js-logout-button"type="submit">Log Out</button></div>
-					<p class ="signup-link">Register </p>
-					<p> or </p>
-					<p class ="signin-link"> Sign In</p>
+						<button class="js-logout-button"type="submit">Log Out</button>
+					</div>
+					<div class ="guest-info">
+						<p class ="signup-link">Register </p>
+						<p> or </p>
+						<p class ="signin-link"> Sign In</p>
+					</div>
 				</div>
 
 				<!-- <div class="col-2 nav-signin"><form action="#" class="js-signin-form">
@@ -69,15 +72,15 @@
 			<div class="row">
 				
 					<form action="#" class="js-search-form">
-						<div class ="col-3 search-container">
+						<div class ="col-1 search-container">
 						<label for="search-form">
 		          			Hoo gave you a caw?
 		        		</label>
 		        		</div>
-		        		<div class ="col-3 search-container">
+		        		<div class ="col-2 search-container">
 		        		<input type="tel" min="1" class ="js-query searchBar" placeholder="111-111-1111" required>
 		        		</div>
-		        		<div class ="col-3 search-container">
+		        		<div class ="col-2 search-container">
 						<button type ="submit" id= "searchButton" class ="searchButton">
 		        			See Hoo It Is!
 		      			</button>
@@ -96,55 +99,51 @@
 
 
 			 
-    <div class="js-signup-popup-window" aria-live="assertive">
-      	<h2 class ="register-title">Create a free account</h2>
-      	<!-- <img class ="avatar" src="OwlCloseup.jpg" alt="Brown owl with yellow eyes and a blank stare."> -->
-      	<p class ="cancel close">x</p>
-        <form method="post" class="js-register-form">
-        	<label for="js-register-first-name"><p>First Name</p></label>
-				<input class="js-register-first-name" type="search" required placeholder="Owl">
-			<label for="js-register-last-name"><p>Last Name</p></label>
-				<input class="js-register-last-name" type="search" required placeholder="Bundy">
-			<label for="js-register-email"><p>Email</p></label>
-				<input class="js-register-email" type="email" required placeholder="email@hooville.com">
-			<label for="js-register-user-name"><p>User Name</p></label>
-				<input class="js-register-user-name" type="search" required placeholder="User Name">
-			<label for="js-register-password"><p>Password</p></label>
-				<input class="js-register-password" type="search" required placeholder="Password">
+		    <div class="js-signup-popup-window" aria-live="assertive">
+		      	<h2 class ="register-title">Create a free account</h2>
+		      	<!-- <img class ="avatar" src="OwlCloseup.jpg" alt="Brown owl with yellow eyes and a blank stare."> -->
+		      	<p class ="cancel close">x</p>
+		        <form method="post" class="js-register-form">
+		        	<label for="js-register-first-name"><p>First Name</p></label>
+						<input class="js-register-first-name" type="search" required placeholder="Owl">
+					<label for="js-register-last-name"><p>Last Name</p></label>
+						<input class="js-register-last-name" type="search" required placeholder="Bundy">
+					<label for="js-register-email"><p>Email</p></label>
+						<input class="js-register-email" type="email" required placeholder="email@hooville.com">
+					<label for="js-register-user-name"><p>User Name</p></label>
+						<input class="js-register-user-name" type="search" required placeholder="User Name">
+					<label for="js-register-password"><p>Password</p></label>
+						<input class="js-register-password" type="search" required placeholder="Password">
 
-			<input type="submit" class="js-register-button" name="Register">
-			<!-- <div class = "register-bottom-container">
-				<button class ="cancel cancel-signup">Cancel</button>
-			</div> -->
-		</form>
-    </div>
+					<input type="submit" class="js-register-button" name="Register">
+					<!-- <div class = "register-bottom-container">
+						<button class ="cancel cancel-signup">Cancel</button>
+					</div> -->
+				</form>
+		    </div>
 
-    <div class="js-signin-popup-window" aria-live="assertive">
+		    <div class="js-signin-popup-window" aria-live="assertive">
 
-      	
-      		<h2 class ="register-title">Sign In</h2>
-      		<p class ="cancel close">x</p>
-      		<form action="#" class="js-signin-form">
-					<!-- <label class ="sign-in-label" for="js-signin-username">
-	          			Hoo Are You?
-	        		</label> -->
-	        		<input type="string" id ="js-signin-username" placeholder="OwlBundy" required>
-	        		<!-- <label class ="sign-in-label" for="js-signin-password">
-	          			Password
-	        		</label> -->
-	        		<input type="string" id ="js-signin-password" placeholder="Password" required>
+		      	
+		      		<h2 class ="register-title">Sign In</h2>
+		      		<p class ="cancel close">x</p>
+		      		<form action="#" class="js-signin-form">
+							<!-- <label class ="sign-in-label" for="js-signin-username">
+			          			Hoo Are You?
+			        		</label> -->
+			        		<input type="string" id ="js-signin-username" placeholder="OwlBundy" required>
+			        		<!-- <label class ="sign-in-label" for="js-signin-password">
+			          			Password
+			        		</label> -->
+			        		<input type="string" id ="js-signin-password" placeholder="Password" required>
 
-					<input type ="submit" class ="signInButton" name="Sign In">
-	      			
-					</form>
-	</div>
-
-	
-
-   
-      <div class="backFade" style=""></div>
-
-
+							<input type ="submit" class ="signInButton" name="Sign In">
+			      			
+							</form>
+			</div>
+		     <div class="backFade" style="">
+		     	
+		     </div>
 		</main>
 		
 		<script src="index.js"></script>
