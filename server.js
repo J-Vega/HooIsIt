@@ -140,34 +140,21 @@ app.get("/list/:id", cors(), (req, res) => {
     });
 });
 
-function filterCommentsFromUser(phoneNumber, userName){
-  let commentList = [];
-  phoneNumber.comments.filter(xComment => xComment.creator === userName)
-  .forEach(comment => commentList.push(comment));
-  console.log(commentList);
-  let commentData = {
-      "phoneNumber":phoneNumber.phoneNumber,
-      "comments":commentList
-  };
-  return commentData;//`<p>${phoneNumber.phoneNumber}</p> <p>${commentList}</p>`;
-};
-
 //Searches all entries with a comment created by specified user name
 app.get("/comments/:userName", cors(), (req, res) => {
   console.log("searching comments posted by: "+ req.params.userName);
   PhoneNumber
     .find({"comments":{$elemMatch:{creator:req.params.userName}}})
     .exec()
-    .then(phoneNumbers => phoneNumbers .forEach (listing => {
+    .then(listing => {
       console.log("Results below...");
-      filterCommentsFromUser(listing,req.params.userName);
-      // var commentList = [];
+      //var commentList = [];//Will return list of comments **after filtered properly
       // for(var i=0; i < listing.length;i++){
       //   console.log(`${listing[i].comments.entries}`);  
       // }
-      console.log(listing.phoneNumber);
-      return res.json(filterCommentsFromUser(listing,req.params.userName));
-    }))
+      
+      return res.json(listing);
+    })
     .catch(err => {
       console.log(err);
       return res.status(500).json({ message: 'Internal server error' });
