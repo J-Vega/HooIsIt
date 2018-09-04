@@ -124,7 +124,7 @@ function addComment(author,comment){
         processData: false,
     	success: function( data, textStatus, jQxhr ){
         console.log("Success!");
-
+        window.location.reload();
         //$('#response pre').html( JSON.stringify( data ) );
     	},
     	error: function( jqXhr, textStatus, errorThrown ){
