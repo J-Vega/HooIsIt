@@ -77,7 +77,7 @@ app.get("/list", cors(), (req, res) => {
 });
 
 //Find specific phone number
-app.get("/search/:phoneNumber", cors(), (req, res) => {
+app.get("/list/:phoneNumber", cors(), (req, res) => {
   
   PhoneNumber
     .findOne({phoneNumber:req.params.phoneNumber})

@@ -144,7 +144,7 @@ function registerUser(userData){
 
 function searchPhoneNumber(searchTerm,callback){
 	let query = {
-		url: `https://stormy-tundra-36765.herokuapp.com/search/${searchTerm}`,
+		url: `https://stormy-tundra-36765.herokuapp.com/list/${searchTerm}`,
 		type: 'get',
 		dataType: 'json'
 	}
