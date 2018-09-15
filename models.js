@@ -12,14 +12,14 @@ const userProfileSchema = mongoose.Schema({
   	lastName: {type: String, required: true},
     password: {type: String, required: true},
     email: {type: String, required: true},
-  	created: {type: Date, default: Date.now}//,
-    //userComments: [{type:Schema.Types.ObjectId, ref: 'UserComment'}]
+  	created: {type: Date, default: Date.now}
+    
 },{collection:"userdata"});
 
 const userCommentSchema = mongoose.Schema({
     
     content: {type: String, required: true},
-    creator: {type: String , required: true},//[{type: Schema.Types.ObjectId, ref: 'UserProfile'}],
+    creator: {type: String , required: true},
     created: {type: Date, required:true, default: Date.now}
 });
 
