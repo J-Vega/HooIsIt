@@ -115,51 +115,21 @@ nav{
 	color: #9a8c62;
 }
 
-.signup-link{
-	color: blue;
+.signup-link, .signin-link{
+	padding: 5px;
+    background-color: #c0ab73;
+    border: 1px solid #d8d8d8;
 }
 
-.signin-link{
-	color: blue;
+.signup-link:hover, .signin-link:hover{
+	cursor: pointer;
 }
 
 .guest-info{
 	padding-top: 15px;
 }
 
-.js-register-form,.js-signin-form{
-	padding-left: 14px;
-    padding-right: 14px;
-	margin: 20px;
-	text-align: left;
-	background-color: #f3f3f3;
-}
 
-.js-register-form label, .js-signin-form label{
-	font-weight: bold;
-	color: black;
-
-}
-
-.js-phone-number{
-	font-weight: bold;	
-	font-size: 18px;
-}
-
-.register-link{
-	color: blue;
-	text-shadow: none;
-}
-
-.register-link:hover,.signup-link:hover,.signin-link:hover{
-	text-decoration: underline;
-	font-weight: bold;
-	cursor: pointer;
-}
-
-.register-title{
-	color: black;
-}
 
 .avatar{
 	width: 25%;
@@ -196,7 +166,7 @@ nav{
 }
 
 .js-register-form input,.js-signin-form input{
-	width: 100%;
+	width: 90%;
     padding: 12px 25px;
 	font-size: 15px;
 	border: 1px solid #c1c1c1;
@@ -206,7 +176,7 @@ label p{
 	margin: 0;
     margin-top: 10px;
     text-align: left;
-    margin-left: 5px;
+    margin-left: 30px;
 }
 
 .call-type-container,.label-container{
