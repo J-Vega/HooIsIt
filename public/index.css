@@ -64,7 +64,7 @@ nav{
     right: 0;
     left: 0;
     z-index: 500;
-    background: #e2e2e2;
+    background: #dcd4b8;
     box-shadow: 0 1px 0 0 rgba(0,0,0,0.066);
     box-sizing: border-box;
     height: 90px;
@@ -122,6 +122,9 @@ nav{
 }
 
 .signup-link:hover, .signin-link:hover{
+	border-color: #f2e69b;
+	color: #f2e69b;
+	background-color: #84734b;
 	cursor: pointer;
 }
 
