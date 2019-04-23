@@ -187,9 +187,9 @@ function addPhoneNumber(data) {
 }
 
 //Get function to list all phone numbers 
-function getDataFromListing(callback) {
+function getRecentListings(callback) {
 	let query = {
-		url: "https://stormy-tundra-36765.herokuapp.com/list",
+		url: "/list",
 		dataType: 'json'
 	}
 
@@ -231,6 +231,11 @@ function renderResults(result) {
 
 	return `<p>Showing results for - ${result["phoneNumber"]}</p><p class= "comment-header">Comments (${result["comments"].length}): </h3><p>${result["description"]}</p>${commentList}`// <p>${result["comments"]}<p>;
 }
+
+function renderRecentListings(result){
+	console.log(result);
+}
+
 function addCommentToUser() {
 	$.ajax({
 		url: '/users/',
@@ -354,6 +359,8 @@ $('.js-success-message').hide();
 $('.js-signup-popup-window').hide();
 $('.js-signin-popup-window').hide();
 $('.post-response').hide();
+
+getRecentListings(renderRecentListings);
 
 toggleHtml();
 $(watchSubmit);

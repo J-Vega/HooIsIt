@@ -65,6 +65,8 @@ app.use(function (req, res, next) {
 app.get("/list", cors(), (req, res) => {
   PhoneNumber
     .find()
+    .sort({"_id":-1})
+    .limit(5)
     .exec() 
     .then(PhoneNumber => {
       
@@ -77,7 +79,7 @@ app.get("/list", cors(), (req, res) => {
 });
 
 //Find specific phone number
-app.get("/list/:phoneNumber", cors(), (req, res) => {
+app.get("/search/:phoneNumber", cors(), (req, res) => {
   
   PhoneNumber
     .findOne({phoneNumber:req.params.phoneNumber})
