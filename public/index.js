@@ -122,7 +122,7 @@ function watchSubmit() {
 }
 
 function addDashes(f) {
-	console.log(f.value);
+	//console.log(f.value);
 	var r = /(\D+)/g,
 		npa = '',
 		nxx = '',
@@ -189,7 +189,7 @@ function addPhoneNumber(data) {
 //Get function to list all phone numbers 
 function getRecentListings(callback) {
 	let query = {
-		url: "/list",
+		url: "https://stormy-tundra-36765.herokuapp.com/list",
 		dataType: 'json'
 	}
 
@@ -233,7 +233,30 @@ function renderResults(result) {
 }
 
 function renderRecentListings(result){
-	console.log(result);
+	//console.log(result);
+
+	let recentSearchList = "";
+
+	for(i=0; i < result.length; i++){
+		//console.log(result[i].phoneNumber);
+		let parsedNumber = `${parseInt(result[i].phoneNumber)}`;
+		//console.log(parsedNumber);
+		//let parts = [parsedNumber.slice(0,3),parsedNumber.slice(3,6),parsedNumber.slice(6,10)];
+		//fNum = parts[0]+"-"+parts[1]+"-"+parts[2];
+		let newEntry = `
+		<div class="recent-listing-container">
+			<p class="recent-listing-date">Posted: ${result[i].comments[0].created.slice(0,10)}</p>
+			<a class="recent-listing-link" href="https://stormy-tundra-36765.herokuapp.com/listing.html?${parsedNumber}"><span class="recent-listing-inline"><p>${parsedNumber.slice(0,3)}-</p><p>${parsedNumber.slice(3,6)}-</p><p>${parsedNumber.slice(6,11)}</p></span></a>
+			<p class="recent-listing-comment">${result[i].comments[0].creator}</p>
+			<p class="recent-listing-comment">'${result[i].comments[0].content}'</p>
+
+		</div>
+		`;
+		recentSearchList += newEntry;
+	}
+	//console.log(recentSearchList);
+	$('.js-recent-searches').html(`<h3>Latest Searches</h3>${recentSearchList}`);
+	//return `<p>${recentSearchList}</p>`;
 }
 
 function addCommentToUser() {

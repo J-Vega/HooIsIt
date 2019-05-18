@@ -246,6 +246,34 @@ label{
 	padding: 12px;
 }
 
+/* Index.js renderrecentlistings function */
+.js-recent-searches{
+	max-width: 800px;
+    margin: auto;
+}
+.recent-listing-container{
+	border: 1px solid grey;
+	border-style: dotted solid dotted solid;
+	margin-top: 3px;
+	padding: 5px;
+}
+
+.recent-listing-container:hover{
+	background: #d1e4ec;
+}
+
+.recent-listing-date{
+	float: left;
+}
+.recent-listing-inline{
+	display: inline-flex;
+}
+
+.recent-listing-comment{
+	clear: both;;
+	
+}
+
 .js-results{
 	margin-top: 12px;
 	background-color: lightgrey;
